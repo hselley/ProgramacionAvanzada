@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.18">
+<meta name="generator" content="Asciidoctor 2.0.23">
 <title>Fundamentos de programación</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -140,7 +140,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #content::before{content:none}
 #header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
 #header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
-#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
 #header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
 #header .details span:first-child{margin-left:-.125em}
 #header .details span.email a{color:rgba(0,0,0,.85)}
@@ -162,6 +162,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #toctitle{color:#7a2518;font-size:1.2em}
 @media screen and (min-width:768px){#toctitle{font-size:1.375em}
 body.toc2{padding-left:15em;padding-right:0}
+body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
 #toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
 #toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
 #toc.toc2>ul{font-size:.9em;margin-bottom:0}
@@ -208,13 +209,10 @@ table.tableblock.fit-content>caption.title{white-space:nowrap;width:0}
 .admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #dddddf;color:rgba(0,0,0,.6);word-wrap:anywhere}
 .admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
 .exampleblock>.content{border:1px solid #e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;border-radius:4px}
-.exampleblock>.content>:first-child{margin-top:0}
-.exampleblock>.content>:last-child{margin-bottom:0}
 .sidebarblock{border:1px solid #dbdbd6;margin-bottom:1.25em;padding:1.25em;background:#f3f3f2;border-radius:4px}
-.sidebarblock>:first-child{margin-top:0}
-.sidebarblock>:last-child{margin-bottom:0}
 .sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
-.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content>:first-child,.sidebarblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child,.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
 .literalblock pre,.listingblock>.content>pre{border-radius:4px;overflow-x:auto;padding:1em;font-size:.8125em}
 @media screen and (min-width:768px){.literalblock pre,.listingblock>.content>pre{font-size:.90625em}}
 @media screen and (min-width:1280px){.literalblock pre,.listingblock>.content>pre{font-size:1em}}
@@ -330,7 +328,7 @@ a.image{text-decoration:none;display:inline-block}
 a.image object{pointer-events:none}
 sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
 sup.footnote a,sup.footnoteref a{text-decoration:none}
-sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
 #footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
 #footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
 #footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
@@ -393,7 +391,7 @@ b.conum *{color:inherit!important}
 dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
 h1,h2,p,td.content,span.alt,summary{letter-spacing:-.01em}
 p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
-p,blockquote,dt,td.content,span.alt,summary{font-size:1.0625rem}
+p,blockquote,dt,td.content,td.hdlist1,span.alt,summary{font-size:1.0625rem}
 p{margin-bottom:1.25rem}
 .sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
 .exampleblock>.content{background:#fffef7;border-color:#e0e0dc;box-shadow:0 1px 4px #e0e0dc}
@@ -941,6 +939,174 @@ mi_funcion("Emil", "Tobías", "Linus")</code></pre>
 </div>
 </div>
 <div class="sect2">
+<h3 id="_módulos_de_python">Módulos de Python</h3>
+<div class="sect3">
+<h4 id="_qué_es_un_módulo">¿Qué es un módulo?</h4>
+<div class="paragraph">
+<p>Considere que un módulo es lo mismo que una biblioteca de código. Un
+archivo que contiene un conjunto de funciones que desea incluir en su
+aplicación.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_crear_un_módulo">Crear un módulo</h4>
+<div class="paragraph">
+<p>Para crear un módulo simplemente guarde el código que desea en un
+archivo con la extensión de archivo <code>.py</code>:</p>
+</div>
+<div class="paragraph">
+<p><strong>Ejemplo</strong> Guarde este código en un archivo <code>llamadomymodule.py</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">def greeting(name):
+    print("Hello, " + name)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_utilice_un_módulo">Utilice un módulo</h4>
+<div class="paragraph">
+<p>Ahora podemos utilizar el módulo que acabamos de crear, mediante la
+importdeclaración: <strong>Ejemplo</strong> Importa el módulo llamado mymodule y llama
+a la función de saludo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">    import mymodule
+
+    mymodule.greeting("Jonathan")</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_variables_en_el_módulo">Variables en el módulo</h4>
+<div class="paragraph">
+<p>El módulo puede contener funciones, como ya se ha descrito, pero también
+variables de todo tipo (matrices, diccionarios, objetos, etc.):</p>
+</div>
+<div class="paragraph">
+<p><strong>Ejemplo</strong> Guarda este código en el <code>archivomymodule.py</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">person1 = {
+    "name": "John",
+    "age": 36,
+    "country": "Norway"
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Ejemplo</strong> Importe el módulo llamado <code>mymodule</code> y acceda al diccionario
+<code>person1</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">    import mymodule
+
+    a = mymodule.person1["age"]
+    print(a)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_nombrar_un_módulo">Nombrar un módulo</h4>
+<div class="paragraph">
+<p>Puedes nombrar el archivo del módulo como quieras, pero debe tener la
+extensión de archivo <code>.py</code></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cambiar_el_nombre_de_un_módulo">Cambiar el nombre de un módulo</h4>
+<div class="paragraph">
+<p>Puedes crear un alias al importar un módulo, utilizando la aspalabra
+clave:</p>
+</div>
+<div class="paragraph">
+<p><strong>Ejemplo</strong> Crear un alias para mymoduleel llamado <code>mx</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">import mymodule as mx
+
+a = mx.person1["age"]
+print(a)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_módulos_integrados">Módulos integrados</h4>
+<div class="paragraph">
+<p>Hay varios módulos integrados en Python que puedes importar cuando
+quieras.</p>
+</div>
+<div class="paragraph">
+<p><strong>Ejemplo</strong> Importar y utilizar el <code>platformmódulo</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">import platform
+
+x = platform.system()
+print(x)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_usando_la_función_dir">Usando la función dir()</h4>
+<div class="paragraph">
+<p>Hay una función incorporada para enumerar todos los nombres de funciones
+(o nombres de variables) en un módulo. La función <code>dir()</code>:</p>
+</div>
+<div class="paragraph">
+<p><strong>Ejemplo</strong> Enumere todos los nombres definidos que pertenecen al módulo
+de la plataforma:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">import platform
+
+x = dir(platform)
+print(x)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_importar_desde_módulo">Importar desde módulo</h4>
+<div class="paragraph">
+<p>Puede elegir importar solo partes de un módulo, utilizando la
+frompalabra clave.</p>
+</div>
+<div class="paragraph">
+<p><strong>Ejemplo</strong> El módulo nombrado <code>mymodule</code> tiene una función y un
+diccionario:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">def greeting(name):
+    print("Hello, " + name)
+
+person1 = {
+    "name": "John",
+    "age": 36,
+    "country": "Norway"
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Ejemplo</strong> Importe únicamente el diccionario <code>person1</code> del módulo:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">from mymodule import person1
+
+print (person1["age"])</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_referencias">Referencias</h3>
 <div class="ulist">
 <ul>
@@ -969,7 +1135,7 @@ Python</a></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-07-01 18:58:52 -0600
+Last updated 2024-07-08 18:31:03 -0600
 </div>
 </div>
 </body>
