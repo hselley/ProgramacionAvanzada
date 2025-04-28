@@ -744,6 +744,28 @@ definición el factorial de cero es uno.</p>
         print("El factorial no está definido en los negativos")</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p><strong>Ejemplo 8</strong>. Escriba una función recursiva que imprima los elementos de
+una lista anidada en varios niveles.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">    lista1 = ["manzana", "plátano", "naranja", "mandarina", "maracuyá", "toronja", "mango", "guayaba"]
+    lista2 = [1, 2, 3, 4, 5]
+    lista3 = ["A", "B", "C", "D"]
+    lista4 = ["a", 1, "b", 2, "c", 3, "d", 4]
+    superLista = [lista1 + lista2 + lista3] + [[lista4]] + lista1
+
+    def impresionRecursiva(listaAnidada):
+    for elemento in listaAnidada:
+        if isinstance(elemento, list):
+            impresionRecursiva(elemento)
+        else:
+            print(elemento)
+
+    impresionRecursiva(superLista)</code></pre>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_arreglos">Arreglos</h3>
@@ -1037,7 +1059,7 @@ de punto flotante y evitando la notación científica. :::</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-07-08 14:21:21 -0600
+Last updated 2025-04-28 12:44:09 -0600
 </div>
 </div>
 </body>
