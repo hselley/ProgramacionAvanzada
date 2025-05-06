@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 2.0.20">
+<meta name="generator" content="Asciidoctor 2.0.23">
 <title>Clases y Objetos</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -140,7 +140,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #content::before{content:none}
 #header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
 #header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #dddddf}
-#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
+#header>h1:only-child{border-bottom:1px solid #dddddf;padding-bottom:8px}
 #header .details{border-bottom:1px solid #dddddf;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:flex;flex-flow:row wrap}
 #header .details span:first-child{margin-left:-.125em}
 #header .details span.email a{color:rgba(0,0,0,.85)}
@@ -162,6 +162,7 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #toctitle{color:#7a2518;font-size:1.2em}
 @media screen and (min-width:768px){#toctitle{font-size:1.375em}
 body.toc2{padding-left:15em;padding-right:0}
+body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #dddddf;padding-bottom:8px}
 #toc.toc2{margin-top:0!important;background:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #e7e7e9;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
 #toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
 #toc.toc2>ul{font-size:.9em;margin-bottom:0}
@@ -327,7 +328,7 @@ a.image{text-decoration:none;display:inline-block}
 a.image object{pointer-events:none}
 sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
 sup.footnote a,sup.footnoteref a{text-decoration:none}
-sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+sup.footnote a:active,sup.footnoteref a:active,#footnotes .footnote a:first-of-type:active{text-decoration:underline}
 #footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
 #footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em;border-width:1px 0 0}
 #footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;margin-bottom:.2em}
@@ -443,7 +444,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="paragraph">
 <p>Python es un lenguaje de programación orientado a objetos. Casi todo en
 Python es un objeto, con sus propiedades y métodos. Una clase es como un
-constructor de objetos, o un ``<em>blueprint</em>'' para crear objetos.</p>
+constructor de objetos, o un &#8220;<em>blueprint</em>&#8221; para crear objetos.</p>
 </div>
 <div class="sect2">
 <h3 id="_crear_una_clase">Crear una Clase</h3>
@@ -477,26 +478,26 @@ print(p1.x)</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_la_función_init">La función <code><em>init</em>()</code></h3>
+<h3 id="_la_función_init">La función <code>__init__()</code></h3>
 <div class="paragraph">
 <p>Los ejemplos anteriores son clases y objetos en su forma más simple, y
 son no es realmente útil en aplicaciones de la vida real.</p>
 </div>
 <div class="paragraph">
 <p>Para entender el significado de las clases tenemos que entender el
-<code><em>init</em>()</code> incorporado función.</p>
+<code>__init__()</code> incorporado función.</p>
 </div>
 <div class="paragraph">
-<p>Todas las clases tienen una función llamada <code><em>init</em>()</code>, que siempre se
-ejecuta cuando la clase está siendo iniciada.</p>
+<p>Todas las clases tienen una función llamada <code>__init__()</code>, que siempre
+se ejecuta cuando la clase está siendo iniciada.</p>
 </div>
 <div class="paragraph">
-<p>Utilice la función <code><em>init</em>()</code> para asignar valores a propiedades de
+<p>Utilice la función <code>__init__()</code> para asignar valores a propiedades de
 objetos u otros operaciones que son necesarias para hacer cuando el
 objeto está siendo creado:</p>
 </div>
 <div class="paragraph">
-<p><strong>Ejemplo</strong>. Cree una clase llamada Persona, use la función <code><em>init</em>()</code>
+<p><strong>Ejemplo</strong>. Cree una clase llamada Persona, use la función <code>__init__()</code>
 para asignar valores para nombre y edad:</p>
 </div>
 <div class="listingblock">
@@ -513,8 +514,8 @@ print(p1.age)</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><strong>Nota:</strong> La función <code><em>init</em>()</code> se llama automáticamente cada vez que la
-clase se utiliza para crear un nuevo objeto.</p>
+<p><strong>Nota:</strong> La función <code>__init__()</code> se llama automáticamente cada vez que
+la clase se utiliza para crear un nuevo objeto.</p>
 </div>
 <div class="paragraph">
 <p>En el contexto de la programación orientada a objetos en Python, el
@@ -523,30 +524,31 @@ parámetro que se utiliza en los métodos de una clase para acceder a las
 variables y métodos del objeto.</p>
 </div>
 <div class="paragraph">
-<p>El método <code><em>init</em></code> es un constructor especial en Python. Se llama
+<p>El método <code>__init__</code> es un constructor especial en Python. Se llama
 automáticamente cuando se crea una nueva instancia de la clase. Recibe
 los parámetros <code>name</code> y <code>age</code>.</p>
 </div>
 <div class="paragraph">
 <p>Dentro del constructor, <code>self</code> entra en juego. El término <code>self</code> se
-refiere a la instancia actual de la clase. Al asignar <code>self.name = name</code>
-y <code>self.age = age</code>, estás almacenando los valores <code>name</code> y <code>age</code> en los
-atributos <code>name</code> y <code>age</code> de la instancia actual de la clase <code>Person</code>.</p>
+refiere a la instancia actual de la clase. Al asignar
+<code>self.name = name</code> y <code>self.age = age</code>, estás almacenando los valores
+<code>name</code> y <code>age</code> en los atributos <code>name</code> y <code>age</code> de la instancia
+actual de la clase <code>Person</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_la_función_str">La función <code><em>str</em>()</code></h3>
+<h3 id="_la_función_str">La función <code>__str__()</code></h3>
 <div class="paragraph">
-<p>La función <code><em>str</em>()</code> controla lo que debe devolverse cuando el objeto
-de clase se representa como una cadena.</p>
+<p>La función <code>__str__()</code> controla lo que debe devolverse cuando el
+objeto de clase se representa como una cadena.</p>
 </div>
 <div class="paragraph">
-<p>Si la función <code><em>str</em>()</code> no está establecida, la representación de
+<p>Si la función <code>__str__()</code> no está establecida, la representación de
 cadena del objeto se devuelve:</p>
 </div>
 <div class="paragraph">
 <p><strong>Ejemplo</strong>. La representación de cadena de un objeto SIN la función
-<code><em>str</em>()</code>:</p>
+<code>__str__()</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -562,7 +564,7 @@ print(p1)</code></pre>
 </div>
 <div class="paragraph">
 <p><strong>Ejemplo</strong>. La representación de cadena de un objeto CON la función
-<code><em>str</em>()</code>:</p>
+<code>__str__()</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -613,7 +615,7 @@ la clase, y se utiliza para acceder a las variables que pertenecen a la
 clase.</p>
 </div>
 <div class="paragraph">
-<p><strong>Ejemplo</strong></p>
+<p><strong>Ejemplo</strong>. Registro de perros con promedio de peso</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -638,15 +640,17 @@ print(f'El peso promedio de un perro es {Perro.get_peso_promedio()} kilos')
 <div class="sect2">
 <h3 id="_el_parámetro_self">El parámetro <code>self</code></h3>
 <div class="paragraph">
-<p>El parámetro <code>self</code> es una referencia a la instancia actual de la clase,
-y se utiliza para acceder a las variables que pertenecen a la clase.</p>
+<p>El parámetro <code>self</code> es una referencia a la instancia actual de la
+clase, y se utiliza para acceder a las variables que pertenecen a la
+clase.</p>
 </div>
 <div class="paragraph">
 <p>No tiene que ser nombrado <code>self</code> , puede ser llamado como sea, pero
 tiene que ser el primer parámetro de cualquier función en la clase:</p>
 </div>
 <div class="paragraph">
-<p><strong>Ejemplo</strong> Usar las palabras <code>mysillyobject</code> y <code>abc</code> en lugar de <code>self</code>:</p>
+<p><strong>Ejemplo</strong> Usar las palabras <code>mysillyobject</code> y <code>abc</code> en lugar de
+<code>self</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -738,8 +742,8 @@ de otra clase, también llamada clase derivada.</p>
 misma que la de crear cualquier otra clase:</p>
 </div>
 <div class="paragraph">
-<p><strong>Ejemplo</strong>. Crea una clase llamada <code>Person</code>, con propiedades <code>firstnamey</code>
-<code>lastname</code>, y un método <code>printname</code>:</p>
+<p><strong>Ejemplo</strong>. Crea una clase llamada <code>Person</code>, con propiedades
+<code>firstnamey</code> <code>lastname</code>, y un método <code>printname</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -775,8 +779,8 @@ propiedades y métodos de la clase <code>Person</code>:</p>
 </div>
 </div>
 <div class="paragraph">
-<p><strong>Nota</strong>: Utilice la <code>pass</code> palabra clave cuando no desee agregar ninguna
-otra propiedad o método a la clase.</p>
+<p><strong>Nota</strong>: Utilice la <code>pass</code> palabra clave cuando no desee agregar
+ninguna otra propiedad o método a la clase.</p>
 </div>
 <div class="paragraph">
 <p>Ahora la clase <code>Student</code> tiene las mismas propiedades y métodos que la
@@ -797,15 +801,15 @@ x.printname()</code></pre>
 <h4 id="_agregue_la_función_init">Agregue la función <strong>init</strong>()</h4>
 <div class="paragraph">
 <p>Hasta ahora hemos creado una clase hija que hereda las propiedades y
-métodos de su clase principal. Queremos agregar la función <code><em>init</em>()</code>
-a la clase hija (en lugar de la palabra clave <code>pass</code>).</p>
+métodos de su clase principal. Queremos agregar la función
+<code>__init__()</code> a la clase hija (en lugar de la palabra clave <code>pass</code>).</p>
 </div>
 <div class="paragraph">
-<p><strong>Nota:</strong> La función <code><em>init</em>()</code> se llama automáticamente cada vez que se
-utiliza la clase para crear un nuevo objeto.</p>
+<p><strong>Nota:</strong> La función <code>__init__()</code> se llama automáticamente cada vez que
+se utiliza la clase para crear un nuevo objeto.</p>
 </div>
 <div class="paragraph">
-<p><strong>Ejemplo</strong>. Añade la función <code><em>init</em>()</code> a la clase <code>Student</code>:</p>
+<p><strong>Ejemplo</strong>. Añade la función <code>__init__()</code> a la clase <code>Student</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -815,16 +819,16 @@ utiliza la clase para crear un nuevo objeto.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Cuando se agrega la función <code><em>init</em>()</code>, la clase hija ya no heredará
-la función <code><em>init</em>()</code> de la clase padre.</p>
+<p>Cuando se agrega la función <code>__init__()</code>, la clase hija ya no heredará
+la función <code>__init__()</code> de la clase padre.</p>
 </div>
 <div class="paragraph">
-<p><strong>Nota</strong>: La función <code><em>init</em>()</code> del hijo reemplaza la herencia de la
-función del padre <code><em>init</em>()</code>.</p>
+<p><strong>Nota</strong>: La función <code>__init__()</code> del hijo reemplaza la herencia de la
+función del padre <code>__init__()</code>.</p>
 </div>
 <div class="paragraph">
-<p>Si se desea mantener la herencia de la función padre <code><em>init</em>()</code>,
-agregue una llamada a la función padre <code><em>init</em>()</code>:</p>
+<p>Si se desea mantener la herencia de la función padre <code>__init__()</code>,
+agregue una llamada a la función padre <code>__init__()</code>:</p>
 </div>
 <div class="paragraph">
 <p><strong>Ejemplo</strong>.</p>
@@ -837,9 +841,9 @@ agregue una llamada a la función padre <code><em>init</em>()</code>:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Ahora hemos agregado exitosamente la función <code><em>init</em>()</code> y conservamos
-la herencia de la clase padre, y estamos listos para agregar
-funcionalidad en la función <code><em>init</em>()</code>.</p>
+<p>Ahora hemos agregado exitosamente la función <code>__init__()</code> y
+conservamos la herencia de la clase padre, y estamos listos para agregar
+funcionalidad en la función <code>__init__()</code>.</p>
 </div>
 </div>
 <div class="sect3">
@@ -881,7 +885,7 @@ propiedades de su padre.</p>
 <div class="paragraph">
 <p>En el ejemplo siguiente, el año 2019 debe ser una variable y pasarse a
 la clase <code>Student</code> al crear objetos de estudiantes. Para ello, agregue
-otro parámetro en la función <code><em>init</em>()</code>:</p>
+otro parámetro en la función <code>__init__()</code>:</p>
 </div>
 <div class="paragraph">
 <p><strong>Ejemplo</strong>. Agregue un parámetro <code>year</code> y pase el año correcto al crear
@@ -939,7 +943,7 @@ de Devs</a></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2024-07-15 18:40:33 -0600
+Last updated 2025-05-05 18:07:51 -0600
 </div>
 </div>
 </body>
