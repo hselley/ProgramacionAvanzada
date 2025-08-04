@@ -1,0 +1,395 @@
+\chapter{Manejo de archivos}
+
+El manejo de archivos es una parte importante de cualquier aplicación
+web.
+
+Python tiene varias funciones para crear, leer, actualizar y eliminar
+archivos.
+
+\section{\texorpdfstring{Función
+\texttt{open}}{Función open}}\label{funciuxf3n-open}
+
+La función clave para trabajar con archivos en Python es
+\texttt{open()}. La función \texttt{open()} toma dos parámetros:
+\emph{nombre\_archivo} y \emph{modo} .
+
+Hay cuatro métodos (modos) diferentes para abrir un archivo:
+
+\begin{itemize}
+  \item ``r'' - Leer - Valor predeterminado. Abre un archivo para leerlo. Se
+    produce un error si el archivo no existe.
+  \item ``a'' - Anexar - Abre un archivo para anexarlo, crea el archivo si no existe.
+  \item ``w'' - Escribir - Abre un archivo para escribir, crea el archivo si no existe.
+  \item ``x'' - Crear - Crea el archivo especificado, devuelve un error si el archivo existe.
+\end{itemize}
+
+Además, puede especificar si el archivo debe manejarse en modo binario o
+de texto.
+
+\begin{itemize}
+  \item ``t'' - Texto - Valor predeterminado. Modo texto.
+  \item ``b'' - Binario - Modo binario (por ejemplo, imágenes).
+\end{itemize}
+
+\section{Sintaxis}
+
+La función \texttt{open()} abre un archivo y lo devuelve como un objeto
+de archivo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{open}\NormalTok{(}\BuiltInTok{file}\NormalTok{, mode)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Valores predeterminados}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4583}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5417}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Parámetro
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descripción
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\emph{file} & La ubicación y nombre del archivo \\
+\emph{mode} & Una cadena que define el modo como se abre el archivo \\
+& \texttt{``r''} - \textbf{Lectura} - Valor por defecto. Abre un archivo
+para lectura, envía error si el archivo no existe. \\
+& \texttt{``a''} - \textbf{Añadir} - Abre un archivo para añadir, crea el
+archivo si no existe. \\
+& \texttt{``w''} - \textbf{Escritura} - Abre un archivo para escritura,
+crea el archivo si no existe. \\
+& \texttt{``x''} - \textbf{Creación} - Crea un archivo, devuelve un error
+si el archivo ya existe. \\
+& \\
+& Adicionalmente se puede especificar si el archivo será manejado como
+texto o binario \\
+& \texttt{``t''} - \textbf{Texto} - Modo texto, valor por defecto. \\
+& \texttt{``b''} - \textbf{Binario} - Modo binario (i.e. imágenes) \\
+\end{longtable}
+
+Para abrir un archivo para su lectura es suficiente especificar el
+nombre del archivo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"demofile.txt"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Este código es equivalente al siguiente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"demofile.txt"}\NormalTok{, }\StringTok{"rt"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Dado que \texttt{\textquotesingle{}r\textquotesingle{}} para lectura y
+\texttt{\textquotesingle{}t\textquotesingle{}} para texto son los
+valores por defecto, no es necesario incluirlos.
+
+\section{Abrir un archivo localmente}
+
+Supongamos que tenemos el archivo \texttt{demofile.txt}, ubicado en la
+misma carpeta que el script de Python:
+
+\textbf{Archivo demofile.txt}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Hello! Welcome to demofile.txt}
+\NormalTok{This file is for testing purposes.}
+\NormalTok{Good Luck!}
+\end{Highlighting}
+\end{Shaded}
+
+Para abrir el archivo, se utiliza la función incorporada
+\texttt{open()}. Esta función devuelve un objeto tipo archivo, que tiene
+un método \texttt{read()} para leer el contenido del archivo:\\
+
+\begin{code} Apertura y lectura de un archivo.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"demofile.txt"}\NormalTok{, }\StringTok{\textquotesingle{}r\textquotesingle{}}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(f.read())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Hello! Welcome to demofile.txt
+This file is for testing purposes.
+Good Luck!Now the file has more content!
+\end{verbatim}
+\end{code}
+
+\section{Abrir un archivo en Google Drive}
+
+Supongamos que tenemos el archivo \texttt{demofile.txt}, ubicado en Google Drive:
+
+\textbf{Archivo demofile.txt}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Hello! Welcome to demofile.txt}
+\NormalTok{This file is for testing purposes.}
+\NormalTok{Good Luck!}
+\end{Highlighting}
+\end{Shaded}
+
+Además un notebook de Python se encuentra en la misma carpeta. Para
+abrir un archivo es necesario utilizar la función \texttt{google.colab}
+dentro del paquete \texttt{drive}. Una vez que se haya incluído el
+paquete, ahora es necesario \emph{montar} la unidad de almacenamiento de
+Google Drive en una ubicación dentro del sistema de archivos virtual:
+\texttt{/drive}. Cabe mencionar que esta dirección apuntará a la raíz de
+la unidad de almacenamiento en Google Drive. \\
+
+\begin{code} Código en Colaboratory para abrir archivos.
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ google.colab }\ImportTok{import}\NormalTok{ drive}
+\NormalTok{drive.mount(}\StringTok{"/drive"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+Al ejecutar la función \texttt{drive.mount}, Google Drive preguntará por
+autorización para tener acceso a su unidad.
+
+Posterior a esto, sólo es necesario utilizar la función open tal y como
+lo hicimos anteriormente.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"/drive/My Drive/demofile.txt"}\NormalTok{, }\StringTok{\textquotesingle{}r\textquotesingle{}}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(f.read())}
+\end{Highlighting}
+\end{Shaded}
+
+Observe que se precede al nombre del archivo la ubicación
+\texttt{/drive/My\ Drive/}, que es donde se montó virtualmente la unidad
+de almacenamiento de Google Drive.
+
+\section{Leer partes de un archivo}
+
+Por defecto el método \texttt{read()} devuelve todo el texto, pero se
+puede especificar cuantos caracteres se desea leer.\\
+
+\begin{code} Lectura parcial del archivo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"demofile.txt"}\NormalTok{, }\StringTok{"r"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(f.read(}\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Hello
+\end{verbatim}
+\end{code}
+
+\section{Leer líneas del archivo}
+Es posible leer una línea de un archivo mediante el método \texttt{readline()}. \\
+
+\begin{code} Lectura de archivo mediante \texttt{readline()}.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"demofile.txt"}\NormalTok{, }\StringTok{"r"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(f.readline())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Hello! Welcome to demofile.txt
+
+\end{verbatim}
+\end{code}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"demofile.txt"}\NormalTok{, }\StringTok{"r"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(f.readline())}
+\BuiltInTok{print}\NormalTok{(f.readline())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Hello! Welcome to demofile.txt
+
+This file is for testing purposes.
+
+\end{verbatim}
+
+Si se utiliza un ciclo \texttt{for}, se puede leer todo el archivo línea por línea.
+\\
+
+\begin{code} Lectura mediante ciclo \texttt{for}.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"demofile.txt"}\NormalTok{, }\StringTok{"r"}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ f:}
+    \BuiltInTok{print}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Hello! Welcome to demofile.txt
+
+This file is for testing purposes.
+
+Good Luck!Now the file has more content!
+\end{verbatim}
+\end{code}
+
+\section{Cerrar un archivo}
+
+Es una biena práctica cerrar un archivo después de utilizarse. Para ello
+se debe utilizar el método \texttt{close()}.\\
+
+\begin{code} Cerrar archivo después de su apertura.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"demofile.txt"}\NormalTok{, }\StringTok{"r"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(f.readline())}
+\NormalTok{f.close()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Hello! Welcome to demofile.txt
+
+\end{verbatim}
+
+Se puede verificar si un archivo está cerrado mediante la propiedad
+booleana \texttt{closed}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}El archivo está cerrado?: }\SpecialCharTok{\{}\NormalTok{f}\SpecialCharTok{.}\NormalTok{closed}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+El archivo está cerrado?: True
+\end{verbatim}
+\end{code}
+
+\section{Escribir en un archivo existente}
+
+Para escribir en un archivo existente se debe agregar un parámetro al
+método \texttt{open()}.
+
+\begin{itemize}
+  \item \texttt{\textquotesingle{}a\textquotesingle{}}. Añadir contenido al final del archivo
+  \item \texttt{\textquotesingle{}w\textquotesingle{}}. Escribir en el archivo. Sobreescribe cualquier contenido existente.
+\end{itemize}
+
+\begin{code} Abrir el archivo \texttt{demofile2.txt} y añadir contenido.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"demofile2.txt"}\NormalTok{, }\StringTok{"a"}\NormalTok{)}
+\NormalTok{f.write(}\StringTok{"Now the file has more content!"}\NormalTok{)}
+\NormalTok{f.close()}
+
+\CommentTok{\#open and read the file after the appending:}
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"demofile2.txt"}\NormalTok{, }\StringTok{"r"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(f.read())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Hello! Welcome to demofile.txt
+This file is for testing purposes.
+Good Luck!Now the file has more content!Now the file has more content!
+
+\end{verbatim}
+\end{code}
+
+\begin{code} Abrir el archivo \texttt{demofile2.txt} y sobrescribir contenido.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"demofile3.txt"}\NormalTok{, }\StringTok{"w"}\NormalTok{)}
+\NormalTok{f.write(}\StringTok{"Woops! I have deleted the content!"}\NormalTok{)}
+\NormalTok{f.close()}
+
+\CommentTok{\#open and read the file after the overwriting:}
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"demofile3.txt"}\NormalTok{, }\StringTok{"r"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(f.read())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Woops! I have deleted the content!
+\end{verbatim}
+\end{code}
+
+\section{Crear un nuevo archivo}
+
+Para crear un nuevo archivo en Python se debe utilizar el método \texttt{open()} con uno de los siguientes parámetros.
+
+\begin{itemize}
+  \item \textquotesingle x\textquotesingle. Crear - crea el archivo y devuelve un error si el archivo existe.
+  \item \textquotesingle a\textquotesingle. Añadir - crea el archivo si es que no existe previamente.
+  \item \textquotesingle w\textquotesingle. Escribir - crea el archivo si es que no existe previamente.
+\end{itemize}
+
+\begin{code} Crea un archivo llamado \texttt{myfile.txt}.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"myfile.txt"}\NormalTok{, }\StringTok{"x"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\begin{code} Crea un nuevo archivo \texttt{myfile.txt} si es que no existe previamente.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{f }\OperatorTok{=} \BuiltInTok{open}\NormalTok{(}\StringTok{"myfile.txt"}\NormalTok{, }\StringTok{"w"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\section{Borrar un archivo}
+
+Para borrar archivos en Python se debe importar el módulo \texttt{os} y
+utlizar el módulo \texttt{os.remove()}. \\
+
+\begin{code} Borrar archivos desde Python.
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ os}
+\NormalTok{os.remove(}\StringTok{"myfile.txt"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ os}
+\ControlFlowTok{if}\NormalTok{ os.path.exists(}\StringTok{"myfile.txt"}\NormalTok{):}
+\NormalTok{  os.remove(}\StringTok{"myfile.txt"}\NormalTok{)}
+\ControlFlowTok{else}\NormalTok{:}
+  \BuiltInTok{print}\NormalTok{(}\StringTok{"The file does not exist"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+The file does not exist
+\end{verbatim}
+\end{code}
+
+\section{Referencias}
+
+\begin{itemize}
+  \item \href{https://www.w3schools.com/python/python_file_handling.asp}{Manejo de archivos en Python.}
+  \item Lutz M., Learning Python, O\textquotesingle Reilly. 2009
+\end{itemize}

@@ -1,0 +1,478 @@
+\chapter{Clases y Objetos}
+
+Python es un lenguaje de programación orientado a objetos. Casi todo en
+Python es un objeto, con sus propiedades y métodos. Una clase es como un
+constructor de objetos, o un ``\emph{blueprint}'' para crear objetos.
+
+\section{Crear una Clase}
+
+Para crear una clase, use la palabra clave \texttt{class}:
+
+\begin{code}
+Cree una clase llamada \texttt{MyClass}, con una propiedad llamada \texttt{x}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ MyClass:}
+\NormalTok{    x }\OperatorTok{=} \DecValTok{5}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\section{Crear Objeto}
+Ahora podemos usar la clase llamada \texttt{MyClass} para crear objetos:
+
+\begin{code}
+Cree un objeto llamado \texttt{p1} e imprima el valor de \texttt{x}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1 }\OperatorTok{=}\NormalTok{ MyClass()}
+\BuiltInTok{print}\NormalTok{(p1.x)}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\section{\texorpdfstring{La función \texttt{\_\_init\_\_()}}{La función \_\_init\_\_()}}
+
+Los ejemplos anteriores son clases y objetos en su forma más simple, y
+son no es realmente útil en aplicaciones de la vida real.
+
+Para entender el significado de las clases tenemos que entender el
+\texttt{\_\_init\_\_()} incorporado función.
+
+Todas las clases tienen una función llamada \texttt{\_\_init\_\_()}, que
+siempre se ejecuta cuando la clase está siendo iniciada.
+
+Utilice la función \texttt{\_\_init\_\_()} para asignar valores a
+propiedades de objetos u otros operaciones que son necesarias para hacer
+cuando el objeto está siendo creado:
+
+\begin{code}
+Cree una clase llamada Persona, use la función \texttt{\_\_init\_\_()} para asignar valores para nombre y edad:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Person:}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, name, age):}
+    \VariableTok{self}\NormalTok{.name }\OperatorTok{=}\NormalTok{ name}
+    \VariableTok{self}\NormalTok{.age }\OperatorTok{=}\NormalTok{ age}
+
+\NormalTok{p1 }\OperatorTok{=}\NormalTok{ Person(}\StringTok{"John"}\NormalTok{, }\DecValTok{36}\NormalTok{)}
+
+\BuiltInTok{print}\NormalTok{(p1.name)}
+\BuiltInTok{print}\NormalTok{(p1.age)}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\textbf{Nota:} La función \texttt{\_\_init\_\_()} se llama
+automáticamente cada vez que la clase se utiliza para crear un nuevo
+objeto.
+
+En el contexto de la programación orientada a objetos en Python, el
+término \texttt{self} se refiere a la instancia actual de la clase. Es
+un parámetro que se utiliza en los métodos de una clase para acceder a
+las variables y métodos del objeto.
+
+El método \texttt{\_\_init\_\_} es un constructor especial en Python. Se
+llama automáticamente cuando se crea una nueva instancia de la clase.
+Recibe los parámetros \texttt{name} y \texttt{age}.
+
+Dentro del constructor, \texttt{self} entra en juego. El término
+\texttt{self} se refiere a la instancia actual de la clase. Al asignar
+\texttt{self.name\ =\ name} y \texttt{self.age\ =\ age}, estás
+almacenando los valores \texttt{name} y \texttt{age} en los atributos
+\texttt{name} y \texttt{age} de la instancia actual de la clase
+\texttt{Person}.
+
+\section{\texorpdfstring{La función \texttt{\_\_str\_\_()}}{La función \_\_str\_\_()}}
+
+La función \texttt{\_\_str\_\_()} controla lo que debe devolverse cuando
+el objeto de clase se representa como una cadena.
+
+Si la función \texttt{\_\_str\_\_()} no está establecida, la
+representación de cadena del objeto se devuelve:
+
+\begin{code}
+La representación de cadena de un objeto SIN la función \texttt{\_\_str\_\_()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Person:}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, name, age):}
+    \VariableTok{self}\NormalTok{.name }\OperatorTok{=}\NormalTok{ name}
+    \VariableTok{self}\NormalTok{.age }\OperatorTok{=}\NormalTok{ age}
+
+\NormalTok{p1 }\OperatorTok{=}\NormalTok{ Person(}\StringTok{"John"}\NormalTok{, }\DecValTok{36}\NormalTok{)}
+
+\BuiltInTok{print}\NormalTok{(p1)}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\begin{code}
+La representación de cadena de un objeto CON la función \texttt{\_\_str\_\_()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Person:}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, name, age):}
+    \VariableTok{self}\NormalTok{.name }\OperatorTok{=}\NormalTok{ name}
+    \VariableTok{self}\NormalTok{.age }\OperatorTok{=}\NormalTok{ age}
+
+  \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+    \ControlFlowTok{return} \SpecialStringTok{f"}\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{name}\SpecialCharTok{\}}\SpecialStringTok{(}\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{age}\SpecialCharTok{\}}\SpecialStringTok{)"}
+
+\NormalTok{p1 }\OperatorTok{=}\NormalTok{ Person(}\StringTok{"John"}\NormalTok{, }\DecValTok{36}\NormalTok{)}
+
+\BuiltInTok{print}\NormalTok{(p1)}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\section{Métodos de Objeto}
+
+Los objetos también pueden contener métodos. Los métodos en los objetos
+son funciones que pertenecen al objeto.
+
+Creemos un método en la clase \texttt{Person}:\\
+
+\begin{code}
+Inserte una función que imprima un saludo y ejecútelo en el objeto \texttt{p1}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Person:}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, name, age):}
+    \VariableTok{self}\NormalTok{.name }\OperatorTok{=}\NormalTok{ name}
+    \VariableTok{self}\NormalTok{.age }\OperatorTok{=}\NormalTok{ age}
+
+  \KeywordTok{def}\NormalTok{ myfunc(}\VariableTok{self}\NormalTok{):}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Hello my name is "} \OperatorTok{+} \VariableTok{self}\NormalTok{.name)}
+
+\NormalTok{p1 }\OperatorTok{=}\NormalTok{ Person(}\StringTok{"John"}\NormalTok{, }\DecValTok{36}\NormalTok{)}
+\NormalTok{p1.myfunc()}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\textbf{Nota}: El parámetro \texttt{self} es una referencia a la
+instancia actual de la clase, y se utiliza para acceder a las variables
+que pertenecen a la clase.\\
+
+\begin{code}
+Registro de perros con promedio de peso.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Perro:}
+\NormalTok{    peso }\OperatorTok{=} \DecValTok{30}
+
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, peso):}
+        \VariableTok{self}\NormalTok{.peso }\OperatorTok{=}\NormalTok{ peso}
+
+    \AttributeTok{@classmethod}
+    \KeywordTok{def}\NormalTok{ get\_peso\_promedio(cls):}
+        \ControlFlowTok{return}\NormalTok{ cls.peso}
+
+\NormalTok{labrador }\OperatorTok{=}\NormalTok{ Perro(}\DecValTok{25}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}El peso de un perro labrador es }\SpecialCharTok{\{}\NormalTok{labrador}\SpecialCharTok{.}\NormalTok{peso}\SpecialCharTok{\}}\SpecialStringTok{ kilos\textquotesingle{}}\NormalTok{)}
+\CommentTok{\# El peso de un perro labrador es 25 kilos}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}El peso promedio de un perro es }\SpecialCharTok{\{}\NormalTok{Perro}\SpecialCharTok{.}\NormalTok{get\_peso\_promedio()}\SpecialCharTok{\}}\SpecialStringTok{ kilos\textquotesingle{}}\NormalTok{)}
+\CommentTok{\# El peso promedio de un perro es 30 kilos}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\section{\texorpdfstring{El parámetro \texttt{self}}{El parámetro self}}
+
+El parámetro \texttt{self} es una referencia a la instancia actual de la
+clase, y se utiliza para acceder a las variables que pertenecen a la
+clase.
+
+No tiene que ser nombrado \texttt{self} , puede ser llamado como sea,
+pero tiene que ser el primer parámetro de cualquier función en la clase:
+
+\begin{code}
+Usar las palabras \texttt{mysillyobject} y \texttt{abc} en lugar de \texttt{self}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Person:}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(mysillyobject, name, age):}
+\NormalTok{    mysillyobject.name }\OperatorTok{=}\NormalTok{ name}
+\NormalTok{    mysillyobject.age }\OperatorTok{=}\NormalTok{ age}
+
+  \KeywordTok{def}\NormalTok{ myfunc(abc):}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Hello my name is "} \OperatorTok{+}\NormalTok{ abc.name)}
+
+\NormalTok{p1 }\OperatorTok{=}\NormalTok{ Person(}\StringTok{"John"}\NormalTok{, }\DecValTok{36}\NormalTok{)}
+\NormalTok{p1.myfunc()}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\section{Modificar Propiedades de Objeto}
+
+Se pueden modificar propiedades en objetos como este: \\
+
+\begin{code} 
+Establezca la edad de \texttt{p1} a 40:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1.age }\OperatorTok{=} \DecValTok{40}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\section{Eliminar Propiedades de Objeto}
+
+Puede eliminar propiedades en objetos utilizando el del palabra clave \texttt{del}:\\
+
+\begin{code}
+Eliminar la propiedad \texttt{age} del objeto
+\texttt{p1}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{del}\NormalTok{ p1.age}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\section{Eliminar Objetos}
+
+Puede eliminar objetos utilizando el del palabra clave \texttt{del}:
+
+\begin{code}
+Eliminar el objeto \texttt{p1}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{del}\NormalTok{ p1}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\section{\texorpdfstring{La sentencia \texttt{pass}}{La sentencia pass}}\
+
+La declaración de una clase no puede quedar vacía, pero si por alguna
+razón es necesario dejar vacía dicha declaración, se puede emplear la
+palabra clave \texttt{pass}.
+
+\textbf{Ejemplo}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Person:}
+  \ControlFlowTok{pass}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Herencia}
+
+La herencia nos permite definir una clase que hereda todos los métodos y
+propiedades de otra clase. La clase padre es la clase de la que se
+hereda, también llamada clase base. La clase hija es la clase que hereda
+de otra clase, también llamada clase derivada.
+
+\subsection{Crear una clase padre}
+
+Cualquier clase puede ser una clase padre, por lo que la sintaxis es la
+misma que la de crear cualquier otra clase:\\
+
+\begin{code}
+Crea una clase llamada \texttt{Person}, con propiedades \texttt{firstnamey} \texttt{lastname}, y un método \texttt{printname}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Person:}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, fname, lname):}
+    \VariableTok{self}\NormalTok{.firstname }\OperatorTok{=}\NormalTok{ fname}
+    \VariableTok{self}\NormalTok{.lastname }\OperatorTok{=}\NormalTok{ lname}
+
+  \KeywordTok{def}\NormalTok{ printname(}\VariableTok{self}\NormalTok{):}
+    \BuiltInTok{print}\NormalTok{(}\VariableTok{self}\NormalTok{.firstname, }\VariableTok{self}\NormalTok{.lastname)}
+
+\CommentTok{\#Use the Person class to create an object, and then execute the printname method:}
+
+\NormalTok{x }\OperatorTok{=}\NormalTok{ Person(}\StringTok{"John"}\NormalTok{, }\StringTok{"Doe"}\NormalTok{)}
+\NormalTok{x.printname()}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\subsection{Crear una clase hija}
+
+Para crear una clase que herede la funcionalidad de otra clase, envíe la
+clase principal como parámetro al crear la clase secundaria: \\
+
+\begin{code}
+Cree una clase llamada \texttt{Student}, que heredará las propiedades y métodos de la clase \texttt{Person}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Student(Person):}
+  \ControlFlowTok{pass}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\textbf{Nota}: Utilice la \texttt{pass} palabra clave cuando no desee agregar ninguna otra propiedad o método a la clase.
+
+Ahora la clase \texttt{Student} tiene las mismas propiedades y métodos que la clase \texttt{Person}. \\
+
+\begin{code}
+Utilizar la clase \texttt{Student} para crear un objeto y luego ejecute el método \texttt{printname}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ Student(}\StringTok{"Mike"}\NormalTok{, }\StringTok{"Olsen"}\NormalTok{)}
+\NormalTok{x.printname()}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\subsection{\texorpdfstring{Agregue la función \textbf{init}()}{Agregue la función init()}}
+
+Hasta ahora hemos creado una clase hija que hereda las propiedades y
+métodos de su clase principal. Queremos agregar la función
+\texttt{\_\_init\_\_()} a la clase hija (en lugar de la palabra clave
+\texttt{pass}).
+
+\textbf{Nota:} La función \texttt{\_\_init\_\_()} se llama
+automáticamente cada vez que se utiliza la clase para crear un nuevo
+objeto.\\
+
+\begin{code}
+Añade la función \texttt{\_\_init\_\_()} a la clase \texttt{Student}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Student(Person):}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, fname, lname):}
+    \CommentTok{\#add properties etc.}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+Cuando se agrega la función \texttt{\_\_init\_\_()}, la clase hija ya no heredará la función \texttt{\_\_init\_\_()} de la clase padre.
+
+\textbf{Nota}: La función \texttt{\_\_init\_\_()} del hijo reemplaza la herencia de la función del padre \texttt{\_\_init\_\_()}.
+
+Si se desea mantener la herencia de la función padre \texttt{\_\_init\_\_()}, agregue una llamada a la función padre \texttt{\_\_init\_\_()}:\\
+
+\begin{code} Mantener la herencia del objeto padre.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Student(Person):}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, fname, lname):}
+\NormalTok{    Person.}\FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, fname, lname)}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+Ahora hemos agregado exitosamente la función \texttt{\_\_init\_\_()} y
+conservamos la herencia de la clase padre, y estamos listos para agregar
+funcionalidad en la función \texttt{\_\_init\_\_()}.
+
+\subsection{La función super()}
+
+Python también tiene una función super() que hará que la clase hija
+herede todos los métodos y propiedades de su clase padre: \\
+
+\begin{code} Herencia de los métodos del objeto padre.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Student(Person):}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, fname, lname):}
+    \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_init\_\_}\NormalTok{(fname, lname)}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+Al utilizar la función super(), no es necesario utilizar el nombre del
+elemento padre, ya que heredará automáticamente los métodos y
+propiedades de su padre.
+
+\subsection{Agregar propiedades}
+
+\begin{code}
+Añade una propiedad llamada \texttt{graduationyear} a la clase \texttt{Student}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Student(Person):}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, fname, lname):}
+    \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_init\_\_}\NormalTok{(fname, lname)}
+    \VariableTok{self}\NormalTok{.graduationyear }\OperatorTok{=} \DecValTok{2019}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+En el ejemplo siguiente, el año 2019 debe ser una variable y pasarse a
+la clase \texttt{Student} al crear objetos de estudiantes. Para ello,
+agregue otro parámetro en la función \texttt{\_\_init\_\_()}:\\
+
+\begin{code}
+Agregue un parámetro \texttt{year} y pase el año correcto al crear objetos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Student(Person):}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, fname, lname, year):}
+    \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_init\_\_}\NormalTok{(fname, lname)}
+    \VariableTok{self}\NormalTok{.graduationyear }\OperatorTok{=}\NormalTok{ year}
+
+\NormalTok{x }\OperatorTok{=}\NormalTok{ Student(}\StringTok{"Mike"}\NormalTok{, }\StringTok{"Olsen"}\NormalTok{, }\DecValTok{2019}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\subsection{Agregar métodos}
+
+\begin{code}
+Agregue un método llamado \texttt{welcome} a la clase \texttt{Student}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Student(Person):}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, fname, lname, year):}
+    \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_init\_\_}\NormalTok{(fname, lname)}
+    \VariableTok{self}\NormalTok{.graduationyear }\OperatorTok{=}\NormalTok{ year}
+
+  \KeywordTok{def}\NormalTok{ welcome(}\VariableTok{self}\NormalTok{):}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Welcome"}\NormalTok{, }\VariableTok{self}\NormalTok{.firstname, }\VariableTok{self}\NormalTok{.lastname, }\StringTok{"to the class of"}\NormalTok{, }\VariableTok{self}\NormalTok{.graduationyear)}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+Si agrega un método en la clase hija con el mismo nombre que una función
+en la clase padre, se anulará la herencia del método principal.
+
+
+\input{caps/04.1. Ejercicios POO.tex}
+
+
+\section{Referencias}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://www.w3schools.com/python/python_classes.asp}{w3 Schools}
+\item
+  \href{https://cosasdedevs.com/posts/metodos-clase-metodos-estaticos-python/\#:~:text=M\%C3\%A9todos\%20de\%20clase\%20en\%20Python&text=Para\%20crear\%20un\%20m\%C3\%A9todo\%20de,cls\%20que\%20viene\%20de\%20class.}{Cosas
+  de Devs}
+\end{itemize}

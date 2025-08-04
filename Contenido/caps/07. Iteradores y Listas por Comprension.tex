@@ -1,0 +1,2099 @@
+\chapter{Iterables}
+
+Un iterador es un objeto que contiene una cantidad contable de valores.
+
+Un iterador es un objeto que se puede iterar, lo que significa que se
+pueden recorrer todos los valores.
+
+Técnicamente, en Python, un iterador es un objeto que implementa el
+protocolo \texttt{iterator}, que consta de los métodos
+\texttt{\_\_iter\_\_()} y \texttt{\_\_next\_\_()}.
+
+Python tiene varios métodos nativos que procesan iterables:
+
+\begin{itemize}
+\item
+  \texttt{sort}: ordena elementos en un iterable.
+\item
+  \texttt{zip}: combina elementos de iterables.
+\item
+  \texttt{enumerate}: empareja elementos en un iterable con posiciones
+  relativas.
+\item
+  \texttt{filter}: selecciona elementos para los que una función es
+  verdadera.
+\item
+  \texttt{reduce}: ejecuta pares de elementos en un iterable a través de
+  una función.
+\end{itemize}
+
+\section{Iterator vs Iterable}
+
+Las listas, tuplas, diccionarios y conjuntos son objetos iterables. Son
+contenedores iterables de los que se puede obtener un iterador.
+
+Todos estos objetos tienen un método \texttt{iter()} que se utiliza para
+obtener un iterador:\\
+
+\begin{code} Creación y uso de un Iterador.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mytuple }\OperatorTok{=}\NormalTok{ (}\StringTok{"apple"}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\StringTok{"cherry"}\NormalTok{)}
+\NormalTok{myit }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(mytuple)}
+
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(myit))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(myit))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(myit))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+apple
+banana
+cherry
+
+\end{verbatim}
+\end{code}
+
+Incluso las cadenas String son objetos iterables, y pueden devolver un
+iterador.
+
+\begin{code} Iterando un \textit{String}.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mystr }\OperatorTok{=} \StringTok{"banana"}
+\NormalTok{myit }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(mystr)}
+
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(myit))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(myit))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(myit))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(myit))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(myit))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(myit))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+b
+a
+n
+a
+n
+a
+\end{verbatim}
+\end{code}
+
+\section{Recorriendo un iterador}
+
+Se puede utilizar un ciclo for para iterar a través del objeto iterable. \\
+
+\begin{code} Iterar los valores de una tupla.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mytuple }\OperatorTok{=}\NormalTok{ (}\StringTok{"apple"}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\StringTok{"cherry"}\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ mytuple:}
+  \BuiltInTok{print}\NormalTok{(x) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+apple
+banana
+cherry
+
+\end{verbatim}
+\end{code}
+
+
+\begin{code} Iterar los caracteres de una cadena.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ mystr }\OperatorTok{=} \StringTok{"banana"}
+
+\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ mystr:}
+  \BuiltInTok{print}\NormalTok{(x) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+b
+a
+n
+a
+n
+a
+
+\end{verbatim}
+\end{code}
+
+El ciclo \texttt{for} en realidad crea un objeto iterador y ejecuta el
+método \texttt{next()} para cada bucle.
+
+\section{Crear un iterador}
+
+Para crear un objeto/clase como iterador, debe implementar los métodos
+\texttt{\_\_iter\_\_()} y \texttt{\_\_next\_\_()} en su objeto.
+
+Recordando la creación de clases, todas ellas tienen una función llamada
+\texttt{\_\_init\_\_()}, que le permite realizar algunas
+inicializaciones cuando se crea el objeto.
+
+El método \texttt{\_\_iter\_\_()} actúa de manera similar, puede
+realizar operaciones (inicializar, etc.), pero siempre debe devolver el
+objeto iterador en sí.
+
+El método \texttt{\_\_next\_\_()} también le permite realizar
+operaciones y debe devolver el siguiente elemento de la secuencia.\\
+
+\begin{code} 
+Crear un iterador que devuelve números, comenzando con 1 y cada secuencia se incrementa en uno.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ MyNumbers:}
+  \KeywordTok{def} \FunctionTok{\_\_iter\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+    \VariableTok{self}\NormalTok{.a }\OperatorTok{=} \DecValTok{1}
+    \ControlFlowTok{return} \VariableTok{self}
+
+  \KeywordTok{def} \FunctionTok{\_\_next\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+\NormalTok{    x }\OperatorTok{=} \VariableTok{self}\NormalTok{.a}
+    \VariableTok{self}\NormalTok{.a }\OperatorTok{+=} \DecValTok{1}
+    \ControlFlowTok{return}\NormalTok{ x}
+
+\NormalTok{myclass }\OperatorTok{=}\NormalTok{ MyNumbers()}
+\NormalTok{myiter }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(myclass)}
+
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(myiter))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(myiter))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(myiter))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(myiter))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(myiter)) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+1
+2
+3
+4
+5
+\end{verbatim}
+\end{code}
+
+\section{StopIteration}
+
+El código anterior iteraría indefinidamente para un número indefinido de
+llamadas \texttt{next()} o si fuese utilizado en un ciclo \texttt{for}.
+Para prevenir esto se puede utilizar la sentencia
+\texttt{StopIteration}.
+
+En la definición del método \texttt{\_\_next\_\_()} se puede definir la
+condición de terminación que lanzará un error si se sobrepasa la
+cantidad de iteraciones definidas.\\
+
+\begin{code}
+Detener la iteración luego de 20 repeticiones.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ MyNumbers:}
+  \KeywordTok{def} \FunctionTok{\_\_iter\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+    \VariableTok{self}\NormalTok{.a }\OperatorTok{=} \DecValTok{1}
+    \ControlFlowTok{return} \VariableTok{self}
+
+  \KeywordTok{def} \FunctionTok{\_\_next\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+    \ControlFlowTok{if} \VariableTok{self}\NormalTok{.a }\OperatorTok{\textless{}=} \DecValTok{20}\NormalTok{:}
+\NormalTok{      x }\OperatorTok{=} \VariableTok{self}\NormalTok{.a}
+      \VariableTok{self}\NormalTok{.a }\OperatorTok{+=} \DecValTok{1}
+      \ControlFlowTok{return}\NormalTok{ x}
+    \ControlFlowTok{else}\NormalTok{:}
+      \ControlFlowTok{raise} \PreprocessorTok{StopIteration}
+
+\NormalTok{myclass }\OperatorTok{=}\NormalTok{ MyNumbers()}
+\NormalTok{myiter }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(myclass)}
+
+\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ myiter:}
+  \BuiltInTok{print}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+\end{verbatim}
+\end{code}
+
+\section{\texorpdfstring{Iterador \texttt{range}}{Iterador range}}
+
+Ya hemos utilizado con anterioridad el método \texttt{range}, pero ahora
+ya podemos especificar que el método devuelve un iterador que genera
+números bajo demanda, en lugar de construir la lista resultante en la
+memoria. Se puede forzar a que el iterador sea una lista de números
+mediante el método \texttt{list}.\\
+
+\begin{code} Forzar un iterador en una lista.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R }\OperatorTok{=} \BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\NormalTok{R}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+range(0, 10)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{I }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(R)}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(I))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(I))}
+\BuiltInTok{print}\NormalTok{(I.}\FunctionTok{\_\_next\_\_}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+0
+1
+2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{I }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(R)}
+\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ R:}
+    \BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(I))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{list}\NormalTok{(R)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+\end{verbatim}
+\end{code}
+
+
+\section{Iteradores map, zip y filter}
+
+Al igual que \texttt{range}, los métodos \texttt{map}, \texttt{zip} y
+\texttt{filter} son iteradores en lugar de producir una lista con los
+resultados. Pero a diferencia de \texttt{range}, estos métodos métodos
+son sus propios iteradores. Es decir, después de recorrer sus resultados
+una vez, se agotan. En otras palabras, no puede tener múltiples
+iteradores en sus resultados que mantengan diferentes posiciones en esos
+resultados.
+\\
+
+\begin{code} En el siguiente código, \texttt{map} devuelve un iterador y no una lista.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{M }\OperatorTok{=} \BuiltInTok{map}\NormalTok{(}\BuiltInTok{abs}\NormalTok{, (}\OperatorTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\NormalTok{M}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+<map at 0x7fa89c5382b0>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(M)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{M }\OperatorTok{=} \BuiltInTok{map}\NormalTok{(}\BuiltInTok{abs}\NormalTok{, (}\OperatorTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+
+\ControlFlowTok{for}\NormalTok{ m }\KeywordTok{in}\NormalTok{ M:}
+    \BuiltInTok{print}\NormalTok{(m)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+1
+0
+1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{M }\OperatorTok{=} \BuiltInTok{map}\NormalTok{(}\BuiltInTok{abs}\NormalTok{, (}\OperatorTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\BuiltInTok{list}\NormalTok{(M)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1, 0, 1]
+\end{verbatim}
+\end{code}
+
+\begin{code}
+La función \texttt{zip} devuelve un iterador que funciona de la misma forma.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Z }\OperatorTok{=} \BuiltInTok{zip}\NormalTok{((}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), (}\DecValTok{10}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{30}\NormalTok{))}
+\NormalTok{Z}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+<zip at 0x7fa89c1c7500>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{list}\NormalTok{(Z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[(1, 10), (2, 20), (3, 30)]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Z }\OperatorTok{=} \BuiltInTok{zip}\NormalTok{((}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), (}\DecValTok{10}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{30}\NormalTok{))}
+
+\ControlFlowTok{for}\NormalTok{ pair }\KeywordTok{in}\NormalTok{ Z:}
+    \BuiltInTok{print}\NormalTok{(pair)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+(1, 10)
+(2, 20)
+(3, 30)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Z }\OperatorTok{=} \BuiltInTok{zip}\NormalTok{((}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), (}\DecValTok{10}\NormalTok{,}\DecValTok{20}\NormalTok{,}\DecValTok{30}\NormalTok{))}
+\BuiltInTok{next}\NormalTok{(Z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+(1, 10)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(Z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+(2, 20)
+\end{verbatim}
+\end{code}  
+
+El método nativo filter devuelve elementos en un iterable para los
+cuales la función pasada como argumento devolvió \texttt{True}. El
+método \texttt{filter} acepta un iterable para procesarlo y devuelve un
+iterable para los resultados generados.
+\\
+\begin{code} Filter devuelve un iterable.
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{filter}\NormalTok{(}\BuiltInTok{bool}\NormalTok{, [}\StringTok{\textquotesingle{}spam\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}ni\textquotesingle{}}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+<filter at 0x7fa89c7d9c90>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{list}\NormalTok{(}\BuiltInTok{filter}\NormalTok{(}\BuiltInTok{bool}\NormalTok{, [}\StringTok{\textquotesingle{}spam\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}ni\textquotesingle{}}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+['spam', 'ni']
+\end{verbatim}
+\end{code}
+
+\subsection{Iteradores múltiples y sencillos}
+
+El objeto \texttt{range} difiere de los demás métodos mencionados, ya
+que soporta \texttt{len} e indexación pero no es su propio iterador, (se crea uno
+con \texttt{iter} cuando se itera manualmente) y admite múltiples
+iteradores sobre su resultado que recuerdan sus posiciones de manera
+independiente.
+\\
+\begin{code} \texttt{range} no es su propio iterador.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R }\OperatorTok{=} \BuiltInTok{range}\NormalTok{(}\DecValTok{3}\NormalTok{)}
+\BuiltInTok{next}\NormalTok{(R)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Cell In[58], line 2
+      1 R = range(3)
+----> 2 next(R)
+
+TypeError: 'range' object is not an iterator
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{I1 }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(R)}
+\BuiltInTok{next}\NormalTok{(I1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(I1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{I2 }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(R)}
+\BuiltInTok{next}\NormalTok{(I2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(I1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+2
+\end{verbatim}
+\end{code}
+
+Por el contrario, \texttt{zip}, \texttt{map} y \texttt{filter} no
+soportan múltiples iteradores activos en el mismo resultado.
+
+\begin{code} \texttt{zip}, \texttt{map} y \texttt{filter}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Z }\OperatorTok{=} \BuiltInTok{zip}\NormalTok{((}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{), (}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{30}\NormalTok{))}
+\NormalTok{I1 }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(Z)}
+\NormalTok{I2 }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(Z)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(I1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+(1, 10)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(I2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+(2, 20)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(I1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+(3, 30)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(I2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+---------------------------------------------------------------------------
+StopIteration                             Traceback (most recent call last)
+Cell In[69], line 1
+----> 1 next(I2)
+
+StopIteration: 
+\end{verbatim}
+\end{code}
+
+Para el caso de \texttt{map}:
+\begin{code} \texttt{map}.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{M }\OperatorTok{=} \BuiltInTok{map}\NormalTok{(}\BuiltInTok{abs}\NormalTok{, (}\OperatorTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+\NormalTok{I1 }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(M)}
+\NormalTok{I2 }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(M)}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(I1), }\BuiltInTok{next}\NormalTok{(I1), }\BuiltInTok{next}\NormalTok{(I1))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(I2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+1 0 1
+\end{verbatim}
+
+\begin{verbatim}
+---------------------------------------------------------------------------
+StopIteration                             Traceback (most recent call last)
+Cell In[74], line 5
+      3 I2 = iter(M)
+      4 print(next(I1), next(I1), next(I1))
+----> 5 print(next(I2))
+
+StopIteration: 
+\end{verbatim}
+\end{code}
+
+Y en el caso de \texttt{range} para un código similar:
+
+\begin{code} \texttt{range}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{R }\OperatorTok{=} \BuiltInTok{range}\NormalTok{(}\DecValTok{3}\NormalTok{)}
+\NormalTok{I1 }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(R)}
+\NormalTok{I2 }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(R)}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(I1), }\BuiltInTok{next}\NormalTok{(I1), }\BuiltInTok{next}\NormalTok{(I1))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(I2))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+0 1 2
+0
+\end{verbatim}
+\end{code}
+
+\subsection{Iteradores de vista de Diccionario}
+
+En Python las claves, valores y métodos de elementos del diccionario
+devuelven objetos iterables \texttt{view} que generan elementos de
+resultado de a uno por vez, en lugar de producir listas de resultados de
+una sola vez en la memoria. Los elementos \texttt{view} mantienen el
+mismo orden físico que el del diccionario y reflejan los cambios
+realizados en el diccionario subyacente.
+\\
+
+\begin{code} \texttt{dict} devuelve un objeto iterable \texttt{view}.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{D }\OperatorTok{=} \BuiltInTok{dict}\NormalTok{(a}\OperatorTok{=}\DecValTok{1}\NormalTok{, b}\OperatorTok{=}\DecValTok{2}\NormalTok{, c}\OperatorTok{=}\DecValTok{3}\NormalTok{)}
+\NormalTok{D}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+{'a': 1, 'b': 2, 'c': 3}
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{K }\OperatorTok{=}\NormalTok{ D.keys()}
+\NormalTok{K}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+dict_keys(['a', 'b', 'c'])
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(K)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Cell In[82], line 1
+----> 1 next(K)
+
+TypeError: 'dict_keys' object is not an iterator
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{I }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(K)}
+\BuiltInTok{next}\NormalTok{(I)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+'a'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(I)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+'b'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ k }\KeywordTok{in}\NormalTok{ D.keys():}
+    \BuiltInTok{print}\NormalTok{(k, end}\OperatorTok{=}\StringTok{\textquotesingle{} \textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+a b c 
+\end{verbatim}
+
+\end{code}
+
+Al igual que con todos los iteradores, siempre puedes forzar una vista
+de diccionario para que construya una lista real. Sin embargo, esto no
+suele ser necesario, excepto para mostrar resultados de forma
+interactiva o para aplicar operaciones de lista como la indexación:
+\\
+\begin{code} Forzar que \texttt{view} sea una lista.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{K }\OperatorTok{=}\NormalTok{ D.keys()}
+\BuiltInTok{list}\NormalTok{(K)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+['a', 'b', 'c']
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{V }\OperatorTok{=}\NormalTok{ D.values()}
+\BuiltInTok{list}\NormalTok{(V)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1, 2, 3]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{D.items()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+dict_items([('a', 1), ('b', 2), ('c', 3)])
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{list}\NormalTok{(D.items())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[('a', 1), ('b', 2), ('c', 3)]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ (k, v) }\KeywordTok{in}\NormalTok{ D.items():}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\NormalTok{k}\SpecialCharTok{\}}\SpecialStringTok{ {-}\textgreater{} }\SpecialCharTok{\{}\NormalTok{v}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+a -> 1
+b -> 2
+c -> 3
+
+\end{verbatim}
+\end{code}
+
+Además, los diccionarios también tienen iteradores, que devuelven claves
+sucesivas, por lo que no suele ser necesario llamar a las claves
+directamente en este contexto.\\
+
+\begin{code} Los diccionarios también tienen iteradores.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{D }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+{'a': 1, 'b': 2, 'c': 3}
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{I }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(D)}
+\BuiltInTok{next}\NormalTok{(I)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+'a'
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(I)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+'b'
+\end{verbatim}
+\end{code}
+
+No se necesita llamar a la función \texttt{keys()} para iterar el
+diccionario, pero \texttt{keys} también es un iterador.\\
+
+\begin{code} \texttt{keys} es un iterador.
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ key }\KeywordTok{in}\NormalTok{ D:}
+    \BuiltInTok{print}\NormalTok{(key)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+a
+b
+c
+
+\end{verbatim}
+\end{code}
+
+Por último, recuerde nuevamente que, dado que \texttt{keys} ya no
+devuelve una lista, el patrón de codificación tradicional para escanear
+un diccionario por claves ordenadas no funcionará. En su lugar,
+convierta primero las vistas de \texttt{keys} con una llamada de lista,
+o utilice la llamada \texttt{sorted} en una vista de \texttt{keys} o en
+el diccionario mismo, de la siguiente manera.\\
+
+\begin{code} \texttt{sorted} en una vista de \texttt{keys}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{D }\OperatorTok{=} \BuiltInTok{dict}\NormalTok{(a}\OperatorTok{=}\DecValTok{1}\NormalTok{, c}\OperatorTok{=}\DecValTok{3}\NormalTok{, b}\OperatorTok{=}\DecValTok{2}\NormalTok{)}
+\NormalTok{D}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+{'a': 1, 'c': 3, 'b': 2}
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ k }\KeywordTok{in} \BuiltInTok{sorted}\NormalTok{(D.keys()):}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\NormalTok{k}\SpecialCharTok{\}}\SpecialStringTok{ {-}\textgreater{} }\SpecialCharTok{\{}\NormalTok{D[k]}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+a -> 1
+b -> 2
+c -> 3
+\end{verbatim}
+\end{code}
+
+O mejor aún, una buena práctica para el ordenamiento de las llaves:\\
+
+\begin{code} Ordenamiento de llaves 
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{D}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+{'a': 1, 'c': 3, 'b': 2}
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ k }\KeywordTok{in} \BuiltInTok{sorted}\NormalTok{(D):}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\NormalTok{k}\SpecialCharTok{\}}\SpecialStringTok{ {-}\textgreater{} }\SpecialCharTok{\{}\NormalTok{D[k]}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+a -> 1
+b -> 2
+c -> 3
+\end{verbatim}
+\end{code}
+
+\section{Listas por Comprensión}
+
+En el capítulo anterior, estudiamos herramientas de programación
+funcional como \texttt{map} y \texttt{filter}, que mapean operaciones
+sobre secuencias y recopilan resultados. Debido a que esta es una tarea
+tan común en la codificación, Python finalmente generó una nueva
+funcionalidad: \textbf{listas por comprensión} (o la comprensión de
+listas), que es incluso más flexible que las herramientas anteriormente
+mencionadas.
+
+En resumen, las listas por comprensión aplican una expresión arbitraria
+a los elementos de un iterable, en lugar de aplicar una función. Como
+tal, pueden ser herramientas más generales.
+
+\subsection{Listas por Comprensión vs. map}
+
+Trabajemos con un ejemplo que demuestra los conceptos básicos. La
+función nativa de Python \texttt{ord} devuelve el código ASCII de un
+caracter (la función nativa \texttt{chr} hace lo opuesto, devuelve el
+caracter de un código ASCII). \\
+
+\begin{code} Función \texttt{ord}.
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{ord}\NormalTok{(}\StringTok{\textquotesingle{}H\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+72
+\end{verbatim}
+\end{code}
+
+Ahora supongamos que se desea tener una lista con el código ASCII de
+cada uno de los caracteres de una cadena. Una forma de realizarlo sería
+a través de un ciclo \texttt{for} e ir añadiendo cada valor en una
+lista. \\
+
+\begin{code} Lista de código ASCII.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res }\OperatorTok{=}\NormalTok{ []}
+\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \StringTok{\textquotesingle{}Hola\textquotesingle{}}\NormalTok{:}
+\NormalTok{    res.append(}\BuiltInTok{ord}\NormalTok{(x))}
+\NormalTok{res}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[72, 111, 108, 97]
+\end{verbatim}
+\end{code}
+
+Ahora empleando el método \texttt{map} para realizar la misma tarea.\\
+
+\begin{code} Usando \texttt{map} para la generación de la lista.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res }\OperatorTok{=} \BuiltInTok{list}\NormalTok{(}\BuiltInTok{map}\NormalTok{(}\BuiltInTok{ord}\NormalTok{, }\StringTok{"Hola"}\NormalTok{))}
+\NormalTok{res}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[72, 111, 108, 97]
+\end{verbatim}
+\end{code}
+
+Esta operación requirió menos código utilizando \texttt{map}.
+
+Sin embargo, es posible obtener el mismo resultado empleando ahora
+listas por comprensión.
+
+Mientras que \texttt{map} asocia (mapea) una \emph{función} sobre una
+\emph{secuencia}, las listas por comprensión asocian una
+\emph{expresión} sobre una \emph{secuencia}.\\
+
+\begin{code} Lista por comprensión.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res }\OperatorTok{=}\NormalTok{ [}\BuiltInTok{ord}\NormalTok{(x) }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \StringTok{"Hola"}\NormalTok{]}
+\NormalTok{res}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[72, 111, 108, 97]
+\end{verbatim}
+\end{code}
+
+Las listas por comprensión recopilan los resultados de aplicar una
+expresión arbitraria a una secuencia de valores y los devuelven en una
+nueva lista. Sintácticamente, las listas por comprensión se encierran
+entre corchetes para enfatizar que construye una lista.
+
+En su forma simple, dentro de los corchetes se codifica una expresión
+que nombra una variable seguida de un de bucle \texttt{for} que nombra
+la misma variable. Luego, Python recopila los resultados de la expresión
+para cada iteración del bucle implícito.
+
+El resultado obtenido por el último código es el mismo con respecto a
+sus equivalentes con \texttt{for} y \texttt{map}. Sin embargo, las
+listas por comprensión se vuelven más convenientes cuando deseamos
+aplicar una expresión arbitraria a una secuencia. \\
+
+\begin{code} Lista por comprensión: aplicar una expresión a una secuencia.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[x}\OperatorTok{**}\DecValTok{2} \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+\end{verbatim}
+\label{code:listaPorComprension1}
+\end{code}
+
+
+La lista del código \ref{code:listaPorComprension1} recopila el cuadrado de los números enteros de 0 hasta 9. Si
+deseamos una versión del código empleando \texttt{map} se necesita de
+una función pequeña que haga el cuadrado de un número. Esta es una
+oportunidad de utilizar a su vez una función \texttt{lambda}, dado que
+no se utilizará para otro propósito adicional.\\
+
+\begin{code} Usando \texttt{map} y \texttt{lambda} para la generación de la lista.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{list}\NormalTok{(}\BuiltInTok{map}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x:x}\OperatorTok{**}\DecValTok{2}\NormalTok{, }\BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+\end{verbatim}
+\label{code:listaPorComprension2}
+\end{code}
+
+A pesar de que esta línea del código \ref{code:listaPorComprension2} realiza el mismo trabajo, requiere un poco más
+de código y resulta también un poco más difícil de leer debido a la
+función \texttt{lambda}. Para expresiones más avanzadas, las listas por
+comprensión típicamente requieren menos código.
+
+\subsection{Añadiendo pruebas y ciclos anidados}
+
+Las listas por comprensión son incluso más generales que lo que se ha
+mostrado hasta ahora. Por ejemplo, se puede codificar una cláusula
+\texttt{if} después del \texttt{for} para agregar lógica de selección.
+
+Las listas por comprensión con cláusulas \texttt{if} pueden considerarse
+análogas al filtro incorporado que se analizó previamente: omiten
+elementos de secuencia para los que la cláusula \texttt{if} no es
+verdadera.
+
+Para demostrarlo, aquí se muestran dos códigos que recogen números pares
+del 0 al 4; al igual que con la alternativa \texttt{map} a la lista por
+comprensión, la versión con \texttt{filter} requiere una pequeña función
+\texttt{lambda} para la expresión de prueba. A modo de comparación, aquí
+también se muestra el bucle \texttt{for} equivalente. \\
+
+\begin{code} Lista por comprensión vs. filter/lambda vs. for
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Lista por comprensión}
+\NormalTok{[x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ x }\OperatorTok{\%}\DecValTok{2} \OperatorTok{==}\DecValTok{0}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[0, 2, 4]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# filter y lambda}
+\BuiltInTok{list}\NormalTok{(}\BuiltInTok{filter}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x:x}\OperatorTok{\%}\DecValTok{2}\OperatorTok{==}\DecValTok{0}\NormalTok{, }\BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[0, 2, 4]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# ciclo for}
+\NormalTok{res }\OperatorTok{=}\NormalTok{ []}
+\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{):}
+    \ControlFlowTok{if}\NormalTok{ x}\OperatorTok{\%}\DecValTok{2}\OperatorTok{==}\DecValTok{0}\NormalTok{:}
+\NormalTok{        res.append(x)}
+\NormalTok{res}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[0, 2, 4]
+\end{verbatim}
+\label{code:listaPorComprension3}
+\end{code}
+
+En todos los casos se utiliza el operador módulo (residuo de la
+división) para identificar números pares. El ćodigo que emplea
+\texttt{filter} no es considerablemente más largo que la versió de
+listas por comprensión. Sin embargo, podemos combinar una condicional
+\texttt{if} y una expresión arbitraria en nuestra lista por comprensión
+para darle el efecto de \texttt{filter} y \texttt{map}, en una sola
+expresión.\\
+
+\begin{code} Lista por comprensión combinado con un condicional.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[x}\OperatorTok{**}\DecValTok{2} \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ x}\OperatorTok{\%}\DecValTok{2}\OperatorTok{==}\DecValTok{0}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[0, 4, 16, 36, 64]
+\end{verbatim}
+\end{code}
+
+Esta vez, recopilamos los cuadrados de los números pares del 0 al 9: el
+ciclo \texttt{for} omite los números para los cuales el condicional
+\texttt{if} a la derecha es falso, y la expresión a la izquierda calcula
+los cuadrados.
+
+La versión del código equivalente con \texttt{map} requiere más trabajo:
+tenemos que combinar selecciones\\
+\texttt{filter} con iteración \texttt{map}, lo que daría como resultado
+una expresión notablemente más compleja. \\
+
+\begin{code} \texttt{list}, \texttt{map} y \texttt{filter}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{list}\NormalTok{(}\BuiltInTok{map}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x:x}\OperatorTok{**}\DecValTok{2}\NormalTok{, }\BuiltInTok{filter}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x:x}\OperatorTok{\%}\DecValTok{2}\OperatorTok{==}\DecValTok{0}\NormalTok{, }\BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[0, 4, 16, 36, 64]
+\end{verbatim}
+\end{code}
+
+Las listas por comprensión son aún más generales. Se puede codificar
+cualquier cantidad de ciclos \texttt{for} anidados en una lista por
+comprensión, y cada una puede tener una condicional \texttt{if} asociada
+opcional.
+
+La estructura general de las listas por comprensión es la siguiente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    [}
+\NormalTok{        expression }\ControlFlowTok{for}\NormalTok{ target1 }\KeywordTok{in}\NormalTok{ iterable1 [}\ControlFlowTok{if}\NormalTok{ condition1]}
+                   \ControlFlowTok{for}\NormalTok{ target2 }\KeywordTok{in}\NormalTok{ iterable2 [}\ControlFlowTok{if}\NormalTok{ condition2]}
+\NormalTok{                   ...}
+                   \ControlFlowTok{for}\NormalTok{ targetN }\KeywordTok{in}\NormalTok{ iterableN [}\ControlFlowTok{if}\NormalTok{ conditionN]}
+\NormalTok{    ]}
+\end{Highlighting}
+\end{Shaded}
+
+Cuando los ciclos \texttt{for} están anidados dentro de una lista por
+comprensión, funcionan como ciclos \texttt{for} anidados. Por ejemplo:\\
+
+\begin{code} Lista por comprensión con for anidados.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res }\OperatorTok{=}\NormalTok{ [x}\OperatorTok{+}\NormalTok{y }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ [}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{] }\ControlFlowTok{for}\NormalTok{ y }\KeywordTok{in}\NormalTok{ [}\DecValTok{100}\NormalTok{, }\DecValTok{200}\NormalTok{, }\DecValTok{300}\NormalTok{]]}
+\NormalTok{res}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[100, 200, 300, 101, 201, 301, 102, 202, 302]
+\end{verbatim}
+\end{code}
+
+La versión equivalente del código: \\
+
+\begin{code} .
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res }\OperatorTok{=}\NormalTok{ []}
+\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ [}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{]:}
+    \ControlFlowTok{for}\NormalTok{ y }\KeywordTok{in}\NormalTok{ [}\DecValTok{100}\NormalTok{, }\DecValTok{200}\NormalTok{, }\DecValTok{300}\NormalTok{]:}
+\NormalTok{        res.append(x}\OperatorTok{+}\NormalTok{y)}
+
+\NormalTok{res}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[100, 200, 300, 101, 201, 301, 102, 202, 302]
+\end{verbatim}
+\end{code}
+
+Aunque las listas por comprensión construyen listas, recuerde que pueden
+iterar sobre cualquier secuencia u otro tipo iterable. El siguiente
+código \ref{code:listaPorComprension4} recorre una cadena en lugar de una 
+lista de números y, por lo tanto recopila resultados de una concatenación.\\
+
+\begin{code} Recorrido de dos cadenas en una lista por comprensión.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res }\OperatorTok{=}\NormalTok{ [x}\OperatorTok{+}\NormalTok{y }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \StringTok{\textquotesingle{}hola\textquotesingle{}} \ControlFlowTok{for}\NormalTok{ y }\KeywordTok{in} \StringTok{\textquotesingle{}HOLA\textquotesingle{}}\NormalTok{]}
+\NormalTok{res}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+['hH',
+ 'hO',
+ 'hL',
+ 'hA',
+ 'oH',
+ 'oO',
+ 'oL',
+ 'oA',
+ 'lH',
+ 'lO',
+ 'lL',
+ 'lA',
+ 'aH',
+ 'aO',
+ 'aL',
+ 'aA']
+\end{verbatim}
+\label{code:listaPorComprension4}
+\end{code}
+
+Por último, se muestra a contuación un código que muestra el efecto de
+añadir condicionales \texttt{if} a ciclos \texttt{for} anidados. El
+código debe formar pares ordenados donde su primer elemento sea par y su
+segundo elemento impar, empleando valores desde 0 hasta 4. \\
+
+\begin{code} .
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[(x,y) }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ x}\OperatorTok{\%}\DecValTok{2}\OperatorTok{==}\DecValTok{0} \ControlFlowTok{for}\NormalTok{ y }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ y}\OperatorTok{\%}\DecValTok{2}\OperatorTok{==}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[(0, 1), (0, 3), (2, 1), (2, 3), (4, 1), (4, 3)]
+\end{verbatim}
+
+La versión equivalente empleando ciclos \texttt{for}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res }\OperatorTok{=}\NormalTok{ []}
+\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{):}
+    \ControlFlowTok{if}\NormalTok{ x}\OperatorTok{\%}\DecValTok{2}\OperatorTok{==}\DecValTok{0}\NormalTok{:}
+        \ControlFlowTok{for}\NormalTok{ y }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{):}
+            \ControlFlowTok{if}\NormalTok{ y}\OperatorTok{\%}\DecValTok{2}\OperatorTok{==}\DecValTok{1}\NormalTok{:}
+\NormalTok{                res.append((x,y))}
+
+\NormalTok{res}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[(0, 1), (0, 3), (2, 1), (2, 3), (4, 1), (4, 3)]
+\end{verbatim}
+\end{code}
+
+El código equivalente empleando \texttt{map} y \texttt{filter} es
+extremadamente complejo y profundamente anidado, así que ni siquiera
+intentaré mostrarlo aquí.
+
+\subsection{Listas por comprensión y matrices}
+
+Una forma básica de codificar matrices en Python es con listas anidadas.
+A continuación, se definen dos matrices de \(3\times 3\) como listas de
+listas anidadas.\\
+
+\begin{code} Listas anidadas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{M }\OperatorTok{=}\NormalTok{ [}
+\NormalTok{    [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{],}
+\NormalTok{    [}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{],}
+\NormalTok{    [}\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{]}
+\NormalTok{]}
+\NormalTok{N }\OperatorTok{=}\NormalTok{ [}
+\NormalTok{    [}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{], }
+\NormalTok{    [}\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{3}\NormalTok{],}
+\NormalTok{    [}\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{4}\NormalTok{]}
+\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+Dada esta estructura, se puede ubicar por índice los renglones y columnas, utilizando operaciones de índice ordinarias:\\
+
+\begin{code} Acceso a elementos en listas anidadas.
+
+  \begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{M[}\DecValTok{1}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[4, 5, 6]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{M[}\DecValTok{1}\NormalTok{][}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+6
+\end{verbatim}
+\end{code}
+
+Sin embargo, las listas por comprensión son herramientas poderosas para
+procesar dichas estructuras, ya que escanean automáticamente las filas y
+columnas por nosotros. Por ejemplo, aunque esta estructura almacena la
+matriz por filas, para recolectar la segunda columna podemos simplemente
+iterar a través de las filas y extraer la columna deseada, o iterar a
+través de las posiciones en las filas e indexar a medida que avanzamos. \\
+
+\begin{code} Recorrido de renglones mediante lista anidada.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[row[}\DecValTok{1}\NormalTok{] }\ControlFlowTok{for}\NormalTok{ row }\KeywordTok{in}\NormalTok{ M]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[2, 5, 8]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[M[row][}\DecValTok{1}\NormalTok{] }\ControlFlowTok{for}\NormalTok{ row }\KeywordTok{in}\NormalTok{ (}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[2, 5, 8]
+\end{verbatim}
+\end{code}
+
+Dadas las posiciones, también podemos realizar tareas fácilmente, como
+extraer una diagonal.
+
+La siguiente expresión usa \texttt{range} para generar la lista de
+elementos que se encuentran en el mismo índice para fila y columna, esto
+es, \texttt{M{[}0{]}{[}0{]}}, \texttt{M{[}1{]}{[}1{]}}, y así
+sucesivamente (suponiendo que la matriz tiene la misma cantidad de filas
+y columnas):\\
+
+\begin{code} Recorrido de elementos en la matriz mediante lista anidada.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[M[i][i] }\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\BuiltInTok{len}\NormalTok{(M))]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1, 5, 9]
+\end{verbatim}
+\end{code}
+
+También podemos usar listas por comprensión para combinar varias
+matrices. A continuación, primero se crea una lista plana que contiene
+el resultado de multiplicar las matrices por pares y luego se crea una
+estructura de lista anidada que tiene los mismos valores anidando listas
+por comprensión:\\
+
+\begin{code} Operaciones entre matrices con listas por comprensión.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[M[row][col] }\OperatorTok{*}\NormalTok{ N[row][col] }\ControlFlowTok{for}\NormalTok{ row }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\BuiltInTok{len}\NormalTok{(M)) }\ControlFlowTok{for}\NormalTok{ col }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\BuiltInTok{len}\NormalTok{(N))]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[2, 4, 6, 12, 15, 18, 28, 32, 36]
+\end{verbatim}
+
+Y si anidamos la lista, para crear una lista bidimiensional:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[[M[row][col] }\OperatorTok{*}\NormalTok{ N[row][col] }\ControlFlowTok{for}\NormalTok{ col }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\BuiltInTok{len}\NormalTok{(M))] }\ControlFlowTok{for}\NormalTok{ row }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\BuiltInTok{len}\NormalTok{(N))]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[[2, 4, 6], [12, 15, 18], [28, 32, 36]]
+\end{verbatim}
+\end{code}
+
+Esta última expresión funciona dado que la iteración del renglón ocurre
+en el ciclo exterior del anidamiento de ciclos \texttt{for}. Es decir,
+para cada renglón se iteran todas las columnas y se almacena en la lista
+resultante.
+\\
+
+\begin{code} Un código equivalente empleando ciclos \texttt{for}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res }\OperatorTok{=}\NormalTok{ []}
+\ControlFlowTok{for}\NormalTok{ row }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\BuiltInTok{len}\NormalTok{(M)):}
+\NormalTok{    temp }\OperatorTok{=}\NormalTok{ []}
+    \ControlFlowTok{for}\NormalTok{ col }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\BuiltInTok{len}\NormalTok{(N)):}
+\NormalTok{        temp.append(M[row][col] }\OperatorTok{*}\NormalTok{ N[row][col])}
+\NormalTok{    res.append(temp)}
+    
+\NormalTok{res}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[[2, 4, 6], [12, 15, 18], [28, 32, 36]]
+\end{verbatim}
+\end{code}
+
+Comparando ambas versiones, el código que emplea listas por comprensión
+sólo requiere una línea. Además de acuerdo a la documentación, se
+ejecuta más rápido para matrices más grandes.
+
+\section{Regresando a los iteradores: Generadores}
+
+Python proporciona herramientas que producen resultados solo cuando son
+necesarios, en lugar de hacerlo todos a la vez. En particular, dos
+construcciones del lenguaje retrasan la creación de resultados siempre
+que sea posible:
+
+\begin{itemize}
+
+\item
+  \emph{Funciones generador}. Las funciones de generador se codifican
+  como declaraciones \texttt{def} normales, pero utilizan declaraciones
+  \texttt{yield} para devolver los resultados de a uno por vez,
+  suspendiendo y reanudando su estado entre cada uno.
+\item
+  \emph{Expresiones generador}. Las expresiones de generador son
+  similares a las comprensiones de listas, pero devuelven un objeto que
+  produce resultados a pedido en lugar de construir una lista de
+  resultados.
+\end{itemize}
+
+\subsubsection{Funciones generador: yield vs. return}
+
+\paragraph{Suspensión de estado}
+
+A diferencia de las funciones normales que devuelven un valor y salen,
+las funciones generadoras suspenden y reanudan automáticamente su
+ejecución y estado alrededor del punto de generación del valor. Por eso,
+suelen ser una alternativa útil tanto para calcular una serie completa
+de valores por adelantado como para guardar y restaurar manualmente el
+estado en las clases. Debido a que el estado que las funciones
+generadoras conservan cuando se suspenden incluye todo su ámbito local,
+sus variables locales conservan información y la ponen a disposición
+cuando se reanudan las funciones.
+
+La principal diferencia entre generador y funciones normales, es que el
+generador \emph{genera} un valor, en lugar de devolverlo: la sentencia
+\texttt{yield} suspende la función y envía un valor de vuelta al
+invocador, pero conserva su estado para permitir que la función reanude
+desde allí. Por ende, cuando la función se reanuda continúa la ejecución
+en ese estado. Esto permite que el código genere una serie de valores a
+lo largo del tiempo, conforme se requieran, en lugar de calcularlos
+todos a la vez.
+
+\paragraph{El protocolo de iteración}
+
+Para verdaderamente comprender las funciones generadoras, es necesario
+saber que están estrechamente relacionadas con la noción del protocolo
+de iteración en Python. Como hemos visto, los objetos iterables definen
+un método \texttt{\_\_next\_\_}, que devuelve el siguiente elemento en
+la iteración o genera la excepción especial \texttt{StopIteration} para
+finalizar la iteración. El iterador de un objeto se obtiene con la
+función nativa \texttt{iter}.
+
+El ciclo \texttt{for} de Python y todos los demás contextos de
+iteración, utilizan el protocolo de iteración para recorrer una
+secuencia o un generador de valores, si es que el protocolo está
+soportado. Si no, la iteración recurre a la indexación repetida de
+secuencias.
+
+Para implementar este protocolo, las funciones que contienen
+\texttt{yield} se compilan como generadores. Cuando se les llama,
+devuelven un objeto generador que soporta la interfaz de iteración con
+un método creado automáticamente llamado \texttt{\_\_next\_\_} para
+reanudar la ejecución.
+
+Las funciones generadoras también pueden tener un \texttt{return} que,
+además de definir el final del bloque def, terminan la generación de
+valores, técnicamente generando una excepción \texttt{StopIteration}
+después de cualquier salida de la función.
+
+Desde la perspectiva de quien llamó a la función, el método
+\texttt{\_\_next\_\_} reanuda la función y se ejecuta hasta que se
+devuelva el siguiente resultado de \texttt{yield} o bien se genere un
+\texttt{StopIteration}.\\
+
+\begin{code}
+El siguiente código define una función generadora que
+se puede utilizar para generar el cuadrado de una serie de números.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ gensquares(N):}
+    \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(N):}
+        \ControlFlowTok{yield}\NormalTok{ i}\OperatorTok{**}\DecValTok{2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ gensquares(}\DecValTok{5}\NormalTok{)}
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+<generator object gensquares at 0x7fca5ac08790>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+---------------------------------------------------------------------------
+StopIteration                             Traceback (most recent call last)
+Cell In[9], line 1
+----> 1 next(x)
+
+StopIteration: 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+9
+
+\end{verbatim}
+\end{code}
+
+\begin{code} Ahora, incrustando la función generadora en un ciclo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in}\NormalTok{ gensquares(}\DecValTok{10}\NormalTok{):}
+    \BuiltInTok{print}\NormalTok{(i)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+0
+1
+4
+9
+16
+25
+36
+49
+64
+81
+
+\end{verbatim}
+\end{code}
+
+\begin{code} Generador de Números Pares.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ generador\_pares():}
+\NormalTok{    n }\OperatorTok{=} \DecValTok{0}
+    \ControlFlowTok{while} \VariableTok{True}\NormalTok{:}
+        \ControlFlowTok{yield}\NormalTok{ n}
+\NormalTok{        n }\OperatorTok{+=} \DecValTok{2}
+
+\CommentTok{\# Ejemplo de uso}
+\NormalTok{pares }\OperatorTok{=}\NormalTok{ generador\_pares()}
+\ControlFlowTok{for}\NormalTok{ \_ }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{20}\NormalTok{):}
+    \BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(pares))  }\CommentTok{\# Output: 0, 2, 4, 6, 8}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+0
+2
+4
+6
+8
+10
+12
+14
+16
+18
+20
+22
+24
+26
+28
+30
+32
+34
+36
+38
+
+\end{verbatim}
+\end{code}
+
+\begin{code}
+Generador de Fibonacci
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ fibonacci():}
+\NormalTok{    a, b }\OperatorTok{=} \DecValTok{0}\NormalTok{, }\DecValTok{1}
+    \ControlFlowTok{while} \VariableTok{True}\NormalTok{:}
+        \ControlFlowTok{yield}\NormalTok{ a}
+\NormalTok{        a, b }\OperatorTok{=}\NormalTok{ b, a }\OperatorTok{+}\NormalTok{ b}
+
+\CommentTok{\# Ejemplo de uso}
+\NormalTok{fib }\OperatorTok{=}\NormalTok{ fibonacci()}
+\ControlFlowTok{for}\NormalTok{ \_ }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{):}
+    \BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(fib))  }\CommentTok{\# Output: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+0
+1
+1
+2
+3
+5
+8
+13
+21
+34
+
+\end{verbatim}
+\end{code}
+
+\begin{code}
+Generador de una Secuencia con un Rango Dado
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ generador\_rango(inicio, fin):}
+    \ControlFlowTok{while}\NormalTok{ inicio }\OperatorTok{\textless{}}\NormalTok{ fin:}
+        \ControlFlowTok{yield}\NormalTok{ inicio}
+\NormalTok{        inicio }\OperatorTok{+=} \DecValTok{1}
+
+\CommentTok{\# Ejemplo de uso}
+\ControlFlowTok{for}\NormalTok{ numero }\KeywordTok{in}\NormalTok{ generador\_rango(}\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{):}
+    \BuiltInTok{print}\NormalTok{(numero)  }\CommentTok{\# Output: 1, 2, 3, 4}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+1
+2
+3
+4
+
+\end{verbatim}
+\end{code}
+
+\begin{code}
+Generador que Filtra Números Pares
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ filtrar\_pares(lista):}
+    \ControlFlowTok{for}\NormalTok{ numero }\KeywordTok{in}\NormalTok{ lista:}
+        \ControlFlowTok{if}\NormalTok{ numero }\OperatorTok{\%} \DecValTok{2} \OperatorTok{==} \DecValTok{0}\NormalTok{:}
+            \ControlFlowTok{yield}\NormalTok{ numero}
+
+\CommentTok{\# Ejemplo de uso}
+\NormalTok{lista }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{]}
+\NormalTok{pares }\OperatorTok{=}\NormalTok{ filtrar\_pares(lista)}
+\ControlFlowTok{for}\NormalTok{ par }\KeywordTok{in}\NormalTok{ pares:}
+    \BuiltInTok{print}\NormalTok{(par)  }\CommentTok{\# Output: 2, 4, 6, 8}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+2
+4
+6
+8
+
+\end{verbatim}
+\end{code}
+
+\begin{code}
+Generador de aproximaciones al número \(\pi\)
+
+\[\pi = 4\times \sum_{n=0}^\infty \dfrac{(-1)^n}{2n+1}\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{iter} \OperatorTok{=} \BuiltInTok{int}\NormalTok{(}\BuiltInTok{input}\NormalTok{(}\StringTok{"Introduzca el número de iteraciones: "}\NormalTok{))}
+
+\NormalTok{pi }\OperatorTok{=} \DecValTok{0}
+\ControlFlowTok{for}\NormalTok{ n }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\BuiltInTok{iter}\OperatorTok{+}\DecValTok{1}\NormalTok{):}
+\NormalTok{    pi }\OperatorTok{+=} \DecValTok{4}\OperatorTok{*}\NormalTok{(}\OperatorTok{{-}}\DecValTok{1}\NormalTok{)}\OperatorTok{**}\NormalTok{n }\OperatorTok{/}\NormalTok{ (}\DecValTok{2}\OperatorTok{*}\NormalTok{n}\OperatorTok{+}\DecValTok{1}\NormalTok{)}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}pi(}\SpecialCharTok{\{}\BuiltInTok{iter}\SpecialCharTok{\}}\SpecialStringTok{) = }\SpecialCharTok{\{}\NormalTok{pi}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+pi(100000) = 3.1416026534897203
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ aproximacionPi():}
+\NormalTok{    pi, n }\OperatorTok{=} \DecValTok{0}\NormalTok{, }\DecValTok{0}
+    \ControlFlowTok{while} \VariableTok{True}\NormalTok{:}
+        \ControlFlowTok{yield}\NormalTok{ n, pi}
+\NormalTok{        pi }\OperatorTok{+=} \DecValTok{4}\OperatorTok{*}\NormalTok{(}\OperatorTok{{-}}\DecValTok{1}\NormalTok{)}\OperatorTok{**}\NormalTok{n }\OperatorTok{/}\NormalTok{ (}\DecValTok{2}\OperatorTok{*}\NormalTok{n}\OperatorTok{+}\DecValTok{1}\NormalTok{)}
+\NormalTok{        n }\OperatorTok{+=} \DecValTok{1}
+
+\NormalTok{x }\OperatorTok{=}\NormalTok{ aproximacionPi()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+(1, 4.0)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{N }\OperatorTok{=} \BuiltInTok{int}\NormalTok{(}\BuiltInTok{input}\NormalTok{(}\StringTok{"Introduzca el número de iteraciones: "}\NormalTok{))}
+\NormalTok{p }\OperatorTok{=}\NormalTok{ aproximacionPi()}
+
+\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(N):}
+    \BuiltInTok{print}\NormalTok{(}\BuiltInTok{next}\NormalTok{(p))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+(0, 0)
+(1, 4.0)
+(2, 2.666666666666667)
+(3, 3.466666666666667)
+(4, 2.8952380952380956)
+\end{verbatim}
+\end{code}
+
+\subsection{Expresiones generadoras: Los iteradores se aproximan a las comprensiones}
+
+En todas las versiones recientes de Python, la noción de
+\emph{iteradores} y \emph{listas por comprensión} se combinan en una
+nueva característica del lenguaje: \emph{expresiones generadoras}. En
+térmios de la sintáxis, las expresiones generadoras son como las listas
+por comprensión normales, pero se incluyen entre paréntesis en lugar de
+corchetes: \\
+
+\begin{code} Listas por comprensión vs. Generadores
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[x}\OperatorTok{**}\DecValTok{2} \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[0, 1, 4, 9, 16]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{(x}\OperatorTok{**}\DecValTok{2} \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+<generator object <genexpr> at 0x7fa0ca13e4d0>
+
+\end{verbatim}
+\end{code}
+
+De hecho, al menos en términos de su funcionalidad, codificar una lista
+por comprensión es esencialmente lo mismo que envolver una expresión de
+generador en una llamada incorporada de lista para obligarla a producir
+todos sus resultados en una lista a la vez, esto es:\\
+
+\begin{code} Un generador produce una lista.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{list}\NormalTok{(x}\OperatorTok{**}\DecValTok{2} \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[0, 1, 4, 9, 16]
+
+\end{verbatim}
+\end{code}
+
+A pesar de este hecho, sin embargo, las expresiones generadoras son muy
+diferentes: devuelven un \emph{objeto generador} que soporta el
+protocolo de iteración, que permite emplear \emph{yield} para obtener el
+siguiente resultado conforme se pida.\\
+
+\begin{code} Objeto generador.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{G }\OperatorTok{=}\NormalTok{ (x}\OperatorTok{**}\DecValTok{2} \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(G)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+---------------------------------------------------------------------------
+StopIteration                             Traceback (most recent call last)
+Cell In[7], line 1
+----> 1 next(G)
+
+StopIteration: 
+
+\end{verbatim}
+\end{code}
+
+Normalmente no vemos la sentencia \emph{next} en una expresión
+generadora como esta, debido a que los ciclos \emph{for} la lanzan
+automáticamente y por detrás:\\
+
+\begin{code} Ciclo \texttt{for} iterando un generador.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ num }\KeywordTok{in}\NormalTok{ (x}\OperatorTok{**}\DecValTok{2} \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{)):}
+    \BuiltInTok{print}\NormalTok{(num)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+0
+1
+4
+9
+16
+
+\end{verbatim}
+\end{code}
+
+Tal como lo hemos visto, este contexto de iteración lo hace de esta
+forma, ésto incluye a las funciones nativas \texttt{sum}, \texttt{map} y
+\texttt{sorted}, así como las listas por comprensión, entre muchos
+otros.\\
+
+\begin{code} Iteración de generadores de \texttt{sum}, \texttt{map} y
+\texttt{sorted}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{sum}\NormalTok{(x}\OperatorTok{**}\DecValTok{2} \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+30
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{sorted}\NormalTok{(x}\OperatorTok{**}\DecValTok{2} \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[0, 1, 4, 9, 16]
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{sum}\NormalTok{(}\BuiltInTok{map}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x:x}\OperatorTok{**}\DecValTok{2}\NormalTok{, }\BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+30
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ functools }\ImportTok{import} \BuiltInTok{reduce}
+
+\BuiltInTok{reduce}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ acum, x : acum }\OperatorTok{+}\NormalTok{ x}\OperatorTok{**}\DecValTok{2}\NormalTok{, }\BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+30
+\end{verbatim}
+\end{code}
+
+\subsection{Generación de valores con tipos y clases nativos}
+
+Python permite varias formas de generar sus tipos avanzados de datos,
+por ejemplo, para generar un diccionario:\\
+
+\begin{code} Generación de un diccionario.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{D }\OperatorTok{=}\NormalTok{ \{}\StringTok{\textquotesingle{}a\textquotesingle{}}\NormalTok{:}\DecValTok{1}\NormalTok{, }\StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{:}\DecValTok{2}\NormalTok{, }\StringTok{\textquotesingle{}c\textquotesingle{}}\NormalTok{:}\DecValTok{3}\NormalTok{\}}
+\NormalTok{x }\OperatorTok{=} \BuiltInTok{iter}\NormalTok{(D)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{next}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+'c'
+
+\end{verbatim}
+\end{code}
+
+El diccionario puede ser iterado manualmente o con las herramientas de
+iteración nativas: for, map y listas por comprensión.
+
+\begin{code} Iteración del diccionario.
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ key }\KeywordTok{in}\NormalTok{ D:}
+    \BuiltInTok{print}\NormalTok{(key, D[key])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+a 1
+b 2
+c 3
+\end{verbatim}
+\end{code}
+
+\section{Recapitulando}
+
+\begin{code} Lista por comprensión.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Listas por comprensión}
+\NormalTok{[x}\OperatorTok{*}\NormalTok{x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+\end{verbatim}
+\end{code}
+
+\begin{code} Expresión generadora.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Expresión generadora}
+\NormalTok{(x}\OperatorTok{*}\NormalTok{x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+<generator object <genexpr> at 0x7fce1b5df6b0>
+
+\end{verbatim}
+\end{code}
+
+\begin{code} Conjunto por comprensión.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Conjunto por comprensión}
+\NormalTok{\{x}\OperatorTok{*}\NormalTok{x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{)\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+{0, 1, 4, 9, 16, 25, 36, 49, 64, 81}
+
+\end{verbatim}
+\end{code}
+
+\begin{code} Diccionario por comprensión.
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Diccionario por comprensión}
+\NormalTok{\{x:x}\OperatorTok{*}\NormalTok{x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{)\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+{0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81}
+\end{verbatim}
+\end{code}
+
+\subsection{Diccionarios y conjuntos por comprensión}
+
+\begin{code} Conjunto por comprensión.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\{x}\OperatorTok{*}\NormalTok{x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{)\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+{0, 1, 4, 9, 16, 25, 36, 49, 64, 81}
+
+\end{verbatim}
+\end{code}
+
+\begin{code} Conjunto por generación y tipo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{set}\NormalTok{(x}\OperatorTok{*}\NormalTok{x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+{0, 1, 4, 9, 16, 25, 36, 49, 64, 81}
+
+\end{verbatim}
+\end{code}
+
+\begin{code} Diccionario por comprensión.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{\{x:x}\OperatorTok{*}\NormalTok{x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{)\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+{0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81}
+
+\end{verbatim}
+\end{code}
+
+\begin{code} Diccionario por generación y tipo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{dict}\NormalTok{((x, x}\OperatorTok{*}\NormalTok{x) }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+{0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81}
+\end{verbatim}
+\end{code}
+
+\section{Referencias}
+
+\begin{itemize}
+\item
+  Lutz M., Learning Python, O\textquotesingle Reilly. 2009
+\end{itemize}

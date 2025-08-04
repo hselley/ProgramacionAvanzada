@@ -1,0 +1,1537 @@
+\chapter{Jerarquía de clases y herencia}
+
+La jerarquía de clases es una familia de clases que heredan métodos y
+atributos entre sí.
+
+Una jerarquía de clases es una familia de clases estrechamente
+relacionadas organizadas de manera jerárquica.
+
+Un concepto clave es la \emph{herencia}, lo que significa que las clases
+hijo pueden heredar atributos y métodos de las clases padre. Una
+estrategia típica es escribir una clase general como clase base (o clase
+principal) y luego dejar que los casos especiales se representen como
+subclases (clases secundarias). Este enfoque a menudo puede ahorrar
+mucha escritura y duplicación de código.\\
+
+\begin{code} Clases para líneas y parábolas.
+
+En este ejemplo crearemos una clase que represente y evalúe líneas
+rectas \(y=c_0 + c_1 x\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{from}\NormalTok{ prettytable }\ImportTok{import}\NormalTok{ PrettyTable}
+
+\KeywordTok{class}\NormalTok{ Line: }
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, c0, c1):}
+        \VariableTok{self}\NormalTok{.c0, }\VariableTok{self}\NormalTok{.c1 }\OperatorTok{=}\NormalTok{ c0, c1}
+
+    \KeywordTok{def} \FunctionTok{\_\_call\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, x):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.c0 }\OperatorTok{+} \VariableTok{self}\NormalTok{.c1 }\OperatorTok{*}\NormalTok{ x}
+
+    \KeywordTok{def}\NormalTok{ table(}\VariableTok{self}\NormalTok{, a, b, n):}
+        \CommentTok{""" Devuelve una tabla con n puntos dado a \textless{}= x \textless{}= b """}
+\NormalTok{        tabla }\OperatorTok{=}\NormalTok{ PrettyTable(field\_names }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}x\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}f(x)\textquotesingle{}}\NormalTok{], float\_format}\OperatorTok{=}\StringTok{\textquotesingle{}.6\textquotesingle{}}\NormalTok{)}
+        \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ np.linspace(a, b, n):}
+\NormalTok{            y }\OperatorTok{=} \VariableTok{self}\NormalTok{(x)}
+\NormalTok{            tabla.add\_row([x, y])}
+        \ControlFlowTok{return}\NormalTok{ tabla}
+    
+    \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \SpecialStringTok{f\textquotesingle{}y = }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{c0}\SpecialCharTok{\}}\SpecialStringTok{ + }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{c1}\SpecialCharTok{\}}\SpecialStringTok{x\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+La clase tiene su constructor estándar y un método especial \texttt{\_\_str\_\_} para la impresión de la función:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{linea }\OperatorTok{=}\NormalTok{ Line(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(linea)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+y = 1 + 2x
+\end{verbatim}
+
+Tiene un método especial \texttt{\_\_call\_\_} que permite la evaluación de la función:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{linea(}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+7
+\end{verbatim}
+
+Y tiene un método table que construye una tabla tipo \texttt{PrettyTable} con la evaluación de la función en un rango de
+valores de acuerdo a los valores recibidos por los argumentos \(a\), \(b\), y \(n\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{linea.table(a}\OperatorTok{=}\DecValTok{1}\NormalTok{, b}\OperatorTok{=}\DecValTok{12}\NormalTok{, n}\OperatorTok{=}\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
++-----------+-----------+
+|     x     |    f(x)   |
++-----------+-----------+
+|  1.000000 |  3.000000 |
+|  1.578947 |  4.157895 |
+|  2.157895 |  5.315789 |
+|  2.736842 |  6.473684 |
+|  3.315789 |  7.631579 |
+|  3.894737 |  8.789474 |
+|  4.473684 |  9.947368 |
+|  5.052632 | 11.105263 |
+|  5.631579 | 12.263158 |
+|  6.210526 | 13.421053 |
+|  6.789474 | 14.578947 |
+|  7.368421 | 15.736842 |
+|  7.947368 | 16.894737 |
+|  8.526316 | 18.052632 |
+|  9.105263 | 19.210526 |
+|  9.684211 | 20.368421 |
+| 10.263158 | 21.526316 |
+| 10.842105 | 22.684211 |
+| 11.421053 | 23.842105 |
+| 12.000000 | 25.000000 |
++-----------+-----------+
+\end{verbatim}
+
+Digamos que ahora se requiere escribir una clase similar para la evaluación de la parábola \(y = c_0 + c_1x + c_2x^2\), el código \ref{code:herencia1} 
+lo muestra.\\
+
+\begin{code} Clase parábola con método \textit{\_\_call\_\_}.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Parabola:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, c0, c1, c2):}
+        \VariableTok{self}\NormalTok{.c0}\OperatorTok{=}\NormalTok{c0, }\VariableTok{self}\NormalTok{.c1}\OperatorTok{=}\NormalTok{c1, }\VariableTok{self}\NormalTok{.c2}\OperatorTok{=}\NormalTok{c2}
+
+    \KeywordTok{def} \FunctionTok{\_\_call\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, x):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.c0 }\OperatorTok{+} \VariableTok{self}\NormalTok{.c1}\OperatorTok{*}\NormalTok{x }\OperatorTok{+} \VariableTok{self}\NormalTok{.c2}\OperatorTok{*}\NormalTok{x}\OperatorTok{**}\DecValTok{2}
+
+    \KeywordTok{def}\NormalTok{ table(}\VariableTok{self}\NormalTok{, a, b, n):}
+        \CommentTok{""" Devuelve una tabla con n puntos dado a \textless{}= x \textless{}= b """}
+\NormalTok{        tabla }\OperatorTok{=}\NormalTok{ PrettyTable(field\_names }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}x\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}f(x)\textquotesingle{}}\NormalTok{], float\_format}\OperatorTok{=}\StringTok{\textquotesingle{}.6\textquotesingle{}}\NormalTok{)}
+        \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ np.linspace(a, b, n):}
+\NormalTok{            y }\OperatorTok{=} \VariableTok{self}\NormalTok{(x)}
+\NormalTok{            tabla.add\_row([x, y])}
+        \ControlFlowTok{return}\NormalTok{ tabla}
+    
+    \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \SpecialStringTok{f\textquotesingle{}y = }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{c0}\SpecialCharTok{\}}\SpecialStringTok{ + }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{c1}\SpecialCharTok{\}}\SpecialStringTok{x + }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{c2}\SpecialCharTok{\}}\SpecialStringTok{x²\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+\label{code:herencia1}
+\end{code}
+
+Observe que la mayoría del código es la misma excepto por las partes que
+involucran a \(c_2\). Quizá copiar, pegar y modificar el código no sea
+tardado ni problemático, pero tal repetición de código es una mala
+práctica.
+
+Imáginese que fuese necesario cambiar la funcionalidad de la generación
+de la tabla o corregir un error en el código replicado, sería necesario
+cambiar en todos los lugares donde el código fue replicado. Esto sería
+lento, impráctico y una posible fuente de más errores.
+
+Por ello, se puede reutilizar el código de la clase \texttt{Line} para
+la construcción de la clase \texttt{Parabola} mediante la herencia.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Parabola(Line):}
+    \ControlFlowTok{pass}
+\end{Highlighting}
+\end{Shaded}
+
+El término \texttt{pass} es una palabra clave que indica a Python que la
+clase se ha dejado intencionalmente vacía. Sin embargo, aunque no haya
+código en la definición de la clase Parabola, ésta clase no está vacía.
+De esta forma \texttt{Parabola} ha heredado los atributos \(c_0\) y
+\(c_1\) y los métodos \texttt{\_\_init\_\_}, \texttt{\_\_call\_\_},
+\texttt{\_\_str\_\_} y \texttt{table} de la clase \texttt{Line}.
+
+En este sentido se dice que \texttt{Line} es la clase base (padre o
+superclase) y \texttt{Parabola} es una subclase (clase hijo o clase
+derivada). En ese momento, \texttt{Parabola} es una copia exacta de
+\texttt{Line} pero es posible modificarla para los propósitos de su uso.
+Para ello es necesario agregar su propio constructor
+\texttt{\_\_init\_\_}, sus métodos \texttt{\_\_call\_\_} y
+\texttt{\_\_str\_\_} de acuerdo a lo requerido.\\
+
+\begin{code} Clase Parábola con herencia.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Parabola(Line):}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, c0, c1, c2):}
+        \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_init\_\_}\NormalTok{(c0, c1)    }\CommentTok{\# La clase Linea almacena c0 y c1}
+        \VariableTok{self}\NormalTok{.c2 }\OperatorTok{=}\NormalTok{ c2}
+
+    \KeywordTok{def} \FunctionTok{\_\_call\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, x):}
+        \ControlFlowTok{return} \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_call\_\_}\NormalTok{(x) }\OperatorTok{+} \VariableTok{self}\NormalTok{.c2}\OperatorTok{*}\NormalTok{x}\OperatorTok{**}\DecValTok{2}
+    
+    \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_str\_\_}\NormalTok{() }\OperatorTok{+} \SpecialStringTok{f\textquotesingle{} + }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{c2}\SpecialCharTok{\}}\SpecialStringTok{x²\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{par }\OperatorTok{=}\NormalTok{ Parabola(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(par.table(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{10}\NormalTok{))}
+\BuiltInTok{print}\NormalTok{(par)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
++----------+-----------+
+|    x     |    f(x)   |
++----------+-----------+
+| 1.000000 |  6.000000 |
+| 1.111111 |  6.925926 |
+| 1.222222 |  7.925926 |
+| 1.333333 |  9.000000 |
+| 1.444444 | 10.148148 |
+| 1.555556 | 11.370370 |
+| 1.666667 | 12.666667 |
+| 1.777778 | 14.037037 |
+| 1.888889 | 15.481481 |
+| 2.000000 | 17.000000 |
++----------+-----------+
+y = 1 + 2x + 3x²
+\end{verbatim}
+\label{code:herencia2}
+\end{code}
+
+Observe que para maximizar la reutilización del código se ha llamado los
+métodos de la superclase \texttt{Line} y añadido las partes faltantes.
+Siempre será posible tener acceso a los métodos del padre mediante la
+función \texttt{super()}.
+
+Es posible llamar directamente al padre mediante su nombre, pero será
+necesario agregar en los argumentos el contexto del objeto mediante
+\texttt{self}. Esto debido a que el nombre genérico no tiene una
+relación con la subclase, mientras que con \texttt{super()} si se hace
+una referencia directa a la superclase.
+
+Esto es:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_init\_\_}\NormalTok{(c0, c1)        }\CommentTok{\# super() hace referencia a la superclase del objeto}
+\NormalTok{Line.}\FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, c0, c1)     }\CommentTok{\# Se hace referencia a la clase \textasciigrave{}Line\textasciigrave{}, que en general no tiene relación con el objeto}
+\end{Highlighting}
+\end{Shaded}
+
+En términos generales sería lo siguiente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{SuperClassName.method(}\VariableTok{self}\NormalTok{, arg1, arg2, ...)}
+\BuiltInTok{super}\NormalTok{(arg1, arg2, ...)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{El verdadero significado de la herencia}
+
+Desde un punto de vista práctico, la herencia permite reutilizar código
+y minimizar la duplicidad del mismo. Pero desde un punto de vista
+teórico, la herencia representa la relación que hay entre dos clases.
+
+Esto significa que si \texttt{Parabola} es una subclase de
+\texttt{Line}, un objeto \texttt{Parabola} también es un objeto de
+\texttt{Line}. En otras palabras, la clase \texttt{Parabola} es un caso
+especial de la clase \texttt{Line}, por lo tanto cualquier instancia de
+\texttt{Parabola} es una instancia de \texttt{Line} pero no viceversa. \\
+
+\begin{code} Ejemplos de herencia y jerarquía.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{l }\OperatorTok{=}\NormalTok{ Line(}\OperatorTok{{-}}\DecValTok{1}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{isinstance}\NormalTok{(l, Line))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{isinstance}\NormalTok{(l, Parabola))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+True
+False
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OperatorTok{=}\NormalTok{ Parabola(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{isinstance}\NormalTok{(p, Parabola))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{isinstance}\NormalTok{(p, Line))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+True
+True
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{issubclass}\NormalTok{(Parabola, Line))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{issubclass}\NormalTok{(Line, Parabola))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+True
+False
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(p.\_\_class\_\_ }\OperatorTok{==}\NormalTok{ Parabola)}
+\BuiltInTok{print}\NormalTok{(p.\_\_class\_\_.}\VariableTok{\_\_name\_\_}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+True
+Parabola
+\end{verbatim}
+\end{code}
+
+Se ha dicho que una subclase es un caso especial de una superclase. En
+el ejemplo, la clase \texttt{Parabola} es un caso específico de la clase
+\texttt{Line}, sin embargo matemáticamente una parábola no es un caso
+específico de una linea, en realidad una línea es un caso específico de
+una parábola cuando \(c_2 = 0\).
+
+Dado este hecho quizá valga la pena redefinir las clases para corregir
+esta discrepancia.\\
+
+\begin{code} Mejora del código.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Parabola:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, c0, c1, c2):}
+        \VariableTok{self}\NormalTok{.c0 }\OperatorTok{=}\NormalTok{ c0, }\VariableTok{self}\NormalTok{.c1, }\VariableTok{self}\NormalTok{.c2 }\OperatorTok{=}\NormalTok{ c0, c1, c2}
+
+    \KeywordTok{def} \FunctionTok{\_\_call\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, x):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.c0 }\OperatorTok{+} \VariableTok{self}\NormalTok{.c1}\OperatorTok{*}\NormalTok{x }\OperatorTok{+} \VariableTok{self}\NormalTok{.c2}\OperatorTok{*}\NormalTok{x}\OperatorTok{**}\DecValTok{2}
+    
+    \KeywordTok{def}\NormalTok{ table(}\VariableTok{self}\NormalTok{, a, b, n):}
+        \CommentTok{""" Devuelve una tabla con n puntos dado a \textless{}= x \textless{}= b """}
+\NormalTok{        tabla }\OperatorTok{=}\NormalTok{ PrettyTable(field\_names }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}x\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}f(x)\textquotesingle{}}\NormalTok{], float\_format}\OperatorTok{=}\StringTok{\textquotesingle{}.6\textquotesingle{}}\NormalTok{)}
+        \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ np.linspace(a, b, n):}
+\NormalTok{            y }\OperatorTok{=} \VariableTok{self}\NormalTok{(x)}
+\NormalTok{            tabla.add\_row([x, y])}
+        \ControlFlowTok{return}\NormalTok{ tabla}
+    
+    \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \SpecialStringTok{f\textquotesingle{}y = }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{c0}\SpecialCharTok{\}}\SpecialStringTok{ + }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{c1}\SpecialCharTok{\}}\SpecialStringTok{x + }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{c2}\SpecialCharTok{\}}\SpecialStringTok{x²\textquotesingle{}}
+
+\KeywordTok{class}\NormalTok{ Line(Parabola):}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, c0, c1):}
+        \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_init\_\_}\NormalTok{(c0, c1, }\DecValTok{0}\NormalTok{)}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\begin{code} Diferenciación Numérica.
+
+Una tarea común en el cómputo científico es la diferenciación e
+integración que pueden ser resueltas por diversos métodos numéricos.
+Muchos de esos métodos están muy relacionados entre sí, por lo que
+pueden ser agrupados en familias de métodos. Una fórmula simple de
+cálculo es la siguiente:
+
+\[ f'(x) \approx \dfrac{f(x+h) - f(x)}{h}, \]
+
+que puede ser implementada por la clase:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Derivative:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, f, h}\OperatorTok{=}\FloatTok{1e{-}5}\NormalTok{):}
+        \VariableTok{self}\NormalTok{.f }\OperatorTok{=}\NormalTok{ f}
+        \VariableTok{self}\NormalTok{.h }\OperatorTok{=} \BuiltInTok{float}\NormalTok{(h)}
+
+    \KeywordTok{def} \FunctionTok{\_\_call\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, x):}
+\NormalTok{        f, h }\OperatorTok{=} \VariableTok{self}\NormalTok{.f, }\VariableTok{self}\NormalTok{.h }
+        \ControlFlowTok{return}\NormalTok{ (f(x}\OperatorTok{+}\NormalTok{h)}\OperatorTok{{-}}\NormalTok{f(x))}\OperatorTok{/}\NormalTok{h}
+\end{Highlighting}
+\end{Shaded}
+
+Para hacer uso del método, sólo creamos una función y una instancia de
+la clase. Posteriormente hacemos una llamada a la instancia con el valor
+a evaluar. Por ejemplo:
+
+\[ f(x) = e^{-x} \sin \left(4\pi x\right) \] \[ f'(1.2) = ?\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ math }\ImportTok{import}\NormalTok{ exp, sin, pi}
+
+\KeywordTok{def}\NormalTok{ f(x):}
+    \ControlFlowTok{return}\NormalTok{ exp(}\OperatorTok{{-}}\NormalTok{x) }\OperatorTok{*}\NormalTok{ sin(}\DecValTok{4}\OperatorTok{*}\NormalTok{pi}\OperatorTok{*}\NormalTok{x)}
+
+\NormalTok{dfdx }\OperatorTok{=}\NormalTok{ Derivative(f)}
+\BuiltInTok{print}\NormalTok{(dfdx(}\FloatTok{1.2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+-3.239208844119101
+\end{verbatim}
+
+Sim embargo, dado que hay diversas fórumlas para encontrar la
+aproximación a la derivada:
+
+\[ f'(x) \approx \dfrac{f(x+h) - f(x)}{h}, \]
+\[ f'(x) \approx \dfrac{f(x+h) - f(x-h)}{2h}, \]
+\[ f'(x) \approx \dfrac{4}{3}\dfrac{f(x+h)-f(x-h)}{2h} - \dfrac{1}{3}\dfrac{f(x+2h)-f(x-2h)}{4h} \]
+
+entre otras.
+
+Por ello se puede escribir fácilmente un módulo que ofrezca múltiples
+fórmulas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Forward:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, f, h}\OperatorTok{=}\FloatTok{1e{-}5}\NormalTok{):}
+        \VariableTok{self}\NormalTok{.f, }\VariableTok{self}\NormalTok{.h }\OperatorTok{=}\NormalTok{ f, h}
+
+    \KeywordTok{def} \FunctionTok{\_\_call\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, x):}
+\NormalTok{        f, h }\OperatorTok{=} \VariableTok{self}\NormalTok{.f, }\VariableTok{self}\NormalTok{.h}
+        \ControlFlowTok{return}\NormalTok{ (f(x}\OperatorTok{+}\NormalTok{h)}\OperatorTok{{-}}\NormalTok{f(x))}\OperatorTok{/}\NormalTok{h}
+
+\KeywordTok{class}\NormalTok{ Central2:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, f, h}\OperatorTok{=}\FloatTok{1e{-}5}\NormalTok{):}
+        \VariableTok{self}\NormalTok{.f, }\VariableTok{self}\NormalTok{.h }\OperatorTok{=}\NormalTok{ f, h}
+
+    \KeywordTok{def} \FunctionTok{\_\_call\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, x):}
+\NormalTok{        f, h }\OperatorTok{=} \VariableTok{self}\NormalTok{.f, }\VariableTok{self}\NormalTok{.h}
+        \ControlFlowTok{return}\NormalTok{ (f(x}\OperatorTok{+}\NormalTok{h)}\OperatorTok{{-}}\NormalTok{f(x}\OperatorTok{{-}}\NormalTok{h))}\OperatorTok{/}\DecValTok{2}\OperatorTok{/}\NormalTok{h}
+
+\KeywordTok{class}\NormalTok{ Central4:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, f, h}\OperatorTok{=}\FloatTok{1e{-}5}\NormalTok{):}
+        \VariableTok{self}\NormalTok{.f, }\VariableTok{self}\NormalTok{.h }\OperatorTok{=}\NormalTok{ f, h}
+
+    \KeywordTok{def} \FunctionTok{\_\_call\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, x):}
+\NormalTok{        f, h }\OperatorTok{=} \VariableTok{self}\NormalTok{.f, }\VariableTok{self}\NormalTok{.h}
+        \ControlFlowTok{return} \DecValTok{4}\OperatorTok{/}\DecValTok{3}\OperatorTok{*}\NormalTok{ (f(x}\OperatorTok{+}\NormalTok{h) }\OperatorTok{{-}}\NormalTok{ f(x}\OperatorTok{{-}}\NormalTok{h))}\OperatorTok{/}\NormalTok{(}\DecValTok{2}\OperatorTok{*}\NormalTok{h) }\OperatorTok{{-}} \DecValTok{1}\OperatorTok{/}\DecValTok{3} \OperatorTok{*}\NormalTok{ (f(x}\OperatorTok{+}\DecValTok{2}\OperatorTok{*}\NormalTok{h) }\OperatorTok{{-}}\NormalTok{ f(x}\OperatorTok{{-}}\DecValTok{2}\OperatorTok{*}\NormalTok{h))}\OperatorTok{*}\NormalTok{(}\DecValTok{4}\OperatorTok{*}\NormalTok{h)}
+\end{Highlighting}
+\end{Shaded}
+
+El problema en este código es la repetición de código para el
+constructor. Para resolverlo se puede crear una superclase que contenga
+el constructor e implementar una subclase por método.
+
+La superclase queda de la siguiente forma:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Diff:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, f, h}\OperatorTok{=}\FloatTok{1e{-}5}\NormalTok{):}
+        \VariableTok{self}\NormalTok{.f, }\VariableTok{self}\NormalTok{.h }\OperatorTok{=}\NormalTok{ f, h}
+\end{Highlighting}
+\end{Shaded}
+
+Y las subclases se definen de la siguiente forma:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Forward(Diff):}
+    \KeywordTok{def} \FunctionTok{\_\_call\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, x):}
+\NormalTok{        f, h }\OperatorTok{=} \VariableTok{self}\NormalTok{.f, }\VariableTok{self}\NormalTok{.h}
+        \ControlFlowTok{return}\NormalTok{ (f(x}\OperatorTok{+}\NormalTok{h) }\OperatorTok{{-}}\NormalTok{ f(x))}\OperatorTok{/}\NormalTok{h}
+
+\KeywordTok{class}\NormalTok{ Central2(Diff):}
+    \KeywordTok{def} \FunctionTok{\_\_call\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, x):}
+\NormalTok{        f, h }\OperatorTok{=} \VariableTok{self}\NormalTok{.f, }\VariableTok{self}\NormalTok{.h}
+        \ControlFlowTok{return}\NormalTok{ (f(x}\OperatorTok{+}\NormalTok{h) }\OperatorTok{{-}}\NormalTok{ f(x}\OperatorTok{{-}}\NormalTok{h))}\OperatorTok{/}\DecValTok{2}\OperatorTok{/}\NormalTok{h}
+
+\KeywordTok{class}\NormalTok{ Central4(Diff):}
+    \KeywordTok{def} \FunctionTok{\_\_call\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, x):}
+\NormalTok{        f, h }\OperatorTok{=} \VariableTok{self}\NormalTok{.f, }\VariableTok{self}\NormalTok{.h}
+        \ControlFlowTok{return}\NormalTok{ (}\DecValTok{4}\OperatorTok{/}\DecValTok{3}\NormalTok{) }\OperatorTok{*}\NormalTok{ (f(x}\OperatorTok{+}\NormalTok{h) }\OperatorTok{{-}}\NormalTok{ f(x}\OperatorTok{{-}}\NormalTok{h))}\OperatorTok{/}\NormalTok{(}\DecValTok{2}\OperatorTok{*}\NormalTok{h) }\OperatorTok{{-}}\NormalTok{ (}\DecValTok{1}\OperatorTok{/}\DecValTok{3}\NormalTok{) }\OperatorTok{*}\NormalTok{ (f(x}\OperatorTok{+}\DecValTok{2}\OperatorTok{*}\NormalTok{h) }\OperatorTok{{-}}\NormalTok{ f(x}\OperatorTok{{-}}\DecValTok{2}\OperatorTok{*}\NormalTok{h))}\OperatorTok{/}\NormalTok{(}\DecValTok{4}\OperatorTok{*}\NormalTok{h)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ math }\ImportTok{import}\NormalTok{ exp, sin, pi}
+
+\KeywordTok{def}\NormalTok{ f(x):}
+    \ControlFlowTok{return}\NormalTok{ exp(}\OperatorTok{{-}}\NormalTok{x) }\OperatorTok{*}\NormalTok{ sin(}\DecValTok{4}\OperatorTok{*}\NormalTok{pi}\OperatorTok{*}\NormalTok{x)}
+
+\NormalTok{dfdx }\OperatorTok{=}\NormalTok{ Forward(f)}
+\BuiltInTok{print}\NormalTok{(dfdx(}\FloatTok{1.2}\NormalTok{))}
+
+\NormalTok{dfdx }\OperatorTok{=}\NormalTok{ Central2(f)}
+\BuiltInTok{print}\NormalTok{(dfdx(}\FloatTok{1.2}\NormalTok{))}
+
+\NormalTok{dfdx }\OperatorTok{=}\NormalTok{ Central4(f)}
+\BuiltInTok{print}\NormalTok{(dfdx(}\FloatTok{1.2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+-3.239208844119101
+-3.2391005667389834
+-3.2391005760477407
+\end{verbatim}
+
+Ahora hagamos una concentración de aproximaciones con todas las
+fórmulas:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# from Diff import Forward, Central2, Central4}
+\ImportTok{from}\NormalTok{ math }\ImportTok{import}\NormalTok{ pi, sin, cos}
+\ImportTok{from}\NormalTok{ prettytable }\ImportTok{import}\NormalTok{ PrettyTable}
+
+\NormalTok{H }\OperatorTok{=}\NormalTok{ [(}\DecValTok{1}\OperatorTok{/}\DecValTok{2}\NormalTok{)}\OperatorTok{**}\NormalTok{i }\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{)]}
+\NormalTok{x0 }\OperatorTok{=}\NormalTok{ pi}\OperatorTok{/}\DecValTok{4}
+
+\NormalTok{table }\OperatorTok{=}\NormalTok{ PrettyTable(field\_names}\OperatorTok{=}\NormalTok{[}\StringTok{\textquotesingle{}h\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Forward\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Central 2\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Central 4\textquotesingle{}}\NormalTok{])}
+\ControlFlowTok{for}\NormalTok{ h }\KeywordTok{in}\NormalTok{ H:}
+\NormalTok{    f1 }\OperatorTok{=}\NormalTok{ Forward(sin, h)}
+\NormalTok{    c2 }\OperatorTok{=}\NormalTok{ Central2(sin, h)}
+\NormalTok{    c4 }\OperatorTok{=}\NormalTok{ Central4(sin, h)}
+\NormalTok{    table.add\_row([h, f1(x0), c2(x0), c4(x0)])}
+
+\BuiltInTok{print}\NormalTok{(table)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
++-------------+--------------------+--------------------+--------------------+
+|      h      |      Forward       |     Central 2      |     Central 4      |
++-------------+--------------------+--------------------+--------------------+
+|     1.0     | 0.2699544827129282 | 0.5950098395293859 | 0.6861847232685281 |
+|     0.5     | 0.5048856975964859 | 0.6780100988420897 | 0.7056768519463243 |
+|     0.25    | 0.611835119448811  | 0.6997640691250939 | 0.707015392552762  |
+|    0.125    | 0.6611301360648314 | 0.7052667953545546 | 0.7071010374310415 |
+|    0.0625   | 0.6845566203276636 | 0.7066465151141275 | 0.7071064217006517 |
+|   0.03125   | 0.6959440534591259 | 0.706991697811663  | 0.7071067587108415 |
+|   0.015625  | 0.7015538499518499 | 0.7070780092891873 | 0.7071067797816953 |
+|  0.0078125  | 0.7043374663312676 | 0.7070995881463489 | 0.7071067810987361 |
+|  0.00390625 | 0.705723916746507  | 0.7071049829223881 | 0.7071067811810678 |
+| 0.001953125 | 0.706415797873774  | 0.7071063316202526 | 0.7071067811862074 |
++-------------+--------------------+--------------------+--------------------+
+\end{verbatim}
+\end{code}  
+
+\section{Funciones recursivas}
+
+La recursividad es un fenómeno presente en la naturaleza. La
+recursividad es un concepto donde una función, procedimiento o proceso
+se define en términos de sí mismo. Es una técnica fundamental en
+matemáticas y ciencias de la computación, pero también se puede observar
+en la naturaleza y en otros campos.
+
+\subsubsection{Ejemplos de Recursividad en la Naturaleza}
+
+\begin{enumerate}
+
+\item
+  \textbf{Fractales:}
+
+  \begin{itemize}
+
+  \item
+    \textbf{Helechos:} Las hojas de un helecho son ejemplos clásicos de
+    recursividad. Cada hoja está compuesta de pequeñas hojas que tienen
+    una forma similar a la hoja completa.
+  \item
+    \textbf{Brócoli Romanesco:} Este vegetal tiene una estructura
+    fractal, donde cada florete se asemeja a una versión en miniatura de
+    la planta completa.
+  \end{itemize}
+\item
+  \textbf{Conchas Marinas:}
+
+  \begin{itemize}
+  
+  \item
+    Muchas conchas marinas, como las de los nautilos, muestran patrones
+    recursivos en su estructura, donde el crecimiento de la concha sigue
+    un patrón logarítmico.
+  \end{itemize}
+\item
+  \textbf{Ramas de Árboles:}
+
+  \begin{itemize}
+  
+  \item
+    La ramificación de los árboles es un ejemplo de recursividad. Cada
+    rama principal se divide en ramas más pequeñas, y estas a su vez se
+    dividen en ramas aún más pequeñas, siguiendo un patrón similar.
+  \end{itemize}
+\item
+  \textbf{Ríos y Deltas:}
+
+  \begin{itemize}
+  
+  \item
+    Los sistemas fluviales también muestran recursividad. Un río
+    principal se divide en afluentes, y estos a su vez en arroyos más
+    pequeños, siguiendo una estructura jerárquica.
+  \end{itemize}
+\item
+  \textbf{Sistemas Circulatorios:}
+
+  \begin{itemize}
+  
+  \item
+    El sistema circulatorio de muchos organismos, donde los grandes
+    vasos sanguíneos se dividen en vasos más pequeños y así
+    sucesivamente, es un ejemplo de recursividad biológica.
+  \end{itemize}
+\item
+  \textbf{Nervios y Neuronas:}
+
+  \begin{itemize}
+  
+  \item
+    Las estructuras neuronales, con dendritas que se ramifican en
+    subdendritas y axones que se ramifican en terminales más pequeños,
+    también son recursivas.
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Concepto Matemático}
+
+En matemáticas, un ejemplo clásico de recursividad es la secuencia de
+Fibonacci, donde cada término se define como la suma de los dos términos
+anteriores:
+
+\[ F(n) = F(n-1) + F(n-2) \forall n\geq 2\]
+
+con \(F(0) = 0\) y \(F(1) = 1\).
+
+La recursividad es una herramienta poderosa porque permite resolver
+problemas complejos dividiéndolos en subproblemas más simples del mismo
+tipo.\\
+
+\begin{code} Serie de Fibonacci
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Serie de Fibonacci}
+
+\KeywordTok{def}\NormalTok{ Fibonacci(n):}
+    \ControlFlowTok{if}\NormalTok{ n}\OperatorTok{==}\DecValTok{0} \KeywordTok{or}\NormalTok{ n}\OperatorTok{==}\DecValTok{1}\NormalTok{:}
+        \ControlFlowTok{return}\NormalTok{ n}
+    \ControlFlowTok{else}\NormalTok{: }
+        \ControlFlowTok{return}\NormalTok{ Fibonacci(n}\OperatorTok{{-}}\DecValTok{1}\NormalTok{) }\OperatorTok{+}\NormalTok{ Fibonacci(n}\OperatorTok{{-}}\DecValTok{2}\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{20}\NormalTok{):}
+    \BuiltInTok{print}\NormalTok{(Fibonacci(i))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+0
+1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+89
+144
+233
+377
+610
+987
+1597
+2584
+4181
+\end{verbatim}
+\end{code}
+
+\subsection{Razón áurea (proporción dorada)}
+
+La razón áurea, también conocida como número áureo o proporción dorada,
+es un número irracional denotado por la letra griega phi \((\varphi)\).
+
+Su valor es aproximadamente 1.6180339887.
+
+Se define algebraicamente como:
+
+\[ \varphi = \frac{1 + \sqrt{5}}{2} \]
+
+\subsection{Propiedades:}\label{propiedades}
+
+\begin{enumerate}
+\item
+  \textbf{Proporción Ideal:} El número surge de la división en dos de un
+  segmento guardando las siguientes proporciones: La longitud total
+  \(a+b\) es al segmento más largo \(a\), como \(a\) es al segmento más
+  corto \(b\), entonces esa proporción es la razón áurea:
+
+  \[ \frac{a+b}{a} = \frac{a}{b} = \varphi \]
+\end{enumerate}
+
+\begin{enumerate}
+\item
+  \textbf{Aparición en la Naturaleza:} La razón áurea aparece en
+  diversas formas en la naturaleza, como en las proporciones de las
+  conchas de nautilo, la disposición de las hojas, y las espirales de
+  las piñas.
+\item
+  \textbf{Uso en Arte y Arquitectura:} Ha sido utilizada en obras de
+  arte y arquitectura para crear estéticamente agradables proporciones,
+  como en el Partenón de Atenas o en las obras de Leonardo da Vinci.
+\item
+  \textbf{Relación con la Secuencia de Fibonacci:} La razón áurea se
+  relaciona con la serie de Fibonacci a través de la relación de los
+  términos consecutivos de la serie. A medida que avanzas en la
+  secuencia de Fibonacci, la proporción de un número con el anterior se
+  aproxima a la razón áurea.
+
+  \[ \lim_{{n \to \infty}} \frac{F(n+1)}{F(n)} = \varphi \]
+
+  Este límite tiende a \$ \textbackslash varphi \textbackslash approx
+  1.6180339887\$ cuando \(n\) tiende a infinito.
+\end{enumerate}
+
+La razón áurea ha fascinado a matemáticos, artistas y arquitectos
+durante siglos debido a su presencia en patrones naturales y su
+aplicación en el diseño.
+
+\href{https://www.youtube.com/watch?v=aopHcOm7a-w}{Número áureo}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n}\OperatorTok{=}\DecValTok{35}
+\NormalTok{Fibonacci(n)}\OperatorTok{/}\NormalTok{Fibonacci(n}\OperatorTok{{-}}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+1.6180339887499087
+
+\end{verbatim}
+
+\begin{code} Suma recursiva.
+Para sumar una lista de números se puede utilizar la función nativa
+\texttt{sum} de Python, pero hagamos una propia que utilice el concepto
+de recursividad.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ miSuma(L):}
+    \ControlFlowTok{if} \KeywordTok{not}\NormalTok{ L: }
+        \ControlFlowTok{return} \DecValTok{0}
+    \ControlFlowTok{else}\NormalTok{:}
+        \ControlFlowTok{return}\NormalTok{ L[}\DecValTok{0}\NormalTok{] }\OperatorTok{+}\NormalTok{ miSuma(L[}\DecValTok{1}\NormalTok{:])}
+
+\BuiltInTok{print}\NormalTok{(miSuma([}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{]))}
+\BuiltInTok{print}\NormalTok{(miSuma(}\BuiltInTok{list}\NormalTok{(}\BuiltInTok{range}\NormalTok{(}\DecValTok{101}\NormalTok{))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+15
+5050
+
+\end{verbatim}
+\end{code}
+
+\begin{code} Una versión alternativa del código empleando la expresión tenaria \texttt{if-else} de Python.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ miSuma(L):}
+    \ControlFlowTok{return} \DecValTok{0} \ControlFlowTok{if} \KeywordTok{not}\NormalTok{ L }\ControlFlowTok{else}\NormalTok{ L[}\DecValTok{0}\NormalTok{] }\OperatorTok{+}\NormalTok{ miSuma(L[}\DecValTok{1}\NormalTok{:])}
+
+\BuiltInTok{print}\NormalTok{(miSuma([}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{]))}
+\BuiltInTok{print}\NormalTok{(miSuma(}\BuiltInTok{list}\NormalTok{(}\BuiltInTok{range}\NormalTok{(}\DecValTok{101}\NormalTok{))))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+15
+5050
+
+\end{verbatim}
+\end{code}
+
+\begin{code} Otra versión que soporta no sólo números.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ miSuma(L):}
+    \ControlFlowTok{return}\NormalTok{ L[}\DecValTok{0}\NormalTok{] }\ControlFlowTok{if} \BuiltInTok{len}\NormalTok{(L) }\OperatorTok{==} \DecValTok{1} \ControlFlowTok{else}\NormalTok{ L[}\DecValTok{0}\NormalTok{] }\OperatorTok{+}\NormalTok{ miSuma(L[}\DecValTok{1}\NormalTok{:])}
+
+
+\BuiltInTok{print}\NormalTok{(miSuma([}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{]))}
+\BuiltInTok{print}\NormalTok{(miSuma(}\BuiltInTok{list}\NormalTok{(}\BuiltInTok{range}\NormalTok{(}\DecValTok{101}\NormalTok{))))}
+\BuiltInTok{print}\NormalTok{(miSuma([}\StringTok{\textquotesingle{}hola\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}mundo\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}cruel\textquotesingle{}}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+15
+5050
+holamundocruel
+
+\end{verbatim}
+\end{code}
+
+\begin{code} Una versión que además de no sólo soportar números, utiliza el desempaquetado de la lista.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ miSuma(L):}
+\NormalTok{    first, }\OperatorTok{*}\NormalTok{rest }\OperatorTok{=}\NormalTok{ L    }\CommentTok{\# Desempaquetado: Toma el primer elemento de la lista L y lo asigna a first, mientras que el resto de los elementos se asignan a rest como una lista}
+    \ControlFlowTok{return}\NormalTok{ first }\ControlFlowTok{if} \KeywordTok{not}\NormalTok{ rest }\ControlFlowTok{else}\NormalTok{ first }\OperatorTok{+}\NormalTok{ miSuma(rest)}
+
+\BuiltInTok{print}\NormalTok{(miSuma([}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{]))}
+\BuiltInTok{print}\NormalTok{(miSuma(}\BuiltInTok{list}\NormalTok{(}\BuiltInTok{range}\NormalTok{(}\DecValTok{101}\NormalTok{))))}
+\BuiltInTok{print}\NormalTok{(miSuma([}\StringTok{\textquotesingle{}hola\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}mundo\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}cruel\textquotesingle{}}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+15
+5050
+holamundocruel
+\end{verbatim}
+\end{code}
+
+\subsection{Recursividad vs Ciclos}
+
+La recursividad y los ciclos son dos enfoques para repetir acciones en
+un programa. Aquí están sus diferencias:
+
+\subsubsection{Recursividad}
+
+\begin{enumerate}
+\item
+  \textbf{Definición:}
+
+  \begin{itemize}
+  \item
+    Una función se llama a sí misma para resolver subproblemas más
+    pequeños.
+  \end{itemize}
+\item
+  \textbf{Estructura:}
+
+  \begin{itemize}
+  \item
+    Requiere un caso base para detener las llamadas recursivas.
+  \item
+    Cada llamada crea un nuevo contexto en la pila de llamadas.
+  \end{itemize}
+\item
+  \textbf{Ventajas:}
+
+  \begin{itemize}
+  \item
+    Más intuitiva para problemas que tienen una naturaleza divisoria,
+    como el recorrido de árboles o la generación de fractales.
+  \item
+    Puede ser más fácil de entender y escribir para ciertos problemas.
+  \end{itemize}
+\item
+  \textbf{Desventajas:}
+
+  \begin{itemize}
+  \item
+    Puede causar desbordamiento de pila si la profundidad de la
+    recursión es muy grande.
+  \item
+    A menudo es menos eficiente en términos de memoria y tiempo debido a
+    las múltiples llamadas a funciones.
+  \end{itemize}
+\end{enumerate}
+
+\subsubsection{Ciclos}
+
+\begin{enumerate}
+\item
+  \textbf{Definición:}
+
+  \begin{itemize}
+  \item
+    Utilizan estructuras de control (como \texttt{for}, \texttt{while})
+    para repetir acciones.
+  \end{itemize}
+\item
+  \textbf{Estructura:}
+
+  \begin{itemize}
+  \item
+    No involucran llamadas repetidas de función.
+  \item
+    Mantienen el control en un único contexto de ejecución.
+  \end{itemize}
+\item
+  \textbf{Ventajas:}
+
+  \begin{itemize}
+  \item
+    Más eficiente en términos de uso de memoria, ya que no hay múltiples
+    contextos.
+  \item
+    Evita problemas de desbordamiento de pila.
+  \end{itemize}
+\item
+  \textbf{Desventajas:}
+
+  \begin{itemize}
+  \item
+    A veces puede ser menos intuitivo para problemas que se modelan
+    naturalmente de manera recursiva.
+  \end{itemize}
+\end{enumerate}
+
+Podría pensarse que las estructuras cíclicas son más sencillas y pueden
+realizar todo aquello que las formas recursivas pueden. Por ejemplo, la
+versión cíclica de la función suma anterior es:\\
+
+\begin{code} Sumas cíclicas
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Suma cíclica}
+\NormalTok{L }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{]}
+
+\BuiltInTok{sum} \OperatorTok{=} \DecValTok{0}
+\ControlFlowTok{while}\NormalTok{ L:}
+    \BuiltInTok{sum} \OperatorTok{+=}\NormalTok{ L[}\DecValTok{0}\NormalTok{]}
+\NormalTok{    L }\OperatorTok{=}\NormalTok{ L[}\DecValTok{1}\NormalTok{:]}
+
+\BuiltInTok{sum}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+15
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Suma cíclica, versión alternativa}
+\NormalTok{L }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{]}
+
+\BuiltInTok{sum} \OperatorTok{=} \DecValTok{0}
+\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ L: }
+    \BuiltInTok{sum} \OperatorTok{+=}\NormalTok{ x}
+
+\BuiltInTok{sum}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+15
+
+\end{verbatim}
+\end{code}
+
+
+Sin embargo hay ocasiones donde la forma recursiva es más simple que una
+cíclica. Por ejemplo, considere el caso de la suma de números en una
+lista anidada:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{[}\DecValTok{1}\NormalTok{, [}\DecValTok{2}\NormalTok{, [}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{], }\DecValTok{5}\NormalTok{], }\DecValTok{6}\NormalTok{, [}\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{], [[}\DecValTok{9}\NormalTok{], [}\DecValTok{10}\NormalTok{]]]}
+\end{Highlighting}
+\end{Shaded}
+
+En casos como este la programación cíclica no sirve dado que no es una
+iteración lineal. Para ello sería necesario agregar más código de manera
+que los ciclos puedan funcionar. Por otro lado, una versión recursiva se
+acomoda mejor debido a la construcción recursiva de la propia lista
+anidada.
+
+Veamos el código \ref{code:recursiva1}:\\
+
+\begin{code} Suma recursiva
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ miSuma(L):}
+\NormalTok{    total }\OperatorTok{=} \DecValTok{0}
+    \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ L:}
+        \ControlFlowTok{if} \KeywordTok{not} \BuiltInTok{isinstance}\NormalTok{(x, }\BuiltInTok{list}\NormalTok{):}
+\NormalTok{            total }\OperatorTok{+=}\NormalTok{ x}
+        \ControlFlowTok{else}\NormalTok{:}
+\NormalTok{            total }\OperatorTok{+=}\NormalTok{ miSuma(x)}
+    \ControlFlowTok{return}\NormalTok{ total}
+
+\BuiltInTok{print}\NormalTok{(miSuma([}\DecValTok{1}\NormalTok{, [}\DecValTok{2}\NormalTok{, [}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{], }\DecValTok{5}\NormalTok{], }\DecValTok{6}\NormalTok{, [}\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{], [[}\DecValTok{9}\NormalTok{], [}\DecValTok{10}\NormalTok{]]]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+55
+\end{verbatim}
+\label{code:recursiva1}
+\end{code}
+
+\subsection{Llamada indirecta de funciones}
+
+Debido a que en Python las funciones son objetos, se pueden escribir
+programas que las procesen de forma genérica. Las funciones como objeto
+pueden ser asignadas a otro nombre, pasadas a otras funciones,
+incrustarlas en estructuras de datos, devueltas por una función, entre
+otras cosas más.
+
+El nombre utilizado al declarar una función a través de \texttt{def}, es
+sólo una variable asignada al contexto actual. Luego de que el operador
+\texttt{def} sea ejecutado, el nombre sólo es una referencia al objeto.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Llamada directa}
+\KeywordTok{def}\NormalTok{ echo(message):}
+    \BuiltInTok{print}\NormalTok{(message)}
+
+\NormalTok{echo(}\StringTok{"Hola mundo cruel"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Hola mundo cruel
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Llamada indirecta}
+\NormalTok{x }\OperatorTok{=}\NormalTok{ echo}
+\NormalTok{x(}\StringTok{"Hola mundo cruel"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Hola mundo cruel
+\end{verbatim}
+
+Debido a que los argumentos se pasan como una asignación de objetos, es
+posible pasar funciones como argumento para otras funciones.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ indirect(func, arg):}
+\NormalTok{    func(arg)}
+
+\NormalTok{indirect(echo, }\StringTok{"Llamada por argumento"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Llamada por argumento
+\end{verbatim}
+
+Incluso es posible incluir funciones en estructuras de datos, como si
+fueran números enteros o cadenas. El siguiente ejemplo, incluye la
+función dos veces en una lista de tuplas, como una especie de tabla de
+acciones. Debido a que los tipos compuestos de Python como estos pueden
+contener cualquier tipo de objeto, tampoco hay ningún caso especial
+aquí:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{myList }\OperatorTok{=}\NormalTok{ [(echo, }\StringTok{"Hola"}\NormalTok{), (echo, }\StringTok{"mundo"}\NormalTok{), (echo, }\StringTok{"cruel"}\NormalTok{)]}
+\ControlFlowTok{for}\NormalTok{ (func, arg) }\KeywordTok{in}\NormalTok{ myList:}
+\NormalTok{    func(arg)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Hola
+mundo
+cruel
+\end{verbatim}
+
+En el siguiente ejemplo, se define una función como y se devuelve
+resultado de otra función.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ make(label):}
+    \KeywordTok{def}\NormalTok{ echo(message):}
+        \BuiltInTok{print}\NormalTok{(label }\OperatorTok{+} \StringTok{\textquotesingle{}:\textquotesingle{}} \OperatorTok{+}\NormalTok{ message)}
+    \ControlFlowTok{return}\NormalTok{ echo}
+
+\NormalTok{F }\OperatorTok{=}\NormalTok{ make(}\StringTok{"Hola"}\NormalTok{)}
+\NormalTok{F(}\StringTok{" Mundo Cruel"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Hola: Mundo Cruel
+\end{verbatim}
+
+En este ejemplo, se define una función \texttt{make} que recibe un
+argumento \texttt{label} que se pasa como argumento a la función
+\texttt{echo}. Esta última función recibe el argumento, forma un mensaje
+y lo imprime. Finalmente la función make devuelve la función
+\texttt{echo}.
+
+\section{Programación funcional}
+
+\subsection{\texorpdfstring{Funciones anónimas \texttt{lambda}}{Funciones anónimas lambda}}
+
+Además del parámetro \texttt{def} para definir funciones, Python ofrece
+la expresión \texttt{lambda} para definir funciones. Al igual que con
+\texttt{def}, \texttt{lambda} permite crear una función para ser
+utilizada posteriormente pero devuelve la función en lugar de asignarlo
+a un nombre. Es por ello que se les conoce como \emph{funciones
+anónimas}.
+
+Para declarar una función anónima, se utiliza la palabra clave
+\texttt{lambda} seguida de uno o más argumentos, y separado con dos
+puntos la expresión a evaluar por la función.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{lambda}\NormalTok{ argument1, argument2, ..., argumentN : expression using arguments}
+\end{Highlighting}
+\end{Shaded}
+
+Las funciones \texttt{lambda} operan de forma idéntica a las funciones
+\texttt{def}, pero existen algunas diferencias entre ellas.
+
+\begin{itemize}
+\item
+  \textbf{\texttt{lambda} es una expresión, no una sentencia}. Debido a
+  esto, las funciones lambda pueden aparecer en lugares donde la
+  sintáxis de Python no lo permite (dentro de una lista, en los
+  argumentos de una función, entre muchos otros). Debido a que es una
+  expresión, devuelve un valor (una función) que puede ser opcionalmente
+  asignada a un nombre. A diferencia de \texttt{def} que siempre asigna
+  la función al nombre indicado.
+\item
+  \textbf{El cuerpo de \texttt{lambda} es una sola expresión, no un
+  bloque de sentencias.} El contenido de las funciones \texttt{lambda}
+  es similar al de las funciones \texttt{def}, pero sólo se escribe la
+  expresión a evlauar sin ser necesario devolverlo explícitamente. Dado
+  que las funciones \texttt{lambda} están limitadas a una sola
+  expresión, son menos generales que las funciones \texttt{def}. Esta
+  limitante es intencional por diseño, de manera que \texttt{lambda}
+  está diseñada para usarse para operaciones simples y \texttt{def} para
+  operaciones más largas.
+\end{itemize}
+
+A pesar de sus diferencias, las funciones \texttt{def} y \texttt{lambda}
+pueden hacer el mismo trabajo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Función def}
+\KeywordTok{def}\NormalTok{ funcion(x,y,z):}
+    \ControlFlowTok{return}\NormalTok{ x}\OperatorTok{+}\NormalTok{y}\OperatorTok{+}\NormalTok{z}
+\NormalTok{funcion(}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+12
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Función lambda}
+\NormalTok{funcion }\OperatorTok{=} \KeywordTok{lambda}\NormalTok{ x,y,z : x}\OperatorTok{+}\NormalTok{y}\OperatorTok{+}\NormalTok{z}
+\NormalTok{funcion(}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+12
+\end{verbatim}
+
+Otro ejemplo con función \texttt{lambda}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ knights():}
+\NormalTok{    title }\OperatorTok{=} \StringTok{\textquotesingle{}Sir\textquotesingle{}}
+\NormalTok{    action }\OperatorTok{=} \KeywordTok{lambda}\NormalTok{ x : title }\OperatorTok{+} \StringTok{\textquotesingle{} \textquotesingle{}} \OperatorTok{+}\NormalTok{ x}
+    \ControlFlowTok{return}\NormalTok{ action}
+
+\NormalTok{act }\OperatorTok{=}\NormalTok{ knights()}
+\NormalTok{act(}\StringTok{"Robin"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+'Sir Robin'
+\end{verbatim}
+
+En este ejemplo, la función \texttt{knigths} devuelve una función
+\texttt{lambda}. Por ello \texttt{act} es nombre de variable que apunta
+a un objeto función \texttt{lambda} asociado en la llamada indirecta.
+Cuado se invoca \texttt{act(``Robin'')}, la función \texttt{lambda} recibe
+el argumento en \texttt{x} y realiza la operación definida.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{act}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+<function __main__.knights.<locals>.<lambda>(x)>
+\end{verbatim}
+
+\subsection{\texorpdfstring{¿Porqué utilizar funciones \texttt{lambda}?}{¿Porqué utilizar funciones lambda?}}
+
+Este tipo de funciones resultan útiles en casos donde se quiere
+incrustar la definición de la función dentro del código que la utiliza.
+Aunque su uso es opcional, tienden a generar código más simple en
+escenarios donde se necesita crear bloques de código concisos e
+independientes.
+
+Las funciones lambda se utilizan comunmente para codificar \emph{jump
+tables}, que son listas o diccionarios de acciones que se deben realizar
+bajo demanda. Por ejemplo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L }\OperatorTok{=}\NormalTok{ [}\KeywordTok{lambda}\NormalTok{ x:x}\OperatorTok{**}\DecValTok{2}\NormalTok{, }\KeywordTok{lambda}\NormalTok{ x:x}\OperatorTok{**}\DecValTok{3}\NormalTok{, }\KeywordTok{lambda}\NormalTok{ x:x}\OperatorTok{**}\DecValTok{4}\NormalTok{]   }\CommentTok{\# Lista de 3 funciones}
+
+\ControlFlowTok{for}\NormalTok{ f }\KeywordTok{in}\NormalTok{ L:}
+    \BuiltInTok{print}\NormalTok{(f(}\DecValTok{2}\NormalTok{))}
+
+\BuiltInTok{print}\NormalTok{(L[}\DecValTok{0}\NormalTok{](}\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+4
+8
+16
+9
+\end{verbatim}
+
+Este código es muy simple e intuitivo, sin embargo, es posibble obtener
+el mismo resultado mediante funciones \texttt{def}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ f1(x): }\ControlFlowTok{return}\NormalTok{ x}\OperatorTok{**}\DecValTok{2}
+\KeywordTok{def}\NormalTok{ f2(x): }\ControlFlowTok{return}\NormalTok{ x}\OperatorTok{**}\DecValTok{3}
+\KeywordTok{def}\NormalTok{ f3(x): }\ControlFlowTok{return}\NormalTok{ x}\OperatorTok{**}\DecValTok{4}
+
+\NormalTok{L }\OperatorTok{=}\NormalTok{ [f1, f2, f3]}
+
+\ControlFlowTok{for}\NormalTok{ f }\KeywordTok{in}\NormalTok{ L:}
+    \BuiltInTok{print}\NormalTok{(f(}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+4
+8
+16
+\end{verbatim}
+
+El resultado es el mismo pero el código es más simple.
+
+Para el caso de los diccionarios veamos el ejemplo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{key }\OperatorTok{=} \StringTok{\textquotesingle{}got\textquotesingle{}}
+\NormalTok{D }\OperatorTok{=}\NormalTok{ \{}
+    \StringTok{\textquotesingle{}already\textquotesingle{}}\NormalTok{: }\KeywordTok{lambda}\NormalTok{ x: x}\OperatorTok{+}\DecValTok{4}\NormalTok{, }
+    \StringTok{\textquotesingle{}got\textquotesingle{}}\NormalTok{: }\KeywordTok{lambda}\NormalTok{ x: x}\OperatorTok{*}\DecValTok{4}\NormalTok{,}
+    \StringTok{\textquotesingle{}one\textquotesingle{}}\NormalTok{ : }\KeywordTok{lambda}\NormalTok{ x: x}\OperatorTok{**}\DecValTok{4}
+\NormalTok{\}}
+
+\NormalTok{D[key](}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+12
+\end{verbatim}
+
+Ahora veamos el caso de funciones \texttt{lambda} anidadas, pero primero
+hagamos un ejemplo con uina función \texttt{def} y dentro una
+\texttt{lambda}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ action(x):}
+    \ControlFlowTok{return} \KeywordTok{lambda}\NormalTok{ y : x}\OperatorTok{+}\NormalTok{y}
+
+\NormalTok{act }\OperatorTok{=}\NormalTok{ action(}\DecValTok{99}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(act)}
+\NormalTok{act(}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+<function action.<locals>.<lambda> at 0x7fa3ccd81580>
+\end{verbatim}
+
+\begin{verbatim}
+101
+\end{verbatim}
+
+Ahora la misma operación pero con un par de funciones \texttt{lambda},
+en una sola línea.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{action }\OperatorTok{=} \KeywordTok{lambda}\NormalTok{ x : (}\KeywordTok{lambda}\NormalTok{ y : x}\OperatorTok{+}\NormalTok{y)}
+\NormalTok{act }\OperatorTok{=}\NormalTok{ action(}\DecValTok{99}\NormalTok{)}
+\NormalTok{act(}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+102
+\end{verbatim}
+
+\subsection{\texorpdfstring{Funciones \texttt{map} sobre
+secuencias}{Funciones map sobre secuencias}}\label{funciones-map-sobre-secuencias}
+
+Otra tarea común al utilizar listas es aplicar una operación a todos los
+elementos y recolectar un resultado. Por ejemplo, actualizar todos los
+elementos en una lista se puede hacer fácilmente con un ciclo empleando
+programación convencional.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{counters }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{]}
+\NormalTok{updated }\OperatorTok{=}\NormalTok{ []}
+
+\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ counters:}
+\NormalTok{    updated.append(x}\OperatorTok{+}\DecValTok{10}\NormalTok{)}
+\NormalTok{updated}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[11, 12, 13, 14]
+\end{verbatim}
+
+Pero dado que este tipo de operaciones son muy comúnes, Python ofrece
+una función nativa que hace este trabajo. La función \texttt{map} aplica
+una función pasada com oargumento a cada uno de los elementos de una
+lista y devuelve otra lista con los resultados. Por ejemplo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ inc(x):}
+    \ControlFlowTok{return}\NormalTok{ x}\OperatorTok{+}\DecValTok{10}
+
+\BuiltInTok{list}\NormalTok{(}\BuiltInTok{map}\NormalTok{(inc, counters))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[11, 12, 13, 14]
+\end{verbatim}
+
+La función \texttt{map} llama a la función pre-existente inc para cada
+uno de los elementos de la lista y los almacena en una nueva lista.
+
+Dado que \texttt{map} espera recibir una función como argumento, es un
+buen lugar para utilizar una función \texttt{lambda}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{counters }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{]}
+\BuiltInTok{list}\NormalTok{(}\BuiltInTok{map}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x : x}\OperatorTok{+}\DecValTok{10}\NormalTok{, counters))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[11, 12, 13, 14]
+\end{verbatim}
+
+Es posible replicar el funcionamiento de \texttt{map} con programación
+ciclos y programación convencional. Sin embargo \texttt{map} es una
+función nativa de Python, por lo que siempre está disponible, funciona
+siempre igual y es más rápida que su versión equivalente con ciclos
+\texttt{for}.
+
+Además \texttt{map} puede utilizarse en situaciones más complicadas. Por
+ejemplo, si la función recibida como argumento por \texttt{map} requiere
+a su vez más de un argumento, se pueden agregar todos los argumentos
+necesarios y \texttt{map} se los hace llegar a la función.
+
+Por ejemplo, considere la función \texttt{pow} que requiere dos
+argumentos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{pow}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+
+\BuiltInTok{list}\NormalTok{(}\BuiltInTok{map}\NormalTok{(}\BuiltInTok{pow}\NormalTok{, [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{], [}\DecValTok{5}\NormalTok{,}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{8}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1, 64, 2187, 65536]
+\end{verbatim}
+
+Para una función que requiere \(n\) argumentos, \texttt{map} espera
+\(n\) secuencias para esa función.
+
+\subsection{\texorpdfstring{Herramientas de programación funcional:
+\texttt{filter} y
+\texttt{reduce}}{Herramientas de programación funcional: filter y reduce}}\label{herramientas-de-programaciuxf3n-funcional-filter-y-reduce}
+
+La función \texttt{map} es la representación más simple de las funciones
+nativas de Python para la \emph{programación funcional}, que son
+herramientas que aplican funciones a secuencias y otros iterables.
+
+Estas herramientas filtran elementos de acuerdo a una función de prueba
+(filtro) y aplican funciones a pares de elementos y resultados de
+ejecución (reduce). Debido a que devuelven iterables, range y filter
+requieren llamadas de lista para mostrar todos sus resultados.
+
+\subsubsection{Filter}
+
+Por ejemplo, el siguiente filtro selecciona elementos en una secuencia
+dada por \texttt{range(-5,\ 5)} que son mayores que cero:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{list}\NormalTok{(}\BuiltInTok{filter}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x:x}\OperatorTok{\textgreater{}}\DecValTok{0}\NormalTok{, }\BuiltInTok{range}\NormalTok{(}\OperatorTok{{-}}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1, 2, 3, 4]
+\end{verbatim}
+
+Los elementos de la secuencia o iterable que cumplen la condición dada
+por la función \texttt{lambda} son añadidos a la lista resultante. Esta
+función, al igual que con \texttt{map}, puede ser construida con ciclos
+\texttt{for}, pero es más rápida y nativa.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{res }\OperatorTok{=}\NormalTok{ []}
+\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\OperatorTok{{-}}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{):}
+    \ControlFlowTok{if}\NormalTok{ x}\OperatorTok{\textgreater{}}\DecValTok{0}\NormalTok{:}
+\NormalTok{        res.append(x)}
+\NormalTok{res}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1, 2, 3, 4]
+\end{verbatim}
+
+\subsubsection{Reduce}
+
+\texttt{reduce} es una función nativa contenida dentro del modulo
+\texttt{functools} y acepta un iterador para proceder pero
+\texttt{reduce} no es un iterador ya que devuelve un sólo resultado.
+
+Por ejemplo, \texttt{reduce} llama la suma y multiplicación para los
+elementos de la lista:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ functools }\ImportTok{import} \BuiltInTok{reduce}
+
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{reduce}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x,y : x}\OperatorTok{+}\NormalTok{y, [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{]))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{reduce}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x,y : x}\OperatorTok{*}\NormalTok{y, [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+10
+24
+\end{verbatim}
+
+En cada paso, \texttt{reduce} pasa el valor actual de la suma o
+multiplicación junto con el siguiente valor de la lista a la función
+\texttt{lambda}. Por defecto, el primer valor de la lista inicializa el
+acumulador para el resultado final.
+
+El siguiente código es una versión equivalente empleando ciclo
+\texttt{for}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{L }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{]}
+\NormalTok{res }\OperatorTok{=}\NormalTok{ L[}\DecValTok{0}\NormalTok{]}
+\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ L[}\DecValTok{1}\NormalTok{:]:}
+\NormalTok{    res }\OperatorTok{+=}\NormalTok{ x}
+\NormalTok{res}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+10
+\end{verbatim}
+
+Para fines ilustrativos y entender el funcionamiento de \texttt{reduce}
+a fondo, éste es un código que replica el funcionamiento de
+\texttt{reduce}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ myReduce(function, sequence):}
+\NormalTok{    result }\OperatorTok{=}\NormalTok{ sequence[}\DecValTok{0}\NormalTok{]}
+    \ControlFlowTok{for} \BuiltInTok{next} \KeywordTok{in}\NormalTok{ sequence[}\DecValTok{1}\NormalTok{:]:}
+\NormalTok{        result }\OperatorTok{=}\NormalTok{ function(result, }\BuiltInTok{next}\NormalTok{)}
+    \ControlFlowTok{return}\NormalTok{ result}
+
+\BuiltInTok{print}\NormalTok{(myReduce(}\KeywordTok{lambda}\NormalTok{ x,y : x}\OperatorTok{+}\NormalTok{y, [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{]))}
+\BuiltInTok{print}\NormalTok{(myReduce(}\KeywordTok{lambda}\NormalTok{ x,y : x}\OperatorTok{*}\NormalTok{y, [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+10
+24
+\end{verbatim}
+
+En el código se puede observar que \texttt{result} fue inicializado en
+el primer elemento de la lista. Sin embargo \texttt{reduce} acepta un
+tercer argumento que se utiliza como valor inicial, o incluso final si
+la lista estuviese vacía.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{reduce}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x,y : x}\OperatorTok{+}\NormalTok{y, [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{], }\DecValTok{10}\NormalTok{))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{reduce}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x,y : x}\OperatorTok{*}\NormalTok{y, [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{], }\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+20
+120
+\end{verbatim}
+
+El valor inicial no debe ser necesariamente un número, puede ser
+cualquier tipo de dato hasta incluso un objeto. Debe considerarse el
+tipo que sea dicho valor inicial para las operaciones que
+\texttt{reduce} llevará a cabo con dicho valor inicial.
+
+\section{Referencias}
+
+\begin{itemize}
+\item
+  \href{https://link.springer.com/book/10.1007/978-3-030-50356-7}{Sundnes
+  J., Introduction to Scientific Programming with Python, Springer Open,
+  2020.}
+\item
+  Lutz M., Learning Python, O\textquotesingle Reilly, 2009.
+\end{itemize}

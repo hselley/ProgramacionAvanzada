@@ -1,0 +1,376 @@
+\chapter{Git}
+\begin{figure}
+\centering
+\includegraphics{img/git-black.png}
+\caption{Git}
+\end{figure}
+
+\href{https://git-scm.com/}{Git} es un sistema de control de versiones
+de software libre diseñado para manejar desde proyectos pequeños hasta
+muy grandes con rapidez y eficiencia.
+
+Git es \href{https://git-scm.com/documentation}{facil de aprender} y es
+liviano con rápido desempeño.
+\href{https://git-scm.com/about/small-and-fast}{Supera a software
+similares} como Subversion, CVS, Perforce y ClearCase gracias a
+características como manejo de ramas locales, areas de "staging" y
+múltiples flujos de trabajo.
+
+Git realiza un control de versiones del código, esto quiere decir que
+almacena el código escrito en todas sus veriones haciendo un registro de
+los cambios realizados, cuando y quien los hizo. Es posible además
+volver a un estado anterior del código. Git realiza un registro de los
+cambios en el código y almacena un \texttt{snapshot} del código pudiendo
+regresar a una versión previa con facilidad.
+
+Aquí puede descargar la versión de Git que corresponda para su sistema:
+
+\begin{itemize}
+\item
+  \href{https://git-scm.com/download/win}{Windows}
+\item
+  \href{https://git-scm.com/download/mac}{macOS}
+\end{itemize}
+
+\section{Mini Tutorial Git}
+
+\subsection{Estados de Git}
+
+Git tiene tres estados para el código:
+
+\begin{enumerate}
+\item
+  \textbf{Working Directory}: El directorio de trabajo, lugar donde se
+  encuentra el código que estamos escribiendo.
+\item
+  \textbf{Staging Area}: Archivos de código listos para ser llevados al
+  repositorio.
+\item
+  \textbf{Respository}: Archivos dentro del repositorio.
+\end{enumerate}
+
+\subsection{Configuración inicial de Git}
+
+\href{https://git-scm.com/}{Git} está disponible para instalar en
+Windows, Linux y macOS. Descarge e instale la versión que corresponda
+para su sistema operativo.
+
+Una vez instalado, puede acceder a Git a través de la terminal en Linux
+y macOS o bien a través de GitBash en Windows.
+
+Recién instalado Git, es necesario configurar el nombre y correo del
+usuario. El siguiente comando asignará el nombre de usuario, este nombre
+es el que quedará registrado en cada commit que se haga en el
+repositorio.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git config }\AttributeTok{{-}{-}global}\NormalTok{ user.name }\StringTok{"Juan Perez"}
+\end{Highlighting}
+\end{Shaded}
+
+Si ejecuta el comando sin argumentos, mostrará el nombre que se
+encuentra configurado actualmente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git config }\AttributeTok{{-}{-}global}\NormalTok{ user.name}
+\end{Highlighting}
+\end{Shaded}
+
+Para registrar el correo del usuario el proceso es similar, el comando
+es el siguiente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git config }\AttributeTok{{-}{-}global}\NormalTok{ user.email }\StringTok{"juan.perez@correo.com"}
+\end{Highlighting}
+\end{Shaded}
+
+Si ejecuta el comando sin argumentos, mostrará el correo que se
+encuentra configurado actualmente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git config }\AttributeTok{{-}{-}global}\NormalTok{ user.email}
+\end{Highlighting}
+\end{Shaded}
+
+La terminal/WindowsBash puede mostrar los resultados de Git en colores,
+esto facilita su lectura. Para habilitar esta característica basta con
+ejecutar el comando:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git config }\AttributeTok{{-}{-}global}\NormalTok{ color.ui true}
+\end{Highlighting}
+\end{Shaded}
+
+Para ver la configuración actual de Git, ejecute el siguiente comando:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git config }\AttributeTok{{-}{-}global} \AttributeTok{{-}{-}list}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ cat .gitconfig}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Comenzando con Git}
+
+El comando \texttt{git\ help} muestra información del manual de git para
+algún comando específico.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git help comando}
+\end{Highlighting}
+\end{Shaded}
+
+El comando \texttt{git\ init} inicializa el proyecto. Indica a Git que
+este es el "Working Directory", que este directorio tiene el código que
+habrá de guardarse en el repositorio. Debe usar este comando cada que
+comienza un proyecto nuevo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git init}
+\end{Highlighting}
+\end{Shaded}
+
+El comando \texttt{git\ stauts} muestra el estado actual del
+repositorio.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git status}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Añadir archivos al Staging
+Area}\label{auxf1adir-archivos-al-staging-area}
+
+Para añadir archivos al Staging Area se usa el comando git add. Puede
+agregarse un archivo o varios a la vez.
+
+El siguiente comando añade el archivo file.txt al staging:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git add file.txt}
+\end{Highlighting}
+\end{Shaded}
+
+El siguiente comando añade todos los archivos en el directorio actual:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git add }\AttributeTok{{-}A}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Añadir archivos al Repository}
+
+Para añadir archivos al Repository se utiliza el comando
+\texttt{git\ commit}. Este comando permite agregar un mensaje, el cual
+nos permite especificar el cambio que hemos realizado en el código. Este
+mensaje es para nosotros mismos como desarrolladores, ya que en un
+futuro que consultemos los cambios, podremos saber con precisión que
+cambio fue realizado en esa etapa del desarrollo del código. Por esa
+razón se recomienda que el mensaje sea claro y conciso.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git commit }\AttributeTok{{-}m} \StringTok{"Mensaje claro y conciso que describe el cambio en el código"}
+\end{Highlighting}
+\end{Shaded}
+
+Una vez que se haga algún cambio en el código o se agreguen archivos,
+haga un \texttt{git\ status} y este indicará que el código en el
+\emph{Working Directory} difiere del que se encientra en el
+\emph{Repository}. Este será el momento para hacer un \texttt{git\ add}
+para los archivos modificados y un \texttt{git\ commit} nuevamente.
+
+Es posible utilizar el comando \texttt{git\ commit} sin más argumentos.
+Esto llevará los cambios del Staging Area al Repository, pero dado que
+no se especificó un mensaje, se abrirá el editor por defecto en el
+sistema (\texttt{vi} en los sistemas *NIX) para escribir el mensaje
+correspondiente para el \emph{commit}.
+
+\subsection{Bitácora de Cambios}
+
+Uno de las grandes ventajas de utiliar Git es que guarda un registro de
+los cambios y un \texttt{snapshot} del código en el momento del
+\texttt{commit}. Para ver el registro se utiliza el comando
+\texttt{git\ log}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git log}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Ver estados anteriores del
+código}\label{ver-estados-anteriores-del-cuxf3digo}
+
+El comando \texttt{git\ checkout} permite ver una versión específica del
+código para la ocurrencia de un \emph{commit} específico. Se dice que
+este comando permite "\emph{viajar en el tiempo}" del código. Este
+comando requiere de un identificador SHA (Secure Hash Algorithm) del
+\emph{commit}, el cual podemos ver en la bitácora. Por ejemplo:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git checkout [}\OperatorTok{\textless{}}\NormalTok{commit}\OperatorTok{\textgreater{}}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+Este comando llevará el código al estado en el que se encontraba al
+momento de haber hecho el coommit correspondiente al ID. De esta forma
+podremos examinar el código en ese momento y llevar a cabo cualquier
+acción que deseemos con el.
+
+Si desearamos viajar nuevamente a otro estado anterior del código
+podríamos hacerlo con \texttt{git\ chechout\ ID}, de acuerdo al ID
+específico a donde quisieramos ir. Por otro lado, si quisieramos
+regresar al último commit realizado (antes del primer
+\texttt{git\ checkout}), basta con escribir:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git checkout master}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Regresar a estados anteriores del
+código.}\label{regresar-a-estados-anteriores-del-cuxf3digo.}
+
+Una de las funcionalidades de Git es que permite ver y regresar a
+estados anteriores del código. Esto es útil por si algún commit tuviera
+un error peligroso o cambios no deseados. Utilice esta instrucción con
+precaución.
+
+Existen cinco tipos de \texttt{reset}: \texttt{soft}, \texttt{mixed},
+\texttt{hard}, \texttt{merge} y \texttt{keep}. A continuación se
+describne los más comunes:
+
+\begin{description}
+\item [soft] Mantiene los cambios de nuestros archivos intacto,
+  simplemente es para que Git tenga presente que está en otro
+  \emph{commit}.
+\item [mixed] Mantiene nuestros archivos, pero limpia el index de
+  git de las cambios realizadas.
+\item [hard] Elimina todo los cambios que tenemos en nuestros
+  archivos para dejarlo exactamente igual que en el repositorio.
+\end{description}
+
+\section{GitHub}
+
+\begin{figure}
+\centering
+\includegraphics[width=2.08333in,height=\textheight]{img/github.png}
+\caption{GitHub}
+\end{figure}
+
+\href{https://github.com/}{GitHub} es una plataforma de desarrollo
+colaborativo para alojar proyectos utilizando el sistema de control de
+versiones Git. Utiliza el framework Ruby on Rails por GitHub,
+Inc.~(anteriormente conocida como Logical Awesome).
+
+GitHub es una plataforma de desarrollo inspirada en su forma de trabajo.
+Usted puede almacenar y revisar código, administrar proyectos y
+construir software desde código abierto hasta empresarial junto a
+millones de desarrolladores.
+
+Desde enero de 2010, opera bajo el nombre de GitHub, Inc.~El código se
+almacena de forma pública, aunque también se puede hacer de forma
+privada, creando una cuenta de pago.
+
+GitHub es un sitio que crea una comunidad de desarrolladores, se puede
+decir que es la red social de los desarrolladores.
+
+\section{MiniTutorial Git + GitHub}
+
+\subsection{Clonar un repositorio}
+
+Si deseamos descargar todos los archivos de código de un proyecto que se
+encuentra en GitHub, podemos hacer una copia a través del comando:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git clone URL}
+\end{Highlighting}
+\end{Shaded}
+
+Este comando es útil si nos interesa obtener el código y no
+necesariamente hacer contribuciones.
+
+\subsection{Manipular repositorios remotos} 
+
+Para vincular un proyecto de código local a un repositorio remoto en
+GitHub se utiliza el comando \emph{git remote}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git remote add origin URL\_Repo}
+\end{Highlighting}
+\end{Shaded}
+
+Este comando establecerá un vinculo entre el código del repositorio
+local \emph{origin} con el repositorio remoto que se encuentra en GitHub
+a través de \emph{URL\_Repo}.
+
+El siguiente comando mostrará si existe un vinculo entre el repositorio
+local y uno remoto:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git remote }\AttributeTok{{-}v}
+\end{Highlighting}
+\end{Shaded}
+
+El siguiente comando permite eliminar el vinculo que exista entre el
+repositorio local y remoto:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git remote remove origin}
+\end{Highlighting}
+\end{Shaded}
+
+Se puede comprobar el efecto de estas operaciones con el comando
+\texttt{git\ remote\ -v}.
+
+El comando \texttt{git\ push} permite subir el código que se encuentra
+en el repositorio local al repositorio remoto en GitHub.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ExtensionTok{$}\NormalTok{ git push origin master}
+\end{Highlighting}
+\end{Shaded}
+
+El comando solicitará el \emph{username} y \emph{password} de la cuenta
+de GitHib donde se encuentra el repositorio remoto.
+
+El comando \texttt{git\ push\ origin\ master} puede ejecutarse cada vez
+que se hagan cambios en el código, de manera que los repositorios local
+y remoto se encuentren en sincronía.
+
+Tenga en cuenta que este comando sincroniza la rama \emph{master} del
+repositorio local con el repositorio remoto en GitHub.
+
+\section{Referencias}
+
+\begin{itemize}
+\item
+  \href{https://git-scm.com/}{Git}
+\item
+  \href{https://github.com/}{GitHub}
+\item
+  \href{https://gitlab.com/}{GitLab}
+\end{itemize}

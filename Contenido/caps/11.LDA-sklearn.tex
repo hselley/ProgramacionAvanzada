@@ -1,0 +1,584 @@
+\chapter{LDA - sklearn}
+\section{Carga de los módulos}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\end{Highlighting}
+\end{Shaded}
+
+
+\section{Lectura de los datos}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos }\OperatorTok{=}\NormalTok{ pd.read\_table(}\StringTok{"data/datosAB.txt"}\NormalTok{, sep}\OperatorTok{=}\StringTok{\textquotesingle{}}\CharTok{\textbackslash{}t}\StringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{datos}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      a    b clase
+0   168  141     r
+1   165  143     r
+2   170  143     r
+3   172  145     r
+4   174  145     r
+5   167  147     r
+6   174  147     r
+7   169  149     r
+8   170  150     r
+9   164  151     r
+10  172  151     r
+11  175  152     r
+12  164  153     r
+13  168  154     r
+14  170  156     r
+15  173  157     r
+16  176  159     r
+17  175  162     r
+18  165  151     n
+19  157  153     n
+20  167  156     n
+21  171  156     n
+22  160  155     n
+23  165  150     n
+24  177  161     n
+25  179  162     n
+26  172  163     n
+27  168  160     n
+28  172  164     n
+29  171  165     n
+30  178  165     n
+31  169  166     n
+32  165  168     n
+33  174  168     n
+34  173  169     n
+35  160  143     n
+\end{verbatim}
+
+\section{Separación de datos}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X }\OperatorTok{=}\NormalTok{ datos.iloc[:,:}\OperatorTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{y }\OperatorTok{=}\NormalTok{ datos.iloc[:,}\DecValTok{2}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+0     r
+1     r
+2     r
+3     r
+4     r
+5     r
+6     r
+7     r
+8     r
+9     r
+10    r
+11    r
+12    r
+13    r
+14    r
+15    r
+16    r
+17    r
+18    n
+19    n
+20    n
+21    n
+22    n
+23    n
+24    n
+25    n
+26    n
+27    n
+28    n
+29    n
+30    n
+31    n
+32    n
+33    n
+34    n
+35    n
+Name: clase, dtype: object
+\end{verbatim}
+
+\section{Creación de subconjutos CP y CE}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.model\_selection }\ImportTok{import}\NormalTok{ train\_test\_split}
+\end{Highlighting}
+\end{Shaded}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X\_ce, X\_cp, y\_ce, y\_cp }\OperatorTok{=}\NormalTok{ train\_test\_split(X, y, test\_size}\OperatorTok{=}\FloatTok{0.3}\NormalTok{, random\_state}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X\_ce}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      a    b
+35  160  143
+33  174  168
+28  172  164
+32  165  168
+8   170  150
+13  168  154
+5   167  147
+17  175  162
+14  170  156
+7   169  149
+26  172  163
+1   165  143
+12  164  153
+25  179  162
+24  177  161
+6   174  147
+23  165  150
+4   174  145
+18  165  151
+21  171  156
+19  157  153
+9   164  151
+34  173  169
+3   172  145
+0   168  141
+\end{verbatim}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_ce}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+35    n
+33    n
+28    n
+32    n
+8     r
+13    r
+5     r
+17    r
+14    r
+7     r
+26    n
+1     r
+12    r
+25    n
+24    n
+6     r
+23    n
+4     r
+18    n
+21    n
+19    n
+9     r
+34    n
+3     r
+0     r
+Name: clase, dtype: object
+\end{verbatim}
+
+\section{Creación del Clasificador LDA}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.discriminant\_analysis }\ImportTok{import}\NormalTok{ LinearDiscriminantAnalysis}
+\end{Highlighting}
+\end{Shaded}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{clasificador }\OperatorTok{=}\NormalTok{ LinearDiscriminantAnalysis(solver}\OperatorTok{=}\StringTok{"svd"}\NormalTok{, store\_covariance}\OperatorTok{=}\VariableTok{True}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\section{Ajuste}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{clasificador.fit(X\_ce, y\_ce)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+LinearDiscriminantAnalysis(store_covariance=True)
+\end{verbatim}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X\_cp}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      a    b
+31  169  166
+20  167  156
+16  176  159
+30  178  165
+22  160  155
+15  173  157
+10  172  151
+2   170  143
+11  175  152
+29  171  165
+27  168  160
+\end{verbatim}
+
+\section{Predicción}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_pred }\OperatorTok{=}\NormalTok{ clasificador.predict(X\_cp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_pred}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+array(['n', 'n', 'r', 'n', 'n', 'r', 'r', 'r', 'r', 'n', 'n'], dtype='<U1')
+\end{verbatim}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_cp}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+31    n
+20    n
+16    r
+30    n
+22    n
+15    r
+10    r
+2     r
+11    r
+29    n
+27    n
+Name: clase, dtype: object
+\end{verbatim}
+
+
+\section{Creación de los resultados estadísticos de la clasificación}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.metrics }\ImportTok{import}\NormalTok{ confusion\_matrix}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mconf }\OperatorTok{=}\NormalTok{ confusion\_matrix(y\_cp, y\_pred)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mconf}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+array([[6, 0],
+       [0, 5]])
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{clasificador.score(X\_cp, y\_cp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+1.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.metrics }\ImportTok{import}\NormalTok{ accuracy\_score}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cc }\OperatorTok{=}\NormalTok{ accuracy\_score(y\_cp, y\_pred)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cc}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+1.0
+\end{verbatim}
+
+\section{Preparación del gráfico}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+\end{Highlighting}
+\end{Shaded}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ matplotlib.colors }\ImportTok{import}\NormalTok{ ListedColormap}
+\end{Highlighting}
+\end{Shaded}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(y\_ce)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+35    n
+33    n
+28    n
+32    n
+8     r
+13    r
+5     r
+17    r
+14    r
+7     r
+26    n
+1     r
+12    r
+25    n
+24    n
+6     r
+23    n
+4     r
+18    n
+21    n
+19    n
+9     r
+34    n
+3     r
+0     r
+Name: clase, dtype: object
+\end{verbatim}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_ce.size}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+25
+\end{verbatim}
+
+
+\section{Ajuste del etiquetado de la variable y}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ sklearn.preprocessing }\ImportTok{import}\NormalTok{ LabelEncoder}
+\end{Highlighting}
+\end{Shaded}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{labelencoder\_y }\OperatorTok{=}\NormalTok{ LabelEncoder()}
+\end{Highlighting}
+\end{Shaded}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_ce }\OperatorTok{=}\NormalTok{ labelencoder\_y.fit\_transform(y\_ce)}
+\end{Highlighting}
+\end{Shaded}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{print}\NormalTok{(y\_ce)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[0 0 0 0 1 1 1 1 1 1 0 1 1 0 0 1 0 1 0 0 0 1 0 1 1]
+\end{verbatim}
+
+
+Nota: Es necesario realizar el ajuste de nuevo dado que cambió la
+variable y debido al proceso de etiquetado
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{clasificador.fit(X\_ce, y\_ce)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+LinearDiscriminantAnalysis(store_covariance=True)
+\end{verbatim}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X\_set, y\_set }\OperatorTok{=}\NormalTok{ X\_ce, y\_ce}
+\end{Highlighting}
+\end{Shaded}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X\_set}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+      a    b
+35  160  143
+33  174  168
+28  172  164
+32  165  168
+8   170  150
+13  168  154
+5   167  147
+17  175  162
+14  170  156
+7   169  149
+26  172  163
+1   165  143
+12  164  153
+25  179  162
+24  177  161
+6   174  147
+23  165  150
+4   174  145
+18  165  151
+21  171  156
+19  157  153
+9   164  151
+34  173  169
+3   172  145
+0   168  141
+\end{verbatim}
+
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{y\_set}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+rray([0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1])
+\end{verbatim}
+
+Creación de la malla (plano cartesiano)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{X1, X2 }\OperatorTok{=}\NormalTok{ np.meshgrid(}
+\NormalTok{    np.arange(start }\OperatorTok{=}\NormalTok{ X\_set.iloc[:,}\DecValTok{0}\NormalTok{].}\BuiltInTok{min}\NormalTok{()}\OperatorTok{{-}}\DecValTok{1}\NormalTok{, stop }\OperatorTok{=}\NormalTok{ X\_set.iloc[:,}\DecValTok{0}\NormalTok{].}\BuiltInTok{max}\NormalTok{()}\OperatorTok{+}\DecValTok{1}\NormalTok{, step}\OperatorTok{=}\FloatTok{0.1}\NormalTok{),}
+\NormalTok{    np.arange(start }\OperatorTok{=}\NormalTok{ X\_set.iloc[:,}\DecValTok{1}\NormalTok{].}\BuiltInTok{min}\NormalTok{()}\OperatorTok{{-}}\DecValTok{1}\NormalTok{, stop }\OperatorTok{=}\NormalTok{ X\_set.iloc[:,}\DecValTok{1}\NormalTok{].}\BuiltInTok{max}\NormalTok{()}\OperatorTok{+}\DecValTok{1}\NormalTok{, step}\OperatorTok{=}\FloatTok{0.1}\NormalTok{)}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Creación del gráfico}\label{creaciuxf3n-del-gruxe1fico}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{plt.contourf(X1, X2, }
+\NormalTok{    clasificador.predict(}
+\NormalTok{        np.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),}
+\NormalTok{        alpha }\OperatorTok{=} \FloatTok{0.75}\NormalTok{, cmap }\OperatorTok{=}\NormalTok{ ListedColormap((}\StringTok{\textquotesingle{}orange\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}red\textquotesingle{}}\NormalTok{))                }
+\NormalTok{)}
+
+\NormalTok{plt.xlim(X1.}\BuiltInTok{min}\NormalTok{(), X1.}\BuiltInTok{max}\NormalTok{())}
+\NormalTok{plt.ylim(X2.}\BuiltInTok{min}\NormalTok{(), X2.}\BuiltInTok{max}\NormalTok{())}
+
+\NormalTok{j}\OperatorTok{=}\DecValTok{0}
+\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in}\NormalTok{ y\_set:}
+    \ControlFlowTok{if}\NormalTok{ i}\OperatorTok{==}\DecValTok{0}\NormalTok{:}
+\NormalTok{        color }\OperatorTok{=} \StringTok{"orange"}
+    \ControlFlowTok{else}\NormalTok{:}
+\NormalTok{        color }\OperatorTok{=} \StringTok{"red"}
+\NormalTok{    plt.scatter(}
+\NormalTok{        X\_set.iloc[j,}\DecValTok{0}\NormalTok{],}
+\NormalTok{        X\_set.iloc[j,}\DecValTok{1}\NormalTok{],}
+\NormalTok{        c }\OperatorTok{=}\NormalTok{ color,}
+\NormalTok{        label }\OperatorTok{=}\NormalTok{ i}
+\NormalTok{    )}
+\NormalTok{    j}\OperatorTok{=}\NormalTok{j}\OperatorTok{+}\DecValTok{1}
+
+\NormalTok{plt.title(}\StringTok{\textquotesingle{}LDA (Conjunto de entrenamiento)\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.xlabel(}\StringTok{\textquotesingle{}a\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.ylabel(}\StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{)}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+/usr/lib/python3/dist-packages/sklearn/base.py:493: UserWarning: X does not have valid feature names, but LinearDiscriminantAnalysis was fitted with feature names
+  warnings.warn(
+\end{verbatim}
+
+% \includegraphics{7f8181e91b5a8d1d2f6fcfa372792cfddeea8ae9.png}
+
+Es importante notar que los puntos que no se encuentran clasificados
+correctamente en la gráfica por el LDA, corresponden a aquellos datos
+del conjunto de entrenamiento que tenían una etiqueta en esa región

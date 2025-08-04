@@ -1,0 +1,1176 @@
+\chapter{Métodos Mágicos} 
+
+\section{Atributos de clase protegidos}
+
+Los atributos dentro de una clase pueden ser modificados por el usuario
+directamente. Volvamos al ejemplo de la clase \texttt{Persona}.
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.1}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{class}\PY{+w}{ }\PY{n+nc}{Persona}\PY{p}{:}
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{nombre}\PY{p}{,} \PY{n}{edad}\PY{p}{,} \PY{n}{num\PYZus{}cuenta}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{nombre}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{edad}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{num\PYZus{}cuenta} \PY{o}{=} \PY{n}{nombre}\PY{p}{,} \PY{n}{edad}\PY{p}{,} \PY{n}{num\PYZus{}cuenta}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf}{mostrarInformación}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{nombre}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ \PYZhy{}\PYZgt{} }\PY{l+s+si}{\PYZob{}}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{edad}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+Con esta clase \texttt{Persona} se crea un objeto llamado \texttt{cliente1}.
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.2}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{cliente1} \PY{o}{=} \PY{n}{Persona}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Juan}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+m+mi}{34}\PY{p}{,} \PY{l+m+mi}{123456789}\PY{p}{)}
+\PY{n}{cliente1}\PY{o}{.}\PY{n}{mostrarInformación}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+Juan -> 34
+\end{Verbatim}
+
+El objeto \texttt{cliente1} tiene los valores se sus propiedades pasadas
+por el constructor al momento de ser creado, y no existe limitante
+alguna para ser modificados directamente. Por ejemplo:
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.3}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{cliente1}\PY{o}{.}\PY{n}{nombre} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Juan Perez}\PY{l+s+s2}{\PYZdq{}}
+\PY{n}{cliente1}\PY{o}{.}\PY{n}{mostrarInformación}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+Juan Perez -> 34
+\end{Verbatim}
+
+Aunque esto es permitido por el intérprete en \texttt{Python}, es
+considerado como una mala práctica de programación. Lo que se debe hacer
+es escribir un módulo dentro de la clase que reciba el nuevo nombre y
+haga el cambio del valor de la propiedad. De esta manera se tiene un
+control y certeza sobre los cambios en las propiedades. Considere además
+el caso de que en la propiedad se almacene información sensible que no
+se desea revelar, sería necesario limitar el acceso a la propiedad que
+contenga esa información.
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.4}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{cliente1}\PY{o}{.}\PY{n}{num\PYZus{}cuenta}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.5}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+123456789
+\end{Verbatim}
+\end{tcolorbox}
+        
+Dado que \texttt{Python} no posee mecanismo para evitar el acceso o que
+se modifiquen los valores de las propiedades, existe una convención para
+marcar los atributos como protegidos. Para ello se utiliza el prefijo
+guión bajo \_ en el nombre de la propiedad. Esto indica a cualquier otro
+programador que dicha propiedad no debería ser accedida o modificada
+fuera de la clase.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.6}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{class}\PY{+w}{ }\PY{n+nc}{Persona}\PY{p}{:}
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{nombre}\PY{p}{,} \PY{n}{edad}\PY{p}{,} \PY{n}{num\PYZus{}cuenta}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{nombre}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{edad}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{\PYZus{}num\PYZus{}cuenta} \PY{o}{=} \PY{n}{nombre}\PY{p}{,} \PY{n}{edad}\PY{p}{,} \PY{n}{num\PYZus{}cuenta} 
+        \PY{c+c1}{\PYZsh{} Nótese que num\PYZus{}cuenta se marcó como propiedad protegida}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf}{mostrarInformación}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+si}{\PYZob{}}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{nombre}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ \PYZhy{}\PYZgt{} }\PY{l+s+si}{\PYZob{}}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{edad}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.7}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{cliente1} \PY{o}{=} \PY{n}{Persona}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Juan}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+m+mi}{34}\PY{p}{,} \PY{l+m+mi}{123456789}\PY{p}{)}
+\PY{n}{cliente1}\PY{o}{.}\PY{n}{mostrarInformación}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Juan -> 34
+    \end{Verbatim}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.8}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{cliente1}\PY{o}{.}\PY{n}{\PYZus{}num\PYZus{}cuenta}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.9}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+123456789
+\end{Verbatim}
+\end{tcolorbox}
+        
+Aunque la propiedad \emph{\_num\_cuenta} aún puede ser impresa e incluso
+modificada, marcarla como protegida indica al programador que hacerlo va
+en contra de las buenas prácticas de codificación.
+
+\section{Métodos especiales}
+
+Los métodos especiales en Python, también conocidos como \textbf{métodos
+mágicos} o \textbf{dunder methods}, son funciones integradas dentro de
+las clases que permiten definir comportamientos específicos para
+operaciones estándar. Tienen dos guiones bajos al principio y al final
+de sus nombres, como \texttt{\_\_init\_\_} o \texttt{\_\_str\_\_}.
+
+\subsection{Algunos métodos especiales comunes:}
+
+\begin{itemize}
+\item
+  \textbf{\texttt{\_\_init\_\_}}: Inicializa una nueva instancia de una clase.
+\item
+  \textbf{\texttt{\_\_str\_\_}}: Define cómo representar un objeto como una cadena de texto, usado en \texttt{str(obj)} y \texttt{print(obj)}.
+\item
+  \textbf{\texttt{\_\_repr\_\_}}: Proporciona una representación oficial de un objeto, usada en \texttt{repr(obj)}.
+\item
+  \textbf{\texttt{\_\_len\_\_}}: Devuelve el tamaño o longitud de un objeto, usado en \texttt{len(obj)}.
+\item
+  \textbf{\texttt{\_\_getitem\_\_}, \texttt{\_\_setitem\_\_}, \texttt{\_\_delitem\_\_}}: Permiten acceder, modificar y eliminar
+  elementos por índice.
+\item
+  \textbf{\texttt{\_\_iter\_\_}, \texttt{\_\_next\_\_}}: Permiten que un objeto sea iterable, como en un bucle \texttt{for}.
+\item
+  \textbf{\texttt{\_\_eq\_\_}, \texttt{\_\_lt\_\_}, \texttt{\_\_gt\_\_}}: Implementan comparaciones (igualdad, menor que,
+  mayor que, etc.).
+\item
+  \textbf{\texttt{\_\_add\_\_}, \texttt{\_\_sub\_\_}, \texttt{\_\_mul\_\_}, etc.}: Definen el comportamiento de operadores
+  aritméticos.
+\end{itemize}
+
+Ya hemos utilizado el método \texttt{\_\_init\_\_} que es el
+constructor, y se ejecuta automáticamente cada vez que se crea un
+objeto/instancia de la clase.
+
+El nombre \textbf{método especial} o más aún \textbf{método mágico}
+puede ser engañoso, ya que técnicamente no hay algo especial o mágico en
+ellos. Lo único especial acerca de ellos es el nombre, el cual asegura
+que serán llamados en situaciones especiales. Por ejemplo, el método
+\texttt{\_\_init\_\_} que se ejecuta al crear un objeto.
+
+Por ejemplo, considere la \emph{fórmula general barométrica} (\ref{eq:formulaGeneralBarométrica}) para
+calcular la presión atmosférica \(p\) dada la altura \(h\).
+
+\begin{equation}
+   p = p_0e^{-Mgh/RT} 
+   \label{eq:formulaGeneralBarométrica}
+\end{equation}
+
+
+donde \(M\) es la masa molar del aire, \(g\) es la constante
+gravitacional, \(R\) es la constante del gas, \(T\) la temperatura y
+\(p_0\) la presión del aire a nivel del mar. Se define además
+\(h_0 = \dfrac{RT}{Mg}\).
+
+\begin{equation}
+    p = p_0e^{-h/h_0}
+    \label{eq:formulaGeneralBarométrica2}
+\end{equation}
+
+
+Ahora se define una clase para el cálculo barométrico.
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.10}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{math} 
+
+\PY{k}{class}\PY{+w}{ }\PY{n+nc}{Barometric}\PY{p}{:}
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{T}\PY{p}{)}\PY{p}{:}
+        \PY{n}{g} \PY{o}{=} \PY{l+m+mf}{9.81}        \PY{c+c1}{\PYZsh{} m/s²}
+        \PY{n}{R} \PY{o}{=} \PY{l+m+mf}{8.314}       \PY{c+c1}{\PYZsh{} J/(K*mol)}
+        \PY{n}{M} \PY{o}{=} \PY{l+m+mf}{0.02896}     \PY{c+c1}{\PYZsh{} kg/mol}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h0} \PY{o}{=} \PY{n}{R}\PY{o}{*}\PY{n}{T}\PY{o}{/}\PY{n}{M}\PY{o}{/}\PY{n}{g}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{p0} \PY{o}{=} \PY{l+m+mi}{100}        \PY{c+c1}{\PYZsh{} kPa}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf}{value}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{h}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{p0} \PY{o}{*} \PY{n}{math}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{h}\PY{o}{/}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h0}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.11}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{bar1} \PY{o}{=} \PY{n}{Barometric}\PY{p}{(}\PY{l+m+mf}{292.15}\PY{p}{)}
+\PY{n}{bar1}\PY{o}{.}\PY{n}{value}\PY{p}{(}\PY{l+m+mi}{2200}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.12}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+77.31204126500637
+\end{Verbatim}
+\end{tcolorbox}
+        
+Esta forma de la clase permite obtener el valor de la presión para
+cierto valor de \(T\) y \(h\). El valor de la presión de obtiene al
+llamar al método \texttt{value} y pasarle el argumento \(h\).
+
+Sería más simple de utilizar si se pudiese llamar directamente al objeto
+sin necesidad de emplear el método intermedio. Para ello existe el
+método especial \texttt{\_\_call\_\_}.
+
+Veamos una nueva versión de la clase empleando este método especial.
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.13}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{math} 
+
+\PY{k}{class}\PY{+w}{ }\PY{n+nc}{Barometric}\PY{p}{:}
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{T}\PY{p}{)}\PY{p}{:}
+        \PY{n}{g} \PY{o}{=} \PY{l+m+mf}{9.81}        \PY{c+c1}{\PYZsh{} m/s²}
+        \PY{n}{R} \PY{o}{=} \PY{l+m+mf}{8.314}       \PY{c+c1}{\PYZsh{} J/(K*mol)}
+        \PY{n}{M} \PY{o}{=} \PY{l+m+mf}{0.02896}     \PY{c+c1}{\PYZsh{} kg/mol}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h0} \PY{o}{=} \PY{n}{R}\PY{o}{*}\PY{n}{T}\PY{o}{/}\PY{n}{M}\PY{o}{/}\PY{n}{g}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{p0} \PY{o}{=} \PY{l+m+mi}{100}        \PY{c+c1}{\PYZsh{} kPa}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}call\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{h}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{p0} \PY{o}{*} \PY{n}{math}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{h}\PY{o}{/}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h0}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.14}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{bar2} \PY{o}{=} \PY{n}{Barometric}\PY{p}{(}\PY{l+m+mf}{292.15}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{bar2}\PY{p}{(}\PY{l+m+mi}{2200}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Es equivalente a esta forma de la llamada}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{bar2}\PY{o}{.}\PY{n+nf+fm}{\PYZus{}\PYZus{}call\PYZus{}\PYZus{}}\PY{p}{(}\PY{l+m+mi}{2200}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+77.31204126500637
+77.31204126500637
+\end{Verbatim}
+
+\subsection{Método especial para imprimir}
+
+Es posible imprmir un objeto \texttt{a} empleando un \texttt{print(a)},
+lo cual funciona bien para los objetos propios de Python como cadenas y
+listas. Sin embrago, si nosotros creamos una clase, ese print no
+necesariamente mostrará información útil. Por ello tendremos que
+resolver ese problema definiendo el método \texttt{\_\_str\_\_} dentro
+de la clase. El método \texttt{\_\_str\_\_} debe devolver de preferencia
+una cadena y no debe recibir argumentos excepto por \texttt{self}.
+
+Redefiniendo la clase \texttt{Barometric}, queda así:
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.15}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{math} 
+
+\PY{k}{class}\PY{+w}{ }\PY{n+nc}{Barometric}\PY{p}{:}
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{T}\PY{p}{)}\PY{p}{:}
+        \PY{n}{g} \PY{o}{=} \PY{l+m+mf}{9.81}        \PY{c+c1}{\PYZsh{} m/s²}
+        \PY{n}{R} \PY{o}{=} \PY{l+m+mf}{8.314}       \PY{c+c1}{\PYZsh{} J/(K*mol)}
+        \PY{n}{M} \PY{o}{=} \PY{l+m+mf}{0.02896}     \PY{c+c1}{\PYZsh{} kg/mol}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h0} \PY{o}{=} \PY{n}{R}\PY{o}{*}\PY{n}{T}\PY{o}{/}\PY{n}{M}\PY{o}{/}\PY{n}{g}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{p0} \PY{o}{=} \PY{l+m+mi}{100}        \PY{c+c1}{\PYZsh{} kPa}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{T} \PY{o}{=} \PY{n}{T}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}call\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{h}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{p(h = }\PY{l+s+si}{\PYZob{}}\PY{n}{h}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{, T = }\PY{l+s+si}{\PYZob{}}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{T}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{) = }\PY{l+s+si}{\PYZob{}}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{p0}\PY{+w}{ }\PY{o}{*}\PY{+w}{ }\PY{n}{math}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{h}\PY{o}{/}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h0}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ kPa}\PY{l+s+s1}{\PYZsq{}}
+    
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}str\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{p0 * exp(\PYZhy{}Mgh/(RT)) [kPa]; T = }\PY{l+s+si}{\PYZob{}}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{T}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ºK}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.16}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{bar3} \PY{o}{=} \PY{n}{Barometric}\PY{p}{(}\PY{l+m+mf}{292.15}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{bar3}\PY{p}{(}\PY{l+m+mi}{2200}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{bar3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+p(h = 2200, T = 292.15) = 77.31204126500637 kPa
+p0 * exp(-Mgh/(RT)) [kPa]; T = 292.15ºK
+\end{Verbatim}
+
+\subsection{Métodos especiales para operaciones matemáticas}
+
+Hasta ahora hemos cubierto los métodos \texttt{\_\_init\_\_},
+\texttt{\_\_call\_\_} y \texttt{\_\_str\_\_}, pero hay más de ellos. Por
+ejemplo, los métodos \texttt{\_\_add\_\_}, \texttt{\_\_sub\_\_} y
+\texttt{\_\_mul\_\_}. Definir estos métodos dentro de la clase nos
+permite emplear expresiones como \(c = a + b\), donde \(a\) y \(b\) son
+instancias de una clase.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{c }\OperatorTok{=}\NormalTok{ a }\OperatorTok{+}\NormalTok{ b       }\CommentTok{\# c = a.\_\_add\_\_(b)}
+
+\NormalTok{c }\OperatorTok{=}\NormalTok{ a }\OperatorTok{{-}}\NormalTok{ b       }\CommentTok{\# c = a.\_\_sub\_\_(b)}
+
+\NormalTok{c }\OperatorTok{=}\NormalTok{ a }\OperatorTok{*}\NormalTok{ b       }\CommentTok{\# c = a.\_\_mul\_\_(b)}
+
+\NormalTok{c }\OperatorTok{=}\NormalTok{ a }\OperatorTok{/}\NormalTok{ b       }\CommentTok{\# c = a.\_\_div\_\_(b)}
+
+\NormalTok{c }\OperatorTok{=}\NormalTok{ a }\OperatorTok{**}\NormalTok{ b      }\CommentTok{\# c = a.\_\_pow\_\_(b)}
+\end{Highlighting}
+\end{Shaded}
+
+Para la mayoría de los casos, cualquiera de estas operaciones devuelve
+un objeto de la misma clase que los operandos.
+
+De manera similar, también existen métodos especiales para comparar
+objetos:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{a }\OperatorTok{==}\NormalTok{ b          }\CommentTok{\# a.\_\_eq\_\_(b)}
+
+\NormalTok{a }\OperatorTok{!=}\NormalTok{ b          }\CommentTok{\# a.\_\_ne\_\_(b)}
+
+\NormalTok{a }\OperatorTok{\textless{}}\NormalTok{ b           }\CommentTok{\# a.\_\_lt\_\_(b)}
+
+\NormalTok{a }\OperatorTok{\textless{}=}\NormalTok{ b          }\CommentTok{\# a.\_\_le\_\_(b)}
+
+\NormalTok{a }\OperatorTok{\textgreater{}}\NormalTok{ b           }\CommentTok{\# a.\_\_gt\_\_(b)}
+
+\NormalTok{a }\OperatorTok{\textgreater{}=}\NormalTok{ b          }\CommentTok{\# a.\_\_ge\_\_(b)}
+\end{Highlighting}
+\end{Shaded}
+
+Estos métodos deben ser implementados para devolver un booleano, para
+que sea consistente con el comportamiento de los operadores de
+comparación.
+
+El contenido de los métodos al momento de definirlos dependen del
+desarrollador, lo único especial acerca de los métodos es su nombre, ya
+que mediante este pueden ser llamados automáticamente por varios
+operadores.
+
+Por ejemplo, si se desea multiplicar dos objetos \(c = a * b\), Python
+buscará el método llamado \texttt{\_\_mul\_\_} en la instancia \(a\). Si
+el método existe, será llamado pasandole como argumento la instancia
+\(b\) y cualquiera que sea la devolución del método \texttt{\_\_mul\_\_}
+se asigna a \(c\).
+
+\subsection{\texorpdfstring{Método especial
+\texttt{\_\_repr\_\_}}{Método especial \_\_repr\_\_}}
+
+Este método especial es semejante al método \texttt{\_\_str\_\_}, ya que
+devuelve una cadena con información acerca del objeto. Por un lado la
+cadena devuelta por \texttt{\_\_str\_\_} muestra información que es
+fácilmente leíble y por otro lado la cadena devuelta por
+\texttt{\_\_repr\_\_} contiene la información necesaria para recrear el
+objeto.
+
+Para un objeto \texttt{a} el método \texttt{\_\_repr\_\_} se puede
+llamar mediante la función nativa de Python llamada \texttt{repr(a)}.
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.17}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{math} 
+
+\PY{k}{class}\PY{+w}{ }\PY{n+nc}{Barometric}\PY{p}{:}
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{T}\PY{p}{)}\PY{p}{:}
+        \PY{n}{g} \PY{o}{=} \PY{l+m+mf}{9.81}        \PY{c+c1}{\PYZsh{} m/s²}
+        \PY{n}{R} \PY{o}{=} \PY{l+m+mf}{8.314}       \PY{c+c1}{\PYZsh{} J/(K*mol)}
+        \PY{n}{M} \PY{o}{=} \PY{l+m+mf}{0.02896}     \PY{c+c1}{\PYZsh{} kg/mol}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h0} \PY{o}{=} \PY{n}{R}\PY{o}{*}\PY{n}{T}\PY{o}{/}\PY{n}{M}\PY{o}{/}\PY{n}{g}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{p0} \PY{o}{=} \PY{l+m+mi}{100}        \PY{c+c1}{\PYZsh{} kPa}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{T} \PY{o}{=} \PY{n}{T}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}call\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{h}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{p(h = }\PY{l+s+si}{\PYZob{}}\PY{n}{h}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{, T = }\PY{l+s+si}{\PYZob{}}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{T}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{) = }\PY{l+s+si}{\PYZob{}}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{p0}\PY{+w}{ }\PY{o}{*}\PY{+w}{ }\PY{n}{math}\PY{o}{.}\PY{n}{exp}\PY{p}{(}\PY{o}{\PYZhy{}}\PY{n}{h}\PY{o}{/}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h0}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ kPa}\PY{l+s+s1}{\PYZsq{}}
+    
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}str\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{k}{return} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{p0 * exp(\PYZhy{}Mgh/(RT)) [kPa]; T = }\PY{l+s+si}{\PYZob{}}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{T}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ºK}\PY{l+s+s1}{\PYZsq{}}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}repr\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+\PY{+w}{        }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Return code for regenerating this instance \PYZdq{}\PYZdq{}\PYZdq{}}
+        \PY{k}{return} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Barometric(}\PY{l+s+si}{\PYZob{}}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{T}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{)}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.18}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{b3} \PY{o}{=} \PY{n}{Barometric}\PY{p}{(}\PY{l+m+mf}{292.15}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{b3}\PY{p}{)}
+\PY{n+nb}{repr}\PY{p}{(}\PY{n}{b3}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+p0 * exp(-Mgh/(RT)) [kPa]; T = 292.15ºK
+\end{Verbatim}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.19}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'Barometric(292.15)'
+\end{Verbatim}
+\end{tcolorbox}
+        
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.20}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{b4} \PY{o}{=} \PY{n+nb}{eval}\PY{p}{(}\PY{n+nb}{repr}\PY{p}{(}\PY{n}{b3}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{b4}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+p0 * exp(-Mgh/(RT)) [kPa]; T = 292.15ºK
+\end{Verbatim}
+
+Estos resultados confirman que el método \texttt{\_\_repr\_\_} funciona
+de acuerdo a lo esperado, dado que \texttt{eval(repr(b3))} devuelve un
+objeto idéntico a \texttt{b3}.
+
+Ambos métodos \texttt{\_\_str\_\_} y \texttt{\_\_repr\_\_} muestran
+información acerca de un objeto, la diferencia es que una muestra
+información legible para humanos y la segunda información legible para
+Python.
+
+\subsection{Mostrar contenido de una clase}
+
+Algunas veces resulta útil mostrar el contenido de una clase, por
+ejemplo para realizar debugging.
+
+Considere la siguiente clase de ejemplo que solo contiene un comentario,
+el constructor y una propiedad:
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.21}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{class}\PY{+w}{ }\PY{n+nc}{A}\PY{p}{:}
+\PY{+w}{    }\PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{} Una clase de muestra \PYZdq{}\PYZdq{}\PYZdq{}}
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{value}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{v} \PY{o}{=} \PY{n}{value}
+\end{Verbatim}
+\end{tcolorbox}
+
+Si se realiza un dir(A) se mostrarán varios métodos y propiedades que se
+han definido automáticamente en la clase.
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.22}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{dir}\PY{p}{(}\PY{n}{A}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.23}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+['\_\_class\_\_',
+ '\_\_delattr\_\_',
+ '\_\_dict\_\_',
+ '\_\_dir\_\_',
+ '\_\_doc\_\_',
+ '\_\_eq\_\_',
+ '\_\_format\_\_',
+ '\_\_ge\_\_',
+ '\_\_getattribute\_\_',
+ '\_\_getstate\_\_',
+ '\_\_gt\_\_',
+ '\_\_hash\_\_',
+ '\_\_init\_\_',
+ '\_\_init\_subclass\_\_',
+ '\_\_le\_\_',
+ '\_\_lt\_\_',
+ '\_\_module\_\_',
+ '\_\_ne\_\_',
+ '\_\_new\_\_',
+ '\_\_reduce\_\_',
+ '\_\_reduce\_ex\_\_',
+ '\_\_repr\_\_',
+ '\_\_setattr\_\_',
+ '\_\_sizeof\_\_',
+ '\_\_str\_\_',
+ '\_\_subclasshook\_\_',
+ '\_\_weakref\_\_']
+\end{Verbatim}
+\end{tcolorbox}
+        
+Además, si se crea un objeto de la clase y se ejecuta el método
+\texttt{dir(a)} observaremos la misma salida mostrado con la clase pero
+también los valores creados por el constructor al momento de la creación
+del objeto.
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.24}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{a} \PY{o}{=} \PY{n}{A}\PY{p}{(}\PY{l+m+mi}{2}\PY{p}{)}
+\PY{n+nb}{dir}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.25}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+['\_\_class\_\_',
+ '\_\_delattr\_\_',
+ '\_\_dict\_\_',
+ '\_\_dir\_\_',
+ '\_\_doc\_\_',
+ '\_\_eq\_\_',
+ '\_\_format\_\_',
+ '\_\_ge\_\_',
+ '\_\_getattribute\_\_',
+ '\_\_getstate\_\_',
+ '\_\_gt\_\_',
+ '\_\_hash\_\_',
+ '\_\_init\_\_',
+ '\_\_init\_subclass\_\_',
+ '\_\_le\_\_',
+ '\_\_lt\_\_',
+ '\_\_module\_\_',
+ '\_\_ne\_\_',
+ '\_\_new\_\_',
+ '\_\_reduce\_\_',
+ '\_\_reduce\_ex\_\_',
+ '\_\_repr\_\_',
+ '\_\_setattr\_\_',
+ '\_\_sizeof\_\_',
+ '\_\_str\_\_',
+ '\_\_subclasshook\_\_',
+ '\_\_weakref\_\_',
+ 'v']
+\end{Verbatim}
+\end{tcolorbox}
+        
+\subsection{\texorpdfstring{Método especial \texttt{\_\_doc\_\_}}{Método especial \_\_doc\_\_}}
+
+El método especial \texttt{\_\_doc\_\_} muestra los comentarios que
+existen dentro de la definición de la clase que han sido escritos dentro
+de triples comillas dobles. Estos textos y este método son los que
+sirven para construir la documentación del código posteriormente.
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.26}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{a}\PY{o}{.}\PY{n+nv+vm}{\PYZus{}\PYZus{}doc\PYZus{}\PYZus{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.27}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+' Una clase de muestra '
+\end{Verbatim}
+\end{tcolorbox}
+        
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.28}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{A}\PY{o}{.}\PY{n+nv+vm}{\PYZus{}\PYZus{}doc\PYZus{}\PYZus{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.29}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+' Una clase de muestra '
+\end{Verbatim}
+\end{tcolorbox}
+        
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.30}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{numpy}
+\PY{n}{numpy}\PY{o}{.}\PY{n+nv+vm}{\PYZus{}\PYZus{}doc\PYZus{}\PYZus{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.31}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'\textbackslash{}nNumPy\textbackslash{}n=====\textbackslash{}n\textbackslash{}nProvides\textbackslash{}n  1. An array object of arbitrary homogeneous
+items\textbackslash{}n  2. Fast mathematical operations over arrays\textbackslash{}n  3. Linear Algebra,
+Fourier Transforms, Random Number Generation\textbackslash{}n\textbackslash{}nHow to use the
+documentation\textbackslash{}n----------------------------\textbackslash{}nDocumentation is available in two
+forms: docstrings provided\textbackslash{}nwith the code, and a loose standing reference guide,
+available from\textbackslash{}n`the NumPy homepage <https://numpy.org>`\_.\textbackslash{}n\textbackslash{}nWe recommend
+exploring the docstrings using\textbackslash{}n`IPython <https://ipython.org>`\_, an advanced
+Python shell with\textbackslash{}nTAB-completion and introspection capabilities.  See below for
+further\textbackslash{}ninstructions.\textbackslash{}n\textbackslash{}nThe docstring examples assume that `numpy` has been
+imported as ``np``::\textbackslash{}n\textbackslash{}n  >>> import numpy as np\textbackslash{}n\textbackslash{}nCode snippets are indicated
+by three greater-than signs::\textbackslash{}n\textbackslash{}n  >>> x = 42\textbackslash{}n  >>> x = x + 1\textbackslash{}n\textbackslash{}nUse the built-
+in ``help`` function to view a function\textbackslash{}'s docstring::\textbackslash{}n\textbackslash{}n  >>> help(np.sort)\textbackslash{}n
+{\ldots} \# doctest: +SKIP\textbackslash{}n\textbackslash{}nFor some objects, ``np.info(obj)`` may provide
+additional help.  This is\textbackslash{}nparticularly true if you see the line "Help on ufunc
+object:" at the top\textbackslash{}nof the help() page.  Ufuncs are implemented in C, not
+Python, for speed.\textbackslash{}nThe native Python help() does not know how to view their
+help, but our\textbackslash{}nnp.info() function does.\textbackslash{}n\textbackslash{}nTo search for documents containing a
+keyword, do::\textbackslash{}n\textbackslash{}n  >>> np.lookfor(\textbackslash{}'keyword\textbackslash{}')\textbackslash{}n  {\ldots} \# doctest:
++SKIP\textbackslash{}n\textbackslash{}nGeneral-purpose documents like a glossary and help on the basic
+concepts\textbackslash{}nof numpy are available under the ``doc`` sub-module::\textbackslash{}n\textbackslash{}n  >>> from
+numpy import doc\textbackslash{}n  >>> help(doc)\textbackslash{}n  {\ldots} \# doctest: +SKIP\textbackslash{}n\textbackslash{}nAvailable
+subpackages\textbackslash{}n---------------------\textbackslash{}nlib\textbackslash{}n    Basic functions used by several
+sub-packages.\textbackslash{}nrandom\textbackslash{}n    Core Random Tools\textbackslash{}nlinalg\textbackslash{}n    Core Linear Algebra
+Tools\textbackslash{}nfft\textbackslash{}n    Core FFT routines\textbackslash{}npolynomial\textbackslash{}n    Polynomial tools\textbackslash{}ntesting\textbackslash{}n
+NumPy testing tools\textbackslash{}ndistutils\textbackslash{}n    Enhancements to distutils with support for\textbackslash{}n
+Fortran compilers support and more  (for Python <=
+3.11).\textbackslash{}n\textbackslash{}nUtilities\textbackslash{}n---------\textbackslash{}ntest\textbackslash{}n    Run numpy unittests\textbackslash{}nshow\_config\textbackslash{}n
+Show numpy build configuration\textbackslash{}nmatlib\textbackslash{}n    Make everything
+matrices.\textbackslash{}n\_\_version\_\_\textbackslash{}n    NumPy version string\textbackslash{}n\textbackslash{}nViewing documentation using
+IPython\textbackslash{}n-----------------------------------\textbackslash{}n\textbackslash{}nStart IPython and import `numpy`
+usually under the alias ``np``: `import\textbackslash{}nnumpy as np`.  Then, directly past or
+use the ``\%cpaste`` magic to paste\textbackslash{}nexamples into the shell.  To see which
+functions are available in `numpy`,\textbackslash{}ntype ``np.<TAB>`` (where ``<TAB>`` refers
+to the TAB key), or use\textbackslash{}n``np.*cos*?<ENTER>`` (where ``<ENTER>`` refers to the
+ENTER key) to narrow\textbackslash{}ndown the list.  To view the docstring for a function,
+use\textbackslash{}n``np.cos?<ENTER>`` (to view the docstring) and ``np.cos??<ENTER>`` (to
+view\textbackslash{}nthe source code).\textbackslash{}n\textbackslash{}nCopies vs. in-place
+operation\textbackslash{}n-----------------------------\textbackslash{}nMost of the functions in `numpy`
+return a copy of the array argument\textbackslash{}n(e.g., `np.sort`).  In-place versions of
+these functions are often\textbackslash{}navailable as array methods, i.e. ``x =
+np.array([1,2,3]); x.sort()``.\textbackslash{}nExceptions to this rule are documented.\textbackslash{}n\textbackslash{}n'
+\end{Verbatim}
+\end{tcolorbox}
+        
+\subsection{Otors métodos especiales}
+
+El método \texttt{\_\_module\_\_} devuelve el nombre del módulo al cual
+pertenece la clase, en el siguiente ejemplo se devuelve
+\texttt{\_\_main\_\_} dado que el objeto fue creado dentro de ese
+módulo.
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.32}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{a}\PY{o}{.}\PY{n+nv+vm}{\PYZus{}\PYZus{}module\PYZus{}\PYZus{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.33}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'\_\_main\_\_'
+\end{Verbatim}
+\end{tcolorbox}
+        
+El método especial \texttt{\_\_dict\_\_} devuelve un diccionario con las
+propiedades y los valores de un objeto.
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.34}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{a}\PY{o}{.}\PY{n+nv+vm}{\PYZus{}\PYZus{}dict\PYZus{}\PYZus{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.35}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\{'v': 2\}
+\end{Verbatim}
+\end{tcolorbox}
+        
+Una instancia contiene todos los atributos de la clase creados
+automáticamente por Python. Si se agregan nuevos valores al objeto,
+éstos son añadidos al diccionario.
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.36}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{a}\PY{o}{.}\PY{n}{myVar} \PY{o}{=} \PY{l+m+mi}{10}
+\PY{n}{a}\PY{o}{.}\PY{n+nv+vm}{\PYZus{}\PYZus{}dict\PYZus{}\PYZus{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.37}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\{'v': 2, 'myVar': 10\}
+\end{Verbatim}
+\end{tcolorbox}
+        
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.38}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{a}\PY{o}{.}\PY{n+nf+fm}{\PYZus{}\PYZus{}getattribute\PYZus{}\PYZus{}}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{v}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{a}\PY{o}{.}\PY{n+nf+fm}{\PYZus{}\PYZus{}getattribute\PYZus{}\PYZus{}}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{myVar}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.39}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+10
+\end{Verbatim}
+\end{tcolorbox}
+        
+\begin{example}
+Crear una clase que calcule la evaluación de la derivada de una función.
+Utilizar una definición genérica para el cálculo de una aproximación de
+la derivada.
+
+\[ f'(x) \approx \dfrac{f(x+h) - f(x)}{h}. \]
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.40}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{class}\PY{+w}{ }\PY{n+nc}{Derivada}\PY{p}{:}
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{f}\PY{p}{,} \PY{n}{h}\PY{o}{=}\PY{l+m+mf}{1e\PYZhy{}5}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{f} \PY{o}{=} \PY{n}{f}  \PY{c+c1}{\PYZsh{} Función f(x) a derivar}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h} \PY{o}{=} \PY{n}{h}
+    
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}call\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{:}
+        \PY{n}{f}\PY{p}{,} \PY{n}{h} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{f}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{h}
+        \PY{k}{return} \PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{o}{+}\PY{n}{h}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{n}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{n}{h}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.41}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{l+m+mi}{3}
+
+\PY{n}{dfdx} \PY{o}{=} \PY{n}{Derivada}\PY{p}{(}\PY{n}{f}\PY{p}{)}
+
+\PY{n}{dfdx}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.42}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+3.000030000110953
+\end{Verbatim}
+\end{tcolorbox}
+\end{example}
+
+
+\begin{example}
+Crear una clase que calcule la aproximación de una integral definida.
+Para ello consideremos la regla compuesta del trapecio.
+
+\[ A = \int_a^b f(x)dx \approx \frac{h}{2}\left[f(a) + 2\sum_{j=1}^{n-1}f(x_j) + f(b) \right] \]
+
+considere:
+
+\[ h = \dfrac{b-a}{n} \]
+
+y
+
+\[ x_j = a + j\cdot h, \]
+
+donde \(n\) es la cantidad de trapecios y \(h\) la altura de cada uno de
+ellos.
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.43}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{class}\PY{+w}{ }\PY{n+nc}{TrapecioCompuesta}\PY{p}{:}
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{f}\PY{p}{,} \PY{n}{n}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{f}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{n} \PY{o}{=} \PY{n}{f}\PY{p}{,} \PY{n}{n}
+    
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}call\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{a}\PY{p}{,} \PY{n}{b}\PY{p}{)}\PY{p}{:}
+        \PY{n}{f}\PY{p}{,} \PY{n}{n} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{f}\PY{p}{,} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{n}
+        \PY{n}{h} \PY{o}{=} \PY{p}{(}\PY{n}{b}\PY{o}{\PYZhy{}}\PY{n}{a}\PY{p}{)}\PY{o}{/}\PY{n}{n}
+        \PY{n}{suma} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{n}\PY{p}{)}\PY{p}{:}
+            \PY{n}{suma} \PY{o}{+}\PY{o}{=} \PY{n}{f}\PY{p}{(}\PY{n}{a} \PY{o}{+} \PY{n}{j}\PY{o}{*}\PY{n}{h}\PY{p}{)}
+
+        \PY{k}{return} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{A = }\PY{l+s+si}{\PYZob{}}\PY{n}{h}\PY{o}{/}\PY{l+m+mi}{2}\PY{o}{*}\PY{p}{(}\PY{n}{f}\PY{p}{(}\PY{n}{a}\PY{p}{)}\PY{+w}{ }\PY{o}{+}\PY{+w}{ }\PY{l+m+mi}{2}\PY{o}{*}\PY{n}{suma}\PY{+w}{ }\PY{o}{+}\PY{+w}{ }\PY{n}{f}\PY{p}{(}\PY{n}{b}\PY{p}{)}\PY{p}{)}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{ u\PYZca{}2}\PY{l+s+s1}{\PYZsq{}}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.44}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{import}\PY{+w}{ }\PY{n+nn}{math}
+\PY{k}{def}\PY{+w}{ }\PY{n+nf}{f}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+    \PY{k}{return} \PY{n}{math}\PY{o}{.}\PY{n}{sin}\PY{p}{(}\PY{n}{x}\PY{p}{)}
+
+\PY{n}{intf} \PY{o}{=} \PY{n}{TrapecioCompuesta}\PY{p}{(}\PY{n}{f}\PY{p}{,} \PY{l+m+mi}{10000}\PY{p}{)}
+
+\PY{n}{intf}\PY{p}{(}\PY{n}{math}\PY{o}{.}\PY{n}{pi}\PY{p}{,} \PY{l+m+mi}{2}\PY{o}{*}\PY{n}{math}\PY{o}{.}\PY{n}{pi}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.45}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+'A = -1.9999999835506608 u\^{}2'
+\end{Verbatim}
+\end{tcolorbox}
+\end{example}
+        
+\begin{example}
+Crear una clase que permita construir un polinomio
+
+\[ P(x) = a_0 + a_1x + a_2x^2 \]
+
+La clase debe incluir la funcionalidad de evaluar un polinomio en un
+valor dado, y sumar dos polinomios. Se deben utilizar los métodos
+especiales para usarlos de la forma indicada:
+
+\begin{itemize}
+\item
+  \texttt{\_\_init\_\_}: para constuir un polinomio de la forma
+  \texttt{p\ =\ Polynomial({[}1,-1{]})}
+\item
+  \texttt{\_\_str\_\_}: para imprimir el polinomio
+\item
+  \texttt{\_\_call\_\_}: para evaluar el polinomio de la forma
+  \texttt{p(2.0)}
+\item
+  \texttt{\_\_add\_\_}: para realizar la suma de polinomios
+\item
+  \texttt{\_\_mul\_\_}: para realizar la multiplicación de polinomios
+\end{itemize}
+
+Además se debe incluir un método para realizar la derivada del
+polinomio.
+
+\subsubsection{Solución}
+
+Creación de la clase Polynomial, el constructor y el método ´\textbf{call}´
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.46}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{class}\PY{+w}{ }\PY{n+nc}{Polynomial}\PY{p}{:}
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{coefficients}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff} \PY{o}{=} \PY{n}{coefficients}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}call\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{:}
+        \PY{n}{s} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{n}{s} \PY{o}{+}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{n}{i}
+        \PY{k}{return} \PY{n}{s}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.47}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{p1} \PY{o}{=} \PY{n}{Polynomial}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}
+\PY{n}{p1}\PY{p}{(}\PY{l+m+mi}{4}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.48}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+-3
+\end{Verbatim}
+\end{tcolorbox}
+        
+Implementación de la suma de polinomios
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.49}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{class}\PY{+w}{ }\PY{n+nc}{Polynomial}\PY{p}{:}
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{coefficients}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff} \PY{o}{=} \PY{n}{coefficients}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}call\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{:}
+        \PY{n}{s} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{n}{s} \PY{o}{+}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{n}{i}
+        \PY{k}{return} \PY{n}{s}
+    
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}add\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{other}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} return self + other}
+
+        \PY{c+c1}{\PYZsh{} we start with longest list and add it to the other}
+        \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{n+nb}{len}\PY{p}{(}\PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{:}
+            \PY{n}{coeffsum} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{p}{:}\PY{p}{]} \PY{c+c1}{\PYZsh{} copy list}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{coeffsum}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+
+        \PY{k}{else}\PY{p}{:} 
+            \PY{n}{coeffsum} \PY{o}{=} \PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{p}{:}\PY{p}{]} \PY{c+c1}{\PYZsh{} copy list}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{coeffsum}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+            
+        \PY{k}{return} \PY{n}{Polynomial}\PY{p}{(}\PY{n}{coeffsum}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.50}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{p1} \PY{o}{=} \PY{n}{Polynomial}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}     \PY{c+c1}{\PYZsh{} x³ + 2x² \PYZhy{}3}
+\PY{n}{p2} \PY{o}{=} \PY{n}{Polynomial}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}        \PY{c+c1}{\PYZsh{} x² + x + 1}
+\PY{n}{p3} \PY{o}{=} \PY{n}{p1} \PY{o}{+} \PY{n}{p2}    \PY{c+c1}{\PYZsh{} x³ + 3x² + x \PYZhy{} 2}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{p3}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+[-2, 1, 3, 1]
+\end{Verbatim}
+
+Para la multiplicación se requiere realizar un proceso un poco más
+complicado. Nos referiremos a la expresión matemática para la
+multiplicación de polinomios.
+
+\[ p_1 \cdot p_2 = \left( \sum_{i=0}^M c_ix^i \right) \left( \sum_{j=0}^N d_jx^j \right) = \sum_{i=0}^M \sum_{j=0}^N c_id_jx^{i+j}, \]
+
+donde
+
+\[p_1 = c_0 + c_1x + c_2x^2 + \dots + c_Mx^M \] y
+\[p_2 = d_0 + d_1x + d_2x^2 + \dots + d_Nx^N \]
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.51}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{class}\PY{+w}{ }\PY{n+nc}{Polynomial}\PY{p}{:}
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{coefficients}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff} \PY{o}{=} \PY{n}{coefficients}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}call\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{:}
+        \PY{n}{s} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{n}{s} \PY{o}{+}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{n}{i}
+        \PY{k}{return} \PY{n}{s}
+    
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}add\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{other}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} return self + other}
+
+        \PY{c+c1}{\PYZsh{} we start with longest list and add it to the other}
+        \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{n+nb}{len}\PY{p}{(}\PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{:}
+            \PY{n}{coeffsum} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{p}{:}\PY{p}{]} \PY{c+c1}{\PYZsh{} copy list}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{coeffsum}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+
+        \PY{k}{else}\PY{p}{:} 
+            \PY{n}{coeffsum} \PY{o}{=} \PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{p}{:}\PY{p}{]} \PY{c+c1}{\PYZsh{} copy list}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{coeffsum}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+            
+        \PY{k}{return} \PY{n}{Polynomial}\PY{p}{(}\PY{n}{coeffsum}\PY{p}{)}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}mul\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{other}\PY{p}{)}\PY{p}{:}
+        \PY{n}{M} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+        \PY{n}{N} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+        \PY{n}{coeff} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{p}{(}\PY{n}{M}\PY{o}{+}\PY{n}{N}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{} [0 for i in range(10)]    \PYZsh{} List of M+N+1 zeros}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{M}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:} 
+            \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{N}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                \PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{n}{j}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{*} \PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+        
+        \PY{k}{return} \PY{n}{Polynomial}\PY{p}{(}\PY{n}{coeff}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.52}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{p1} \PY{o}{=} \PY{n}{Polynomial}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}     \PY{c+c1}{\PYZsh{} x³ + 2x² \PYZhy{}3}
+\PY{n}{p2} \PY{o}{=} \PY{n}{Polynomial}\PY{p}{(}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}        \PY{c+c1}{\PYZsh{} x² + x + 1}
+\PY{n}{p4} \PY{o}{=} \PY{n}{p1} \PY{o}{*} \PY{n}{p2}    \PY{c+c1}{\PYZsh{} x³ + 3x² + x \PYZhy{} 2}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{p4}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+[-3, -3, -1, 3, 3, 1]
+\end{Verbatim}
+
+Para el cálculo de la derivada del polinomio, se puede utilizar la regla:
+
+\[ \dfrac{d}{dx}\sum_{i=0}^n c_ix^i = \sum_{i=1}^n ic_ix^{i-1} \]
+
+Por lo tanto, si \(c\) es la lista de coeficientes del polinomio, la
+derivada tiene una lista de coeficientes en \(dc\), donde
+\(dc[i-1] = i\cdot c[i]\) para todos los valores de \(i\) desde 1 hasta
+el índice mayor en \(c\). Recuerde que la derivada de un polinomio se
+reduce en grado en 1, por lo tanto la lista \(dc\) tendrá un elemento
+menos que la lista \(c\).
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.53}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{class}\PY{+w}{ }\PY{n+nc}{Polynomial}\PY{p}{:}
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{coefficients}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff} \PY{o}{=} \PY{n}{coefficients}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}call\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{:}
+        \PY{n}{s} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{n}{s} \PY{o}{+}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{n}{i}
+        \PY{k}{return} \PY{n}{s}
+    
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}add\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{other}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} return self + other}
+
+        \PY{c+c1}{\PYZsh{} we start with longest list and add it to the other}
+        \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{n+nb}{len}\PY{p}{(}\PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{:}
+            \PY{n}{coeffsum} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{p}{:}\PY{p}{]} \PY{c+c1}{\PYZsh{} copy list}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{coeffsum}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+
+        \PY{k}{else}\PY{p}{:} 
+            \PY{n}{coeffsum} \PY{o}{=} \PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{p}{:}\PY{p}{]} \PY{c+c1}{\PYZsh{} copy list}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{coeffsum}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+            
+        \PY{k}{return} \PY{n}{Polynomial}\PY{p}{(}\PY{n}{coeffsum}\PY{p}{)}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}mul\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{other}\PY{p}{)}\PY{p}{:}
+        \PY{n}{M} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+        \PY{n}{N} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+        \PY{n}{coeff} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{p}{(}\PY{n}{M}\PY{o}{+}\PY{n}{N}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{} [0 for i in range(10)]    \PYZsh{} List of M+N+1 zeros}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{M}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:} 
+            \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{N}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                \PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{n}{j}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{*} \PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+        
+        \PY{k}{return} \PY{n}{Polynomial}\PY{p}{(}\PY{n}{coeff}\PY{p}{)}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf}{differentiate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{i} \PY{o}{*} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+        \PY{k}{del} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf}{derivative}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{n}{dpdx} \PY{o}{=} \PY{n}{Polynomial}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{p}{:}\PY{p}{]}\PY{p}{)}
+        \PY{n}{dpdx}\PY{o}{.}\PY{n}{differentiate}\PY{p}{(}\PY{p}{)}
+        \PY{k}{return} \PY{n}{dpdx}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.54}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{p1} \PY{o}{=} \PY{n}{Polynomial}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}     \PY{c+c1}{\PYZsh{} x³ + 2x² \PYZhy{}3}
+\PY{n}{p1}\PY{o}{.}\PY{n}{derivative}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{5.55}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+<\_\_main\_\_.Polynomial at 0x7fa9cc5e0fd0>
+\end{Verbatim}
+\end{tcolorbox}
+        
+Por último, hace falta agregar la función \texttt{\_\_str\_\_} para
+mostrar el polinomio de una forma legible. El método debe devolver una
+representación del polinomio lo más cercana posible a como se escribe en
+Matemáticas.
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.56}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{class}\PY{+w}{ }\PY{n+nc}{Polynomial}\PY{p}{:}
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}init\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{coefficients}\PY{p}{)}\PY{p}{:}
+        \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff} \PY{o}{=} \PY{n}{coefficients}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}call\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{x}\PY{p}{)}\PY{p}{:}
+        \PY{n}{s} \PY{o}{=} \PY{l+m+mi}{0}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{n}{s} \PY{o}{+}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{o}{*}\PY{n}{x}\PY{o}{*}\PY{o}{*}\PY{n}{i}
+        \PY{k}{return} \PY{n}{s}
+    
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}add\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{other}\PY{p}{)}\PY{p}{:}
+        \PY{c+c1}{\PYZsh{} return self + other}
+
+        \PY{c+c1}{\PYZsh{} we start with longest list and add it to the other}
+        \PY{k}{if} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)} \PY{o}{\PYZgt{}} \PY{n+nb}{len}\PY{p}{(}\PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{:}
+            \PY{n}{coeffsum} \PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{p}{:}\PY{p}{]} \PY{c+c1}{\PYZsh{} copy list}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{coeffsum}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+
+        \PY{k}{else}\PY{p}{:} 
+            \PY{n}{coeffsum} \PY{o}{=} \PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{p}{:}\PY{p}{]} \PY{c+c1}{\PYZsh{} copy list}
+            \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+                \PY{n}{coeffsum}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+            
+        \PY{k}{return} \PY{n}{Polynomial}\PY{p}{(}\PY{n}{coeffsum}\PY{p}{)}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}mul\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{,} \PY{n}{other}\PY{p}{)}\PY{p}{:}
+        \PY{n}{M} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+        \PY{n}{N} \PY{o}{=} \PY{n+nb}{len}\PY{p}{(}\PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{)} \PY{o}{\PYZhy{}} \PY{l+m+mi}{1}
+        \PY{n}{coeff} \PY{o}{=} \PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{*}\PY{p}{(}\PY{n}{M}\PY{o}{+}\PY{n}{N}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)} \PY{c+c1}{\PYZsh{} [0 for i in range(10)]    \PYZsh{} List of M+N+1 zeros}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{M}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:} 
+            \PY{k}{for} \PY{n}{j} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n}{N}\PY{o}{+}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{:}
+                \PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{o}{+}\PY{n}{j}\PY{p}{]} \PY{o}{+}\PY{o}{=} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{*} \PY{n}{other}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{j}\PY{p}{]}
+        
+        \PY{k}{return} \PY{n}{Polynomial}\PY{p}{(}\PY{n}{coeff}\PY{p}{)}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf}{differentiate}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{1}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]} \PY{o}{=} \PY{n}{i} \PY{o}{*} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}
+        \PY{k}{del} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}\PY{p}{]}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf}{derivative}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{n}{dpdx} \PY{o}{=} \PY{n}{Polynomial}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{p}{:}\PY{p}{]}\PY{p}{)}
+        \PY{n}{dpdx}\PY{o}{.}\PY{n}{differentiate}\PY{p}{(}\PY{p}{)}
+        \PY{k}{return} \PY{n}{dpdx}
+
+    \PY{k}{def}\PY{+w}{ }\PY{n+nf+fm}{\PYZus{}\PYZus{}str\PYZus{}\PYZus{}}\PY{p}{(}\PY{n+nb+bp}{self}\PY{p}{)}\PY{p}{:}
+        \PY{n}{s} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}
+        \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]} \PY{o}{!=} \PY{l+m+mi}{0}\PY{p}{:}
+                \PY{n}{s} \PY{o}{+}\PY{o}{=} \PY{l+s+sa}{f}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ + }\PY{l+s+si}{\PYZob{}}\PY{n+nb+bp}{self}\PY{o}{.}\PY{n}{coeff}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{l+s+si}{:}\PY{l+s+s1}{g}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{*x\PYZca{}}\PY{l+s+si}{\PYZob{}}\PY{n}{i}\PY{l+s+si}{:}\PY{l+s+s1}{g}\PY{l+s+si}{\PYZcb{}}\PY{l+s+s1}{\PYZsq{}}
+        \PY{c+c1}{\PYZsh{} fix layout}
+        \PY{n}{s} \PY{o}{=} \PY{n}{s}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{+ \PYZhy{} }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{} }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{s} \PY{o}{=} \PY{n}{s}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ 1*}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ }\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{s} \PY{o}{=} \PY{n}{s}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x\PYZca{}0}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{s} \PY{o}{=} \PY{n}{s}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{*1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{s} \PY{o}{=} \PY{n}{s}\PY{o}{.}\PY{n}{replace}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x\PYZca{}1}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{x}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{k}{if} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ + }\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+            \PY{n}{s} \PY{o}{=} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{:}\PY{p}{]}
+        \PY{k}{if} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{:}\PY{l+m+mi}{3}\PY{p}{]} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{ \PYZhy{} }\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+            \PY{n}{s} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZhy{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{s}\PY{p}{[}\PY{l+m+mi}{3}\PY{p}{:}\PY{p}{]}
+        \PY{k}{return} \PY{n}{s}
+\end{Verbatim}
+\end{tcolorbox}
+
+\[ p_1(x) = x^3 + 2x^2 - 3\]
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.57}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{p1} \PY{o}{=} \PY{n}{Polynomial}\PY{p}{(}\PY{p}{[}\PY{o}{\PYZhy{}}\PY{l+m+mi}{3}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{,} \PY{l+m+mi}{2}\PY{p}{,} \PY{l+m+mi}{1}\PY{p}{]}\PY{p}{)}     \PY{c+c1}{\PYZsh{} x³ + 2x² \PYZhy{}3}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{p1}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+-3 + 2*x\^{}2 + x\^{}3
+\end{Verbatim}
+
+\[ \dfrac{dp_1}{dx} = 3x^2 + 4x \]
+
+\begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{5.58}{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{p2} \PY{o}{=} \PY{n}{p1}\PY{o}{.}\PY{n}{derivative}\PY{p}{(}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{p2}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+4*x + 3*x\^{}2
+\end{Verbatim}
+\end{example}
+
+    % Add a bibliography block to the postdoc
+    
+    
+    

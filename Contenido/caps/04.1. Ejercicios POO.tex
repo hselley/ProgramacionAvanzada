@@ -1,0 +1,714 @@
+\section{Ejercicios de POO}
+\begin{exercise}{\rm
+Cree una clase llamada Persona, use la función \emph{\_\_init\_\_()}
+para asignar valores para nombre y edad:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Person:}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, name, age):}
+    \VariableTok{self}\NormalTok{.name }\OperatorTok{=}\NormalTok{ name}
+    \VariableTok{self}\NormalTok{.age }\OperatorTok{=}\NormalTok{ age}
+
+\NormalTok{p1 }\OperatorTok{=}\NormalTok{ Person(}\StringTok{"John"}\NormalTok{, }\DecValTok{36}\NormalTok{)}
+
+\BuiltInTok{print}\NormalTok{(p1.name)}
+\BuiltInTok{print}\NormalTok{(p1.age)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+John
+36
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Person:}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, name, age):}
+    \VariableTok{self}\NormalTok{.name }\OperatorTok{=}\NormalTok{ name}
+    \VariableTok{self}\NormalTok{.age }\OperatorTok{=}\NormalTok{ age}
+
+\NormalTok{p1 }\OperatorTok{=}\NormalTok{ Person(}\StringTok{"John"}\NormalTok{, }\DecValTok{36}\NormalTok{)}
+
+\BuiltInTok{print}\NormalTok{(p1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+<__main__.Person object at 0x7d8759ac9240>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Person:}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(mysillyobject, name, age):}
+\NormalTok{    mysillyobject.name }\OperatorTok{=}\NormalTok{ name}
+\NormalTok{    mysillyobject.age }\OperatorTok{=}\NormalTok{ age}
+
+  \KeywordTok{def}\NormalTok{ myfunc(abc):}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Hello my name is "} \OperatorTok{+}\NormalTok{ abc.name)}
+
+\NormalTok{p1 }\OperatorTok{=}\NormalTok{ Person(}\StringTok{"John"}\NormalTok{, }\DecValTok{36}\NormalTok{)}
+\NormalTok{p1.myfunc()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Hello my name is John
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Person:}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, name, age):}
+    \VariableTok{self}\NormalTok{.name }\OperatorTok{=}\NormalTok{ name}
+    \VariableTok{self}\NormalTok{.age }\OperatorTok{=}\NormalTok{ age}
+
+  \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+    \ControlFlowTok{return} \SpecialStringTok{f"}\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{name}\SpecialCharTok{\}}\SpecialStringTok{ is }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{age}\SpecialCharTok{\}}\SpecialStringTok{ years old."}
+
+\NormalTok{p1 }\OperatorTok{=}\NormalTok{ Person(}\StringTok{"John"}\NormalTok{, }\DecValTok{36}\NormalTok{)}
+
+\BuiltInTok{print}\NormalTok{(p1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+John is 36 years old.
+
+\end{verbatim}
+}\end{exercise}
+
+
+
+\begin{exercise}{\rm 
+Crear una clase que reciba la parte real y la parte imaginaria de un
+número complejo. Debe devolver la representación del número.
+
+\[ 2 \pm 3i\] \[ -4 \pm 5i \]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ complex\_number:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, real, imag):}
+        \VariableTok{self}\NormalTok{.real }\OperatorTok{=}\NormalTok{ real}
+        \VariableTok{self}\NormalTok{.imag }\OperatorTok{=}\NormalTok{ imag}
+
+    \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{real}\SpecialCharTok{\}}\SpecialStringTok{ ± }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{imag}\SpecialCharTok{\}}\SpecialStringTok{i\textquotesingle{}}
+
+\NormalTok{num1 }\OperatorTok{=}\NormalTok{ complex\_number(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(num1)}
+\NormalTok{num2 }\OperatorTok{=}\NormalTok{ complex\_number(}\OperatorTok{{-}}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(num2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+2 ± 3i
+-4 ± 5i
+
+\end{verbatim}
+}\end{exercise}
+
+
+\begin{exercise}{\rm 
+Inserte una función que imprima un saludo y ejecútelo en el objeto p1:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Person:}
+  \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, name, age):}
+    \VariableTok{self}\NormalTok{.name }\OperatorTok{=}\NormalTok{ name}
+    \VariableTok{self}\NormalTok{.age }\OperatorTok{=}\NormalTok{ age}
+
+  \KeywordTok{def}\NormalTok{ myfunc(}\VariableTok{self}\NormalTok{):}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Hello my name is "} \OperatorTok{+} \VariableTok{self}\NormalTok{.name }\OperatorTok{+} \StringTok{" and I\textquotesingle{}m "} \OperatorTok{+} \BuiltInTok{str}\NormalTok{(}\VariableTok{self}\NormalTok{.age) }\OperatorTok{+} \StringTok{" years old."}\NormalTok{)}
+
+\NormalTok{p1 }\OperatorTok{=}\NormalTok{ Person(}\StringTok{"John"}\NormalTok{, }\DecValTok{36}\NormalTok{)}
+\NormalTok{p1.myfunc()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Hello my name is John and I'm 36 years old.
+
+\end{verbatim}
+
+}\end{exercise}
+
+
+
+\begin{exercise}{\rm 
+
+Registro de perros
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Perro:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, name, raza, talla, peso):}
+        \VariableTok{self}\NormalTok{.name }\OperatorTok{=}\NormalTok{ name}
+        \VariableTok{self}\NormalTok{.raza }\OperatorTok{=}\NormalTok{ raza}
+        \VariableTok{self}\NormalTok{.talla }\OperatorTok{=}\NormalTok{ talla}
+        \VariableTok{self}\NormalTok{.peso }\OperatorTok{=}\NormalTok{ peso}
+
+    \KeywordTok{def}\NormalTok{ obtener\_peso(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.peso}
+
+\NormalTok{miPerro }\OperatorTok{=}\NormalTok{ Perro(}\StringTok{"Firulais"}\NormalTok{, }\StringTok{"mestizo"}\NormalTok{, }\StringTok{"Mediano"}\NormalTok{, }\DecValTok{15}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Mi perro pesa }\SpecialCharTok{\{}\NormalTok{miPerro}\SpecialCharTok{.}\NormalTok{obtener\_peso()}\SpecialCharTok{\}}\SpecialStringTok{ kilos\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Mi perro pesa 15 kilos
+
+\end{verbatim}
+}\end{exercise}
+
+
+
+
+\begin{exercise}{\rm 
+
+Registro de perros con promedio de peso
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Perro:}
+    \CommentTok{\# Peso promedio}
+\NormalTok{    peso }\OperatorTok{=} \DecValTok{20}
+
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, name, raza, talla, peso):}
+        \VariableTok{self}\NormalTok{.name }\OperatorTok{=}\NormalTok{ name}
+        \VariableTok{self}\NormalTok{.raza }\OperatorTok{=}\NormalTok{ raza}
+        \VariableTok{self}\NormalTok{.talla }\OperatorTok{=}\NormalTok{ talla}
+        \VariableTok{self}\NormalTok{.peso }\OperatorTok{=}\NormalTok{ peso}
+
+    \AttributeTok{@classmethod} \CommentTok{\# Método de clase: Acceso a los valores de clase en lugar de instancia}
+    \KeywordTok{def}\NormalTok{ obtener\_peso(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.peso}
+
+\NormalTok{miPerro }\OperatorTok{=}\NormalTok{ Perro(}\StringTok{"Firulais"}\NormalTok{, }\StringTok{"mestizo"}\NormalTok{, }\StringTok{"Mediano"}\NormalTok{, }\DecValTok{12}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Mi perro pesa }\SpecialCharTok{\{}\NormalTok{miPerro}\SpecialCharTok{.}\NormalTok{peso}\SpecialCharTok{\}}\SpecialStringTok{ kilos\textquotesingle{}}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}El peso promedio de los perros es }\SpecialCharTok{\{}\NormalTok{miPerro}\SpecialCharTok{.}\NormalTok{obtener\_peso()}\SpecialCharTok{\}}\SpecialStringTok{ kilos\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Mi perro pesa 12 kilos
+El peso promedio de los perros es 20 kilos
+
+\end{verbatim}
+}\end{exercise}
+
+
+\texttt{@classmethod} convierte un método para que trabaje con la clase
+en sí (y sus atributos de clase) y no con instancias específicas.
+
+\begin{exercise}{\rm 
+
+Calculadora
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ calcu:}
+
+    \AttributeTok{@staticmethod}
+    \KeywordTok{def}\NormalTok{ sumar(num1, num2):}
+        \ControlFlowTok{return}\NormalTok{ num1 }\OperatorTok{+}\NormalTok{ num2}
+
+    \AttributeTok{@staticmethod}
+    \KeywordTok{def}\NormalTok{ resta(num1, num2):}
+        \ControlFlowTok{return}\NormalTok{ num1 }\OperatorTok{{-}}\NormalTok{ num2}
+
+    \AttributeTok{@staticmethod}
+    \KeywordTok{def}\NormalTok{ multiplicacion(num1, num2):}
+        \ControlFlowTok{return}\NormalTok{ num1 }\OperatorTok{*}\NormalTok{ num2}
+
+    \AttributeTok{@staticmethod}
+    \KeywordTok{def}\NormalTok{ division(num1, num2):}
+        \ControlFlowTok{return}\NormalTok{ num1 }\OperatorTok{/}\NormalTok{ num2}
+
+\BuiltInTok{print}\NormalTok{(calcu.sumar(}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{))}
+\BuiltInTok{print}\NormalTok{(calcu.resta(}\DecValTok{8}\NormalTok{,}\DecValTok{4}\NormalTok{))}
+\BuiltInTok{print}\NormalTok{(calcu.multiplicacion(}\DecValTok{2}\NormalTok{,}\DecValTok{9}\NormalTok{))}
+\BuiltInTok{print}\NormalTok{(calcu.division(}\DecValTok{6}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+9
+4
+18
+2.0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OperatorTok{=}\NormalTok{ calcu.sumar(}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+9
+
+\end{verbatim}
+}\end{exercise}
+
+
+\begin{exercise}{\rm 
+
+Realizar una clase que reciba un par de argumentos numéricos y realice
+las operaciones aritméticas básicas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ calculadora:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, num1, num2):}
+        \VariableTok{self}\NormalTok{.num1 }\OperatorTok{=}\NormalTok{ num1}
+        \VariableTok{self}\NormalTok{.num2 }\OperatorTok{=}\NormalTok{ num2}
+
+    \KeywordTok{def}\NormalTok{ suma(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.num1 }\OperatorTok{+} \VariableTok{self}\NormalTok{.num2}
+
+    \KeywordTok{def}\NormalTok{ resta(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.num1 }\OperatorTok{{-}} \VariableTok{self}\NormalTok{.num2}
+
+    \KeywordTok{def}\NormalTok{ multiplicacion(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.num1 }\OperatorTok{*} \VariableTok{self}\NormalTok{.num2}
+
+    \KeywordTok{def}\NormalTok{ division(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.num1 }\OperatorTok{/} \VariableTok{self}\NormalTok{.num2}
+
+\NormalTok{operacion }\OperatorTok{=}\NormalTok{ calculadora(}\DecValTok{5}\NormalTok{,}\DecValTok{9}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(operacion.num1)}
+\BuiltInTok{print}\NormalTok{(operacion.num2)}
+\BuiltInTok{print}\NormalTok{(operacion.suma())}
+\BuiltInTok{print}\NormalTok{(operacion.resta())}
+\BuiltInTok{print}\NormalTok{(operacion.multiplicacion())}
+\BuiltInTok{print}\NormalTok{(operacion.division())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+5
+9
+14
+-4
+45
+0.5555555555555556
+
+\end{verbatim}
+}\end{exercise}
+
+
+\begin{exercise}{\rm 
+
+Realice un clase \emph{Circulo} que reciba las coordenadas \((x,y)\)
+donde se ubica el centro y el radio \(r\). La clase debe tener métodos
+que determinen el perímetro, área, cuadrante donde se ubica el cirulo en
+el plano cartesiano.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ math}
+
+\KeywordTok{class}\NormalTok{ Circulo:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, x, y, r):}
+        \VariableTok{self}\NormalTok{.x }\OperatorTok{=}\NormalTok{ x}
+        \VariableTok{self}\NormalTok{.y }\OperatorTok{=}\NormalTok{ y}
+        \VariableTok{self}\NormalTok{.r }\OperatorTok{=}\NormalTok{ r}
+
+    \KeywordTok{def}\NormalTok{ perimetro(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \DecValTok{2} \OperatorTok{*}\NormalTok{ math.pi }\OperatorTok{*} \VariableTok{self}\NormalTok{.r}
+
+    \KeywordTok{def}\NormalTok{ area(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return}\NormalTok{ math.pi }\OperatorTok{*} \VariableTok{self}\NormalTok{.r}\OperatorTok{**}\DecValTok{2}
+
+    \KeywordTok{def}\NormalTok{ cuadrante(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{if} \VariableTok{self}\NormalTok{.x }\OperatorTok{\textgreater{}} \DecValTok{0} \KeywordTok{and} \VariableTok{self}\NormalTok{.y }\OperatorTok{\textgreater{}} \DecValTok{0}\NormalTok{:}
+            \ControlFlowTok{return} \StringTok{"I"}
+        \ControlFlowTok{elif} \VariableTok{self}\NormalTok{.x }\OperatorTok{\textless{}} \DecValTok{0} \KeywordTok{and} \VariableTok{self}\NormalTok{.y }\OperatorTok{\textgreater{}} \DecValTok{0}\NormalTok{:}
+            \ControlFlowTok{return} \StringTok{"II"}
+        \ControlFlowTok{elif} \VariableTok{self}\NormalTok{.x }\OperatorTok{\textgreater{}} \DecValTok{0} \KeywordTok{and} \VariableTok{self}\NormalTok{.y }\OperatorTok{\textless{}} \DecValTok{0}\NormalTok{:}
+            \ControlFlowTok{return} \StringTok{"IV"}
+        \ControlFlowTok{else}\NormalTok{:}
+            \ControlFlowTok{return} \StringTok{"III"}
+
+\NormalTok{c1 }\OperatorTok{=}\NormalTok{ Circulo(}\OperatorTok{{-}}\DecValTok{6}\NormalTok{,}\OperatorTok{{-}}\DecValTok{7}\NormalTok{,}\DecValTok{2}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(c1.perimetro())}
+\BuiltInTok{print}\NormalTok{(c1.area())}
+\BuiltInTok{print}\NormalTok{(c1.cuadrante())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+12.566370614359172
+12.566370614359172
+III
+
+\end{verbatim}
+}\end{exercise}
+
+
+\begin{exercise}{\rm 
+
+Realice una clase que reciba la parte real y la parte imaginaria de un
+número complejo. Debe tener métodos que determine el módulo del número
+complejo, la suma y resta de dos números complejos.
+
+\[ |2 +- 3i| = \sqrt{2^2 + 3^2} = \sqrt{13} \]
+\[ (2+-3i) + (4+-5i) = 6 +- 8i \] \[ (2+-3i) - (4+-5i) = -2 +- 2i \]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ math}
+
+\KeywordTok{class}\NormalTok{ ComplexNumber:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, r, i):}
+        \VariableTok{self}\NormalTok{.r }\OperatorTok{=}\NormalTok{ r}
+        \VariableTok{self}\NormalTok{.i }\OperatorTok{=}\NormalTok{ i}
+
+    \KeywordTok{def}\NormalTok{ modulo(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return}\NormalTok{ math.sqrt(}\VariableTok{self}\NormalTok{.r}\OperatorTok{**}\DecValTok{2} \OperatorTok{+} \VariableTok{self}\NormalTok{.i}\OperatorTok{**}\DecValTok{2}\NormalTok{)}
+
+    \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{r}\SpecialCharTok{\}}\SpecialStringTok{ ± }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{i}\SpecialCharTok{\}}\SpecialStringTok{i\textquotesingle{}}
+
+    \CommentTok{\# Métodos Mágicos (Dunder {-}\textgreater{} double under (score))}
+    \KeywordTok{def} \FunctionTok{\_\_add\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, other):}
+        \ControlFlowTok{return}\NormalTok{ ComplexNumber(}\VariableTok{self}\NormalTok{.r }\OperatorTok{+}\NormalTok{ other.r, }\VariableTok{self}\NormalTok{.i }\OperatorTok{+}\NormalTok{ other.i)}
+
+    \KeywordTok{def} \FunctionTok{\_\_sub\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, other):}
+        \ControlFlowTok{return}\NormalTok{ ComplexNumber(}\VariableTok{self}\NormalTok{.r }\OperatorTok{{-}}\NormalTok{ other.r, }\VariableTok{self}\NormalTok{.i }\OperatorTok{{-}}\NormalTok{ other.i)}
+
+\CommentTok{\# Ejemplo}
+\NormalTok{c1 }\OperatorTok{=}\NormalTok{ ComplexNumber(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(c1)}
+\BuiltInTok{print}\NormalTok{(c1.modulo())}
+
+\NormalTok{c2 }\OperatorTok{=}\NormalTok{ ComplexNumber(}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(c2)}
+\BuiltInTok{print}\NormalTok{(c2.modulo())}
+
+\NormalTok{c3r }\OperatorTok{=}\NormalTok{ c1.r }\OperatorTok{+}\NormalTok{ c2.r}
+\NormalTok{c3i }\OperatorTok{=}\NormalTok{ c1.i }\OperatorTok{+}\NormalTok{ c2.i}
+\NormalTok{c3 }\OperatorTok{=}\NormalTok{ ComplexNumber(c3r, c3i)}
+\BuiltInTok{print}\NormalTok{(c3)}
+
+\NormalTok{c4 }\OperatorTok{=}\NormalTok{ c1 }\OperatorTok{+}\NormalTok{ c2}
+\BuiltInTok{print}\NormalTok{(c4)}
+
+\NormalTok{c5 }\OperatorTok{=}\NormalTok{ c1 }\OperatorTok{{-}}\NormalTok{ c2}
+\BuiltInTok{print}\NormalTok{(c5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+2 ± 3i
+3.605551275463989
+4 ± 5i
+6.4031242374328485
+6 ± 8i
+6 ± 8i
+-2 ± -2i
+
+\end{verbatim}
+}\end{exercise}
+
+
+En Python, los métodos \emph{\_\_add\_\_} y \emph{\_\_sub\_\_} son
+métodos especiales que permiten definir el comportamiento de los
+operadores de suma (+) y resta (-) para los objetos de una clase
+personalizada. Estos métodos se denominan "\textbf{métodos mágicos}" o
+"\textbf{métodos dunder}" (double underscore, por sus siglas en inglés).
+
+\begin{exercise}{\rm \textbf{Clase Persona}.
+
+Crea una clase \emph{Persona} con atributos nombre, edad y métodos para
+mostrar esta información y calcular si la persona es mayor de edad.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Persona:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, nombre, edad):}
+        \VariableTok{self}\NormalTok{.nombre }\OperatorTok{=}\NormalTok{ nombre}
+        \VariableTok{self}\NormalTok{.edad }\OperatorTok{=}\NormalTok{ edad}
+
+    \KeywordTok{def}\NormalTok{ mostrar\_info(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Nombre: }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{nombre}\SpecialCharTok{\}}\SpecialStringTok{, Edad: }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{edad}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+
+    \KeywordTok{def}\NormalTok{ mayor\_de\_edad(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{if} \VariableTok{self}\NormalTok{.edad }\OperatorTok{\textgreater{}=} \DecValTok{18}\NormalTok{:}
+            \ControlFlowTok{return} \VariableTok{True}
+        \ControlFlowTok{else}\NormalTok{:}
+            \ControlFlowTok{return} \VariableTok{False}
+
+\CommentTok{\# Ejemplo}
+\NormalTok{persona1 }\OperatorTok{=}\NormalTok{ Persona(}\StringTok{"Juan"}\NormalTok{, }\DecValTok{23}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(persona1.mostrar\_info())}
+\BuiltInTok{print}\NormalTok{(persona1.mayor\_de\_edad())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Nombre: Juan, Edad: 23
+True
+\end{verbatim}
+}\end{exercise}
+
+
+\begin{exercise}{\rm \textbf{Clase Rectángulo}. 
+Crea una clase \emph{Rectángulo} con atributos largo y ancho. Incluye
+métodos para calcular el área y el perímetro del rectángulo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Rectangulo:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, largo, ancho):}
+        \VariableTok{self}\NormalTok{.largo }\OperatorTok{=}\NormalTok{ largo}
+        \VariableTok{self}\NormalTok{.ancho }\OperatorTok{=}\NormalTok{ ancho}
+
+    \KeywordTok{def}\NormalTok{ perimetro(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \DecValTok{2} \OperatorTok{*}\NormalTok{ (}\VariableTok{self}\NormalTok{.largo }\OperatorTok{+} \VariableTok{self}\NormalTok{.ancho)}
+
+    \KeywordTok{def}\NormalTok{ area(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.largo }\OperatorTok{*} \VariableTok{self}\NormalTok{.ancho}
+
+
+\CommentTok{\# Ejemplo}
+\NormalTok{r1 }\OperatorTok{=}\NormalTok{ Rectangulo(}\DecValTok{9}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(r1.perimetro())}
+\BuiltInTok{print}\NormalTok{(r1.area())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+28
+45
+
+\end{verbatim}
+}\end{exercise}
+
+\begin{exercise}{\rm \textbf{Clase Círculo}. 
+Crea una clase \emph{Círculo} con un atributo radio. Añade métodos para
+calcular el área y la circunferencia del círculo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ math }
+
+\KeywordTok{class}\NormalTok{ Circulo:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, r):}
+        \VariableTok{self}\NormalTok{.r }\OperatorTok{=}\NormalTok{ r}
+
+    \KeywordTok{def}\NormalTok{ area(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return}\NormalTok{ math.pi }\OperatorTok{*} \VariableTok{self}\NormalTok{.r}\OperatorTok{**}\DecValTok{2}
+
+    \KeywordTok{def}\NormalTok{ circunferencia(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \DecValTok{2}\OperatorTok{*}\NormalTok{math.pi}\OperatorTok{*}\VariableTok{self}\NormalTok{.r}
+    
+\CommentTok{\# Ejemplo}
+\NormalTok{c1 }\OperatorTok{=}\NormalTok{ Circulo(}\DecValTok{4}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Area = }\SpecialCharTok{\{}\NormalTok{c1}\SpecialCharTok{.}\NormalTok{area()}\SpecialCharTok{\}}\SpecialStringTok{ u²\textquotesingle{}}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Perimetro = }\SpecialCharTok{\{}\NormalTok{c1}\SpecialCharTok{.}\NormalTok{circunferencia()}\SpecialCharTok{\}}\SpecialStringTok{ u\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Area = 50.26548245743669 u²
+Perimetro = 25.132741228718345 u
+\end{verbatim}
+}\end{exercise}
+
+\begin{exercise}{\rm \textbf{Clase CuentaBancaria.}
+Crea una clase \emph{CuentaBancaria} con atributos titular y saldo.
+Incluye métodos para depositar, retirar y mostrar el saldo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ CuentaBancaria:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, titular, saldo}\OperatorTok{=}\DecValTok{0}\NormalTok{):}
+        \VariableTok{self}\NormalTok{.titular }\OperatorTok{=}\NormalTok{ titular}
+        \VariableTok{self}\NormalTok{.saldo }\OperatorTok{=}\NormalTok{ saldo}
+
+    \KeywordTok{def}\NormalTok{ depositar(}\VariableTok{self}\NormalTok{, monto):}
+        \VariableTok{self}\NormalTok{.saldo }\OperatorTok{+=}\NormalTok{ monto}
+
+    \KeywordTok{def}\NormalTok{ retirar(}\VariableTok{self}\NormalTok{, monto):}
+        \ControlFlowTok{if}\NormalTok{ monto }\OperatorTok{\textless{}} \VariableTok{self}\NormalTok{.saldo:}
+            \VariableTok{self}\NormalTok{.saldo }\OperatorTok{=} \VariableTok{self}\NormalTok{.saldo }\OperatorTok{{-}}\NormalTok{ monto }\CommentTok{\# self.saldo {-}= monto}
+        \ControlFlowTok{else}\NormalTok{:}
+            \BuiltInTok{print}\NormalTok{(}\StringTok{"Saldo insuficiente"}\NormalTok{)}
+
+    \KeywordTok{def}\NormalTok{ mostrarSaldo(}\VariableTok{self}\NormalTok{):}
+        \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Saldo de }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{titular}\SpecialCharTok{\}}\SpecialStringTok{: $ }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{saldo}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+
+\CommentTok{\# Ejemplo}
+\NormalTok{cliente1 }\OperatorTok{=}\NormalTok{ CuentaBancaria(}\StringTok{"Juan Perez"}\NormalTok{, }\DecValTok{4500}\NormalTok{)}
+\NormalTok{cliente1.depositar(}\DecValTok{430}\NormalTok{)}
+\NormalTok{cliente1.mostrarSaldo()}
+\NormalTok{cliente1.retirar(}\DecValTok{10000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Saldo de Juan Perez: $ 4930
+Saldo insuficiente
+
+\end{verbatim}
+}\end{exercise}
+
+\begin{exercise}{\rm 
+\textbf{Clase Estudiante.} 
+Crea una clase Estudiante que herede de Persona. Añade un atributo
+promedio y un método para determinar si el estudiante está aprobado
+(promedio \textgreater= 6).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Persona:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, nombre, edad):}
+        \VariableTok{self}\NormalTok{.nombre }\OperatorTok{=}\NormalTok{ nombre}
+        \VariableTok{self}\NormalTok{.edad }\OperatorTok{=}\NormalTok{ edad}
+
+    \KeywordTok{def}\NormalTok{ mostrarInfo(}\VariableTok{self}\NormalTok{):}
+        \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Nombre: }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{nombre}\SpecialCharTok{\}}\SpecialStringTok{, Edad: }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{edad}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+
+\KeywordTok{class}\NormalTok{ Estudiante(Persona):}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, nombre, edad, promedio):}
+        \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_init\_\_}\NormalTok{(nombre, edad)}
+        \VariableTok{self}\NormalTok{.promedio }\OperatorTok{=}\NormalTok{ promedio}
+
+    \KeywordTok{def}\NormalTok{ aprobado(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{if} \VariableTok{self}\NormalTok{.promedio }\OperatorTok{\textgreater{}=} \DecValTok{6}\NormalTok{:}
+            \ControlFlowTok{return} \VariableTok{True}
+        \ControlFlowTok{else}\NormalTok{:}
+            \ControlFlowTok{return} \VariableTok{False}
+
+\CommentTok{\# Ejemplo}
+\NormalTok{estudiante1 }\OperatorTok{=}\NormalTok{ Estudiante(}\StringTok{"Maria"}\NormalTok{, }\DecValTok{20}\NormalTok{, }\FloatTok{7.5}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(estudiante1.aprobado())}
+\NormalTok{estudiante1.mostrarInfo()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+True
+Nombre: Maria, Edad: 20
+
+\end{verbatim}
+}\end{exercise}
+
+\begin{exercise}{\rm 
+
+\textbf{Clase Libro.} Crea una clase Libro con atributos título, autor y año. Incluye un
+método para mostrar la información del libro y otro para determinar si
+es un libro antiguo (año \textless{} 2000).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Libro:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, titulo, autor, anio):}
+        \VariableTok{self}\NormalTok{.titulo }\OperatorTok{=}\NormalTok{ titulo}
+        \VariableTok{self}\NormalTok{.autor }\OperatorTok{=}\NormalTok{ autor}
+        \VariableTok{self}\NormalTok{.anio }\OperatorTok{=}\NormalTok{ anio}
+
+    \KeywordTok{def}\NormalTok{ info(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{autor}\SpecialCharTok{\}}\SpecialStringTok{; }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{titulo}\SpecialCharTok{\}}\SpecialStringTok{; }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{anio}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}
+
+    \KeywordTok{def}\NormalTok{ esAntiguo(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \VariableTok{True} \ControlFlowTok{if} \VariableTok{self}\NormalTok{.anio }\OperatorTok{\textless{}} \DecValTok{2000} \ControlFlowTok{else} \VariableTok{False}
+
+\NormalTok{libro1 }\OperatorTok{=}\NormalTok{ Libro(}\StringTok{"Algebra"}\NormalTok{, }\StringTok{"Baldor"}\NormalTok{, }\DecValTok{1980}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(libro1.info())}
+\BuiltInTok{print}\NormalTok{(libro1.esAntiguo())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Baldor; Algebra; 1980
+True
+
+\end{verbatim}
+}\end{exercise}
+
+\begin{exercise}{\rm \textbf{Clase Vehículo}. 
+Crea una clase Vehículo con atributos marca, modelo y año. Añade un
+método para mostrar la información del vehículo y otro para determinar
+si es un vehículo clásico (año \textless{} 1980).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\end{Highlighting}
+\end{Shaded}
+}\end{exercise}
+
+\begin{exercise}{\rm 
+\textbf{Clase Empleado.} 
+Crea una clase Empleado con atributos nombre, salario y
+años\_de\_experiencia. Añade un método para calcular un aumento salarial
+basado en los años de experiencia (5\%).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Empleado:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, nombre, salario, exp):}
+        \VariableTok{self}\NormalTok{.nombre }\OperatorTok{=}\NormalTok{ nombre}
+        \VariableTok{self}\NormalTok{.salario }\OperatorTok{=}\NormalTok{ salario}
+        \VariableTok{self}\NormalTok{.exp }\OperatorTok{=}\NormalTok{ exp}
+
+    \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \SpecialStringTok{f\textquotesingle{}Nombre: }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{nombre}\SpecialCharTok{\}}\SpecialStringTok{, Salario: }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{salario}\SpecialCharTok{\}}\SpecialStringTok{, Años de Experiencia: }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{exp}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}
+
+    \KeywordTok{def}\NormalTok{ mostrarInfo(}\VariableTok{self}\NormalTok{):}
+        \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Nombre: }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{nombre}\SpecialCharTok{\}}\SpecialStringTok{, Salario: }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{salario}\SpecialCharTok{\}}\SpecialStringTok{, Años de Experiencia: }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{exp}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+
+    \KeywordTok{def}\NormalTok{ aumento(}\VariableTok{self}\NormalTok{):}
+\NormalTok{        aumento }\OperatorTok{=} \FloatTok{0.05}\OperatorTok{*}\VariableTok{self}\NormalTok{.exp}
+        \VariableTok{self}\NormalTok{.salario }\OperatorTok{+=} \VariableTok{self}\NormalTok{.salario}\OperatorTok{*}\NormalTok{aumento}
+
+\CommentTok{\# Ejemplo}
+\NormalTok{empleado1 }\OperatorTok{=}\NormalTok{ Empleado(}\StringTok{"Carlos"}\NormalTok{, }\DecValTok{15000}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(empleado1)}
+\NormalTok{empleado1.mostrarInfo()}
+\NormalTok{empleado1.aumento()}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Nuevo salario: }\SpecialCharTok{\{}\NormalTok{empleado1}\SpecialCharTok{.}\NormalTok{salario}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Nombre: Carlos, Salario: 15000, Años de Experiencia: 10
+Nombre: Carlos, Salario: 15000, Años de Experiencia: 10
+Nuevo salario: 22500.0
+
+\end{verbatim}
+}\end{exercise}
+
+
+\begin{exercise}{\rm \textbf{Clase CuentaDeAhorro.}
+Crea una clase CuentaDeAhorro que herede de CuentaBancaria. Añade un
+atributo interés y un método para aplicar el interés al saldo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\end{Highlighting}
+\end{Shaded}
+}\end{exercise}
+
+\begin{exercise}{\rm \textbf{Clase Empresa.}
+Crea una clase Empresa con atributos nombre y empleados (una lista de
+objetos de la clase Empleado). Incluye métodos para agregar empleados,
+eliminar empleados y calcular el salario total pagado por la empresa.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+
+\end{Highlighting}
+\end{Shaded}
+}\end{exercise}

@@ -1,0 +1,610 @@
+\chapter{Sintáxis Básica de Python}
+\section{Python}
+
+\href{https://www.python.org/about/}{Python} es un lenguaje de
+programación poderoso y rápido, se lleva bien con otros lenguajes, corre
+en cualquier lugar, es amigable, fácil de aprender y es de software
+libre.
+
+\section{Sintáxis}
+
+En la gran mayoría de los lenguajes de programación el compilador o
+intérprete ignora los espacios que el usuario utilice para escribir su
+código. En Python, los espacios se utilizan para formar grupos de
+instrucciones y también para la sintaxis de algunas instrucciones.
+
+\section{If-Elif-Else}
+
+La sentencia de control \texttt{if-elif-else} tiene la siguiente
+sintaxis:
+
+Sintaxis:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ condición A:}
+\NormalTok{    instrucción A1}
+\NormalTok{    instrucción A2}
+\NormalTok{    ...}
+\NormalTok{    instrucción An}
+\ControlFlowTok{elif}\NormalTok{ condición B:}
+\NormalTok{    instrucción B1}
+\NormalTok{    instrucción B2}
+\NormalTok{    ...}
+\NormalTok{    instrucción Bn}
+\ControlFlowTok{else}\NormalTok{:}
+\NormalTok{    instrucción C1}
+\NormalTok{    instrucción C2}
+\NormalTok{    ...}
+\NormalTok{    instrucción Cn}
+
+\end{Highlighting}
+\end{Shaded}
+
+
+\begin{code} if-else
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ControlFlowTok{if} \DecValTok{2}\OperatorTok{\textless{}}\DecValTok{3}\NormalTok{:}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{"verdadero"}\NormalTok{)}
+    \ControlFlowTok{else}\NormalTok{:}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{"falso"}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"fin"}\NormalTok{)}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\begin{code}
+Solicite dos números x y \texttt{y}. Si \texttt{x}
+es positivo \texttt{y} se multiplica por dos, si \texttt{x} es cero
+\texttt{y} se multiplica por 3 y si \texttt{x} es negativo y se
+multiplica por cuatro.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    x}\OperatorTok{=}\BuiltInTok{int}\NormalTok{(}\BuiltInTok{input}\NormalTok{(}\StringTok{"Ingrese el valor de x "}\NormalTok{))}
+\NormalTok{    y}\OperatorTok{=}\BuiltInTok{int}\NormalTok{(}\BuiltInTok{input}\NormalTok{(}\StringTok{"Ingrese el valor de y "}\NormalTok{))}
+    \ControlFlowTok{if}\NormalTok{ x}\OperatorTok{\textgreater{}}\DecValTok{0}\NormalTok{:}
+\NormalTok{        z}\OperatorTok{=}\NormalTok{y}\OperatorTok{*}\DecValTok{2}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{"Positivo"}\NormalTok{)}
+    \ControlFlowTok{elif}\NormalTok{ x}\OperatorTok{==}\DecValTok{0}\NormalTok{:}
+\NormalTok{        z}\OperatorTok{=}\NormalTok{y}\OperatorTok{*}\DecValTok{3}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{"Cero"}\NormalTok{)}
+    \ControlFlowTok{else}\NormalTok{:}
+\NormalTok{        z}\OperatorTok{=}\NormalTok{y}\OperatorTok{*}\DecValTok{4}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{"Negativo"}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(z)}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\section{For}
+
+El ciclo \texttt{for} tiene la siguiente sintaxis:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ iterador }\KeywordTok{in}\NormalTok{ iterando:}
+\NormalTok{    instrucción }\DecValTok{1}
+\NormalTok{    instrucción }\DecValTok{2}
+\NormalTok{    ...}
+\NormalTok{    instrucción n}
+
+\end{Highlighting}
+\end{Shaded}
+
+\begin{code} Un ciclo que imprime numeros enteros desde 0 hasta 9.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{10}\NormalTok{):}
+    \BuiltInTok{print}\NormalTok{(i)}
+\end{Highlighting}
+\end{Shaded}
+    
+\end{code}
+ 
+
+La función \texttt{range} genera una secuencia de números enteros
+comenzando desde 0, con un incremento unitario. Por esa razón es que se
+generan los números enteros desde 0 hasta 9. Es posible cambiar el valor
+inicial de la secuencia y el incremento.
+
+\begin{code} Considere los primeros 10 números naturales, los
+pimeros 5 urales se multiplican por 2 y los siguientes números naturales
+se multiplican por 3.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{11}\NormalTok{):}
+        \ControlFlowTok{if}\NormalTok{ x}\OperatorTok{\textless{}=}\DecValTok{5}\NormalTok{:}
+            \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\NormalTok{x}\SpecialCharTok{\}}\SpecialStringTok{ {-}\textgreater{} }\SpecialCharTok{\{}\NormalTok{x}\OperatorTok{*}\DecValTok{2}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+        \ControlFlowTok{else}\NormalTok{:}
+            \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\NormalTok{x}\SpecialCharTok{\}}\SpecialStringTok{ {-}\textgreater{} }\SpecialCharTok{\{}\NormalTok{x}\OperatorTok{*}\DecValTok{3}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\section{While} 
+El ciclo \texttt{while} repite las instrucciones siempre y cuando la
+condición sea verdadera. La sintaxis del ciclo \texttt{while} es la
+siguiente:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ControlFlowTok{while}\NormalTok{ condición:}
+\NormalTok{        instrucción }\DecValTok{1}
+\NormalTok{        instrucción }\DecValTok{2}
+\NormalTok{        ...}
+\NormalTok{        instrucción n}
+
+\end{Highlighting}
+\end{Shaded}
+
+\begin{code} Se imprimen los primeros 10 numeros naturales.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    i }\OperatorTok{=} \DecValTok{1}
+    \ControlFlowTok{while}\NormalTok{ i }\OperatorTok{\textless{}=} \DecValTok{10}\NormalTok{:}
+        \BuiltInTok{print}\NormalTok{(i)}
+\NormalTok{        i}\OperatorTok{=}\NormalTok{i}\OperatorTok{+}\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\section{Listas}
+
+\subsection{Creación}
+
+Una lista es un conjunto de valores ordenados y modificables que permite
+repeticiones. Los elementos en la lista son numerados comenzando desde
+0, de manera que la localidad donde se encuentra el último elemento para
+una lista de tamaño \texttt{n} será \texttt{n-1}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    lista }\OperatorTok{=}\NormalTok{ [}\StringTok{"manzana"}\NormalTok{, }\StringTok{"plátano"}\NormalTok{, }\StringTok{"naranja"}\NormalTok{, }\StringTok{"mandarina"}\NormalTok{, }\StringTok{"maracuyá"}\NormalTok{]}
+    \BuiltInTok{print}\NormalTok{(lista)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Acceso}
+
+El acceso a algún elemento en particular de la lista se hace utilizando
+los corchetes, indicando dentro de ellos la posición que ocupa dentro de
+la lista.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    lista[posición]}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Índices negativos}
+
+Es posible usar numeración negativa para hacer referencia a los
+elementos dentro de una lista pero en orden reverso. Es decir,
+\texttt{-1} hace referencia al último elemento, \texttt{-2} al
+penúltimo, \texttt{-3} al antepenúltimo y así sucesivamente.
+
+\subsection{Rango de índices}
+
+Es posible seleccionar un subconjunto de elementos contiguos contenidos
+en la lista especificando el rango de posiciones que ocupan dentro de la
+lista.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    lista }\OperatorTok{=}\NormalTok{ [}\StringTok{"manzana"}\NormalTok{, }\StringTok{"plátano"}\NormalTok{, }\StringTok{"naranja"}\NormalTok{, }\StringTok{"mandarina"}\NormalTok{, }\StringTok{"maracuyá"}\NormalTok{, }
+            \StringTok{"toronja"}\NormalTok{, }\StringTok{"mango"}\NormalTok{, }\StringTok{"guayaba"}\NormalTok{]}
+    \BuiltInTok{print}\NormalTok{(lista[}\DecValTok{2}\NormalTok{:}\DecValTok{6}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+Por otro lado, si se omite el límite inferior del rango, python
+considerará 0 como posición inicial.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    lista }\OperatorTok{=}\NormalTok{ [}\StringTok{"manzana"}\NormalTok{, }\StringTok{"plátano"}\NormalTok{, }\StringTok{"naranja"}\NormalTok{, }\StringTok{"mandarina"}\NormalTok{, }\StringTok{"maracuyá"}\NormalTok{, }
+            \StringTok{"toronja"}\NormalTok{, }\StringTok{"mango"}\NormalTok{, }\StringTok{"guayaba"}\NormalTok{]}
+    \BuiltInTok{print}\NormalTok{(lista[:}\DecValTok{6}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+Finalmente, si se omite el límite superior del rango, python considerará
+el último elemento como tal límite.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    lista }\OperatorTok{=}\NormalTok{ [}\StringTok{"manzana"}\NormalTok{, }\StringTok{"plátano"}\NormalTok{, }\StringTok{"naranja"}\NormalTok{, }\StringTok{"mandarina"}\NormalTok{, }\StringTok{"maracuyá"}\NormalTok{, }
+            \StringTok{"toronja"}\NormalTok{, }\StringTok{"mango"}\NormalTok{, }\StringTok{"guayaba"}\NormalTok{]}
+    \BuiltInTok{print}\NormalTok{(lista[}\DecValTok{2}\NormalTok{:])}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Tamaño de una lista}
+
+Para determinar el tamaño de una lista se puede utilizar la función
+\texttt{len()}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \BuiltInTok{print}\NormalTok{(}\BuiltInTok{len}\NormalTok{(lista))}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Funciones}
+
+En python la declaración de funciones requiere muy poco código. Basta
+con utilizar la palabra clave \texttt{def} para comenzar la definición
+de la función.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \KeywordTok{def}\NormalTok{ nombreFuncion(parámetroEntrada):}
+\NormalTok{        instrucción }\DecValTok{1}
+\NormalTok{        instrucción }\DecValTok{2}
+\NormalTok{        ...}
+\NormalTok{        instrucción n}
+        \ControlFlowTok{return}\NormalTok{ parámetroSalida}
+
+\end{Highlighting}
+\end{Shaded}
+
+\begin{code} Escriba una función que calcule el factorial de una
+función. Verifique que el número ingresado por el usuario sea positivo y
+considere que por definición el factorial de cero es uno.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \KeywordTok{def}\NormalTok{ factorial(x):}
+        \ControlFlowTok{if}\NormalTok{ x}\OperatorTok{\textgreater{}=}\DecValTok{0}\NormalTok{:}
+\NormalTok{            f}\OperatorTok{=}\DecValTok{1}
+        \ControlFlowTok{if}\NormalTok{ x}\OperatorTok{\textgreater{}}\DecValTok{0}\NormalTok{:}
+\NormalTok{            f}\OperatorTok{=}\DecValTok{1}
+            \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{,x}\OperatorTok{+}\DecValTok{1}\NormalTok{):}
+\NormalTok{            f}\OperatorTok{=}\NormalTok{f}\OperatorTok{*}\NormalTok{i}
+            \ControlFlowTok{return}\NormalTok{ f}
+        \ControlFlowTok{else}\NormalTok{:}
+            \BuiltInTok{print}\NormalTok{(}\StringTok{"El factorial no está definido"}\NormalTok{)}
+
+\NormalTok{    x }\OperatorTok{=} \BuiltInTok{int}\NormalTok{(}\BuiltInTok{input}\NormalTok{(}\StringTok{"Introduzca un número: "}\NormalTok{))}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\NormalTok{x}\SpecialCharTok{\}}\SpecialStringTok{! = }\SpecialCharTok{\{}\NormalTok{factorial(x)}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)      }
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\begin{code} Escriba una función que calcule el factorial de una
+función. Considere la definción recursiva del factorial. Verifique que
+el número ingresado por el usuario sea positivo y considere que por
+definición el factorial de cero es uno.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \KeywordTok{def}\NormalTok{ factorial(x):}
+        \ControlFlowTok{if}\NormalTok{ x}\OperatorTok{==}\DecValTok{0}\NormalTok{:}
+\NormalTok{            f}\OperatorTok{=}\DecValTok{1}
+        \ControlFlowTok{else}\NormalTok{:}
+\NormalTok{            f}\OperatorTok{=}\NormalTok{x}\OperatorTok{*}\NormalTok{factorial(x}\OperatorTok{{-}}\DecValTok{1}\NormalTok{)}
+        \ControlFlowTok{return}\NormalTok{(f)}
+
+\NormalTok{    x }\OperatorTok{=} \BuiltInTok{int}\NormalTok{(}\BuiltInTok{input}\NormalTok{(}\StringTok{"Ingrese un número"}\NormalTok{))}
+    \ControlFlowTok{if}\NormalTok{ x}\OperatorTok{\textgreater{}=}\DecValTok{0}\NormalTok{:}
+\NormalTok{        fac}\OperatorTok{=}\NormalTok{factorial(x)}
+        \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\NormalTok{x}\SpecialCharTok{\}}\SpecialStringTok{! = }\SpecialCharTok{\{}\NormalTok{fac}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+    \ControlFlowTok{else}\NormalTok{:}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{"El factorial no está definido en los negativos"}\NormalTok{)    }
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\begin{code} Escriba una función recursiva que imprima los elementos de una lista anidada en varios niveles.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    lista1 }\OperatorTok{=}\NormalTok{ [}\StringTok{"manzana"}\NormalTok{, }\StringTok{"plátano"}\NormalTok{, }\StringTok{"naranja"}\NormalTok{, }\StringTok{"mandarina"}\NormalTok{, }\StringTok{"maracuyá"}\NormalTok{, }\StringTok{"toronja"}\NormalTok{, }
+            \StringTok{"mango"}\NormalTok{, }\StringTok{"guayaba"}\NormalTok{]}
+\NormalTok{    lista2 }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{]}
+\NormalTok{    lista3 }\OperatorTok{=}\NormalTok{ [}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{, }\StringTok{"D"}\NormalTok{]}
+\NormalTok{    lista4 }\OperatorTok{=}\NormalTok{ [}\StringTok{"a"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\StringTok{"b"}\NormalTok{, }\DecValTok{2}\NormalTok{, }\StringTok{"c"}\NormalTok{, }\DecValTok{3}\NormalTok{, }\StringTok{"d"}\NormalTok{, }\DecValTok{4}\NormalTok{]}
+\NormalTok{    superLista }\OperatorTok{=}\NormalTok{ [lista1 }\OperatorTok{+}\NormalTok{ lista2 }\OperatorTok{+}\NormalTok{ lista3] }\OperatorTok{+}\NormalTok{ [[lista4]] }\OperatorTok{+}\NormalTok{ lista1}
+
+    \KeywordTok{def}\NormalTok{ impresionRecursiva(listaAnidada):}
+    \ControlFlowTok{for}\NormalTok{ elemento }\KeywordTok{in}\NormalTok{ listaAnidada:}
+        \ControlFlowTok{if} \BuiltInTok{isinstance}\NormalTok{(elemento, }\BuiltInTok{list}\NormalTok{):}
+\NormalTok{            impresionRecursiva(elemento)}
+        \ControlFlowTok{else}\NormalTok{: }
+            \BuiltInTok{print}\NormalTok{(elemento)}
+
+\NormalTok{    impresionRecursiva(superLista)}
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\section{Arreglos}
+
+Python no tiene de forma nativa soporte para arreglos, en su lugar opta
+por usar listas anidadas. Sin embargo, es posible utilizar el paquete
+\href{https://numpy.org/}{NumPy} para utilizar los arreglos de manera
+semejante a la existente en otros lenguajes. \textbf{NumPy} además
+resulta ser más eficiente en el manejo de datos que su contraparte
+nativa de python mediante listas anidadas. Adicionalmente,
+\textbf{NumPy} incluye más herramientas que extienden la funcionalidad
+de Python.
+
+\subsection{Declaración}
+
+Sintaxis:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ numpy.array([}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{])}
+    \BuiltInTok{print}\NormalTok{(arreglo)}
+\end{Highlighting}
+\end{Shaded}
+
+Esta sintaxis puede resultar incómoda porque será necesario escribirla
+todas las veces que necesite declarar un arreglo. Una alternativa para
+simplificar un poco esta declaración es mediante la creación de un
+alias, esto de la siguiente manera:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.array([}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{])}
+    \BuiltInTok{print}\NormalTok{(arreglo)}
+\end{Highlighting}
+\end{Shaded}
+
+Para declarar un arreglo bidimensional se utiliza la siguiente sintáxis:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], [}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{]])}
+    \BuiltInTok{print}\NormalTok{(arreglo) }
+\end{Highlighting}
+\end{Shaded}
+
+El atributo \texttt{ndim} devuelve la cantidad de dimensiones que tiene
+un arreglo.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], [}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{]])}
+    \BuiltInTok{print}\NormalTok{(arreglo.ndim) }
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Acceso a elementos de un arreglo}
+
+El acceso a elementos dentro de un arreglo en \texttt{numpy} es similar
+a la forma que se utiliza para las listas. Recuerde que elos índice para
+los elementos dentro del arreglo comienza en 0.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.array([}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{])}
+    \BuiltInTok{print}\NormalTok{(arreglo[}\DecValTok{0}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+Para el caso de un arreglo bidimensional se utiliza una coma para separar la posición de las dimensiones.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], [}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{]])}
+    \BuiltInTok{print}\NormalTok{(arreglo[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{]) }
+\end{Highlighting}
+\end{Shaded}
+
+Si el arreglo tiene más dimensiones se utiliza la misma idea para cada una de ellas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.array([[[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], [}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{]],[[}\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{], [}\DecValTok{10}\NormalTok{, }\DecValTok{11}\NormalTok{, }\DecValTok{12}\NormalTok{]])}
+    \BuiltInTok{print}\NormalTok{(arreglo[}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{]) }
+\end{Highlighting}
+\end{Shaded}
+
+De la misma forma que con las listas, también es posible utilizar índices negativos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{,}\DecValTok{5}\NormalTok{], [}\DecValTok{6}\NormalTok{,}\DecValTok{7}\NormalTok{,}\DecValTok{8}\NormalTok{,}\DecValTok{9}\NormalTok{,}\DecValTok{10}\NormalTok{]])}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{\textquotesingle{}El último elemento en el arreglo bidimensional\textquotesingle{}}\NormalTok{, arreglo[}\DecValTok{1}\NormalTok{, }\OperatorTok{{-}}\DecValTok{1}\NormalTok{]) }
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Cortes de arreglos}
+
+Es posible \emph{cortar} un subconjunto de un arreglo para definir uno
+nuevo. Esto es de especial utilidad para extraer vectores de una matriz
+existente, ya sea para definir un nuevo vector o bien realizar
+operaciones con el.
+
+El corte (o rebanada) de la matriz se hace indicando un rango de
+posiciones, es decir \texttt{{[}inicio\ :\ fin{]}}. Además se puede
+especificar un incremento \texttt{{[}inicio\ :\ fin\ :\ incremento{]}}.
+Si no se especifica un inicio, de asume como 0, y si no se especifica un
+final se asume el último elemento de la matriz. Si no se especifica un
+incremento, se asume como 1.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.array([}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{])}
+\NormalTok{    arreglo2 }\OperatorTok{=}\NormalTok{ arreglo[}\DecValTok{1}\NormalTok{:}\DecValTok{4}\NormalTok{]}
+    \BuiltInTok{print}\NormalTok{(arreglo2)}
+\end{Highlighting}
+\end{Shaded}
+
+En el siguiente ejemplo, se hace una rebanada de la matriz especificando
+un incremento diferente a uno:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.array([}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{])}
+    \BuiltInTok{print}\NormalTok{(arreglo[}\DecValTok{1}\NormalTok{:}\DecValTok{5}\NormalTok{:}\DecValTok{2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Cortes de arreglos bidimensionales}
+
+Es posible realizar rebanadas de arreglos de 2 ó más dimensiones,
+resultando un vector o una matriz según sea el caso.
+
+El siguiente ejemplo realiza una rebanada de un arreglo bidimensional y
+el resultado es un vector. Observe que el vector es una rebanada de la
+segunda dimensión de la matriz.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{], [}\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{10}\NormalTok{]])}
+    \BuiltInTok{print}\NormalTok{(arreglo[}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{:}\DecValTok{4}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+En este ejemplo se hace una rebanada de un arreglo bidimensional y el
+resultado es nuevamente un vector. En esta ocasión el vector es una
+rebanada vertical por lo que el resultado contiene elementos de ambas
+dimensiones de la matriz.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{], [}\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{10}\NormalTok{]])}
+    \BuiltInTok{print}\NormalTok{(arreglo[}\DecValTok{0}\NormalTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+En este último caso, se hace una rebanada que resulta una matriz que
+contiene elementos de ambas dimensiones de la matriz original.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.array([[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{], [}\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{10}\NormalTok{]])}
+    \BuiltInTok{print}\NormalTok{(arreglo[}\DecValTok{0}\NormalTok{:}\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{:}\DecValTok{4}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Arreglos aleatorios}
+
+Es posible generar un arreglo o matriz lleno de números (pseudo)
+aleatorios, para ello se puede utilizar el método \texttt{rand}. Para la
+generación, basta con especificar las dimensiones del arreglo que se
+desea generar.\\
+
+
+\begin{code} Generación de un vector unidimensional de 20 elementos aleatorios.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.random.rand(}\DecValTok{20}\NormalTok{) }
+    \BuiltInTok{print}\NormalTok{(arreglo)}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\begin{code} Generación de una matriz bidimensional de tamaño \texttt{5x3}, es decir 5 renglones y 3 columnas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.random.rand(}\DecValTok{5}\NormalTok{, }\DecValTok{3}\NormalTok{) }
+    \BuiltInTok{print}\NormalTok{(arreglo)}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\begin{code} Generación de una matriz tridimensional de tamaño \texttt{5x3x2}, es decir 5 matrices de 3 renglones y 
+2 columnas cada una de ellas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.random.rand(}\DecValTok{5}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{2}\NormalTok{) }
+    \BuiltInTok{print}\NormalTok{(arreglo)}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\subsection{Añadir elementos a un arreglo}
+
+Para añadir elementos al final de un arreglo, se puede utilizar el
+método \texttt{append} contenido en la biblioteca \texttt{Numpy}. El
+argumento \texttt{axis} permite especificar el lugar donde serán
+añadidos los elementos al arreglo.\\
+
+\begin{code}
+Añadir una matriz al final de una matriz, justo debajo de la matriz inicial (\texttt{axis=0}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.append([[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{], [}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{]], [[}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{], [}\DecValTok{30}\NormalTok{, }\DecValTok{40}\NormalTok{]], axis}\OperatorTok{=}\DecValTok{0}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(arreglo)}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\begin{code}
+Añadir una matriz al final de la matriz, a la derehca de la matriz inicial (\texttt{axis=1}).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    arreglo }\OperatorTok{=}\NormalTok{ np.append([[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{], [}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{]], [[}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{], [}\DecValTok{30}\NormalTok{, }\DecValTok{40}\NormalTok{]], axis}\OperatorTok{=}\DecValTok{1}\NormalTok{)}
+    \BuiltInTok{print}\NormalTok{(arreglo)}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+\subsection{Formateo de impresión de un arreglo}
+
+Si se desea controlar la forma en la que los números contenidos en un
+arreglo serán impresos, se puede utilizar el método
+\texttt{printoptions} de la biblioteca \texttt{Numpy}.\\
+
+\begin{code}
+Generar una matriz bidimensional de tamaño 10x5 llena
+con números aleatorios no enteros con valores entre 0 y 1. Imprimir la
+matriz mostrando únicamente 4 cifras significativas no enteras.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+    \ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\NormalTok{    x }\OperatorTok{=}\NormalTok{ np.random.rand(}\DecValTok{10}\NormalTok{,}\DecValTok{5}\NormalTok{)}
+        \ControlFlowTok{with}\NormalTok{ np.printoptions(precision}\OperatorTok{=}\DecValTok{4}\NormalTok{, suppress}\OperatorTok{=}\VariableTok{True}\NormalTok{):}
+\NormalTok{            np.set\_printoptions(formatter}\OperatorTok{=}\NormalTok{\{}\StringTok{\textquotesingle{}float\textquotesingle{}}\NormalTok{: }\StringTok{\textquotesingle{}}\SpecialCharTok{\{: 0.4f\}}\StringTok{\textquotesingle{}}\NormalTok{.}\BuiltInTok{format}\NormalTok{\})}
+            \BuiltInTok{print}\NormalTok{(x)}
+
+\end{Highlighting}
+\end{Shaded}
+\end{code}
+
+La función \texttt{with} permite especificar el formato mediante el cual
+serán impresos unicamente los números en el arreglo, dejando intactos
+los parámetros de los demás \texttt{print} que pudiesen existir. El
+parámetro \texttt{suppress=True} indica que los números deben ser
+impresos en la forma de punto flotante y evitando la notación
+científica. 

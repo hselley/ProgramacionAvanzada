@@ -1,0 +1,315 @@
+\section{Ejercicios}
+
+\subsection{Listas por compresión}
+
+\begin{exercise} Crea una lista que contenga los cuadrados de los números del 1 al 10.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cuadrados }\OperatorTok{=}\NormalTok{ [x}\OperatorTok{**}\DecValTok{2} \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{11}\NormalTok{)]}
+\BuiltInTok{print}\NormalTok{(cuadrados)  }\CommentTok{\# Salida: [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Genera una lista que contenga los números pares del 1 al 20.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pares }\OperatorTok{=}\NormalTok{ [x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{21}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ x }\OperatorTok{\%} \DecValTok{2} \OperatorTok{==} \DecValTok{0}\NormalTok{]}
+\BuiltInTok{print}\NormalTok{(pares)  }\CommentTok{\# Salida: [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Dada una lista de palabras, crea una nueva lista que contenga la longitud de cada palabra.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{palabras }\OperatorTok{=}\NormalTok{ [}\StringTok{"manzana"}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\StringTok{"cereza"}\NormalTok{, }\StringTok{"durazno"}\NormalTok{]}
+\NormalTok{longitudes }\OperatorTok{=}\NormalTok{ [}\BuiltInTok{len}\NormalTok{(palabra) }\ControlFlowTok{for}\NormalTok{ palabra }\KeywordTok{in}\NormalTok{ palabras]}
+\BuiltInTok{print}\NormalTok{(longitudes)  }\CommentTok{\# Salida: [7, 6, 6, 7]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[7, 6, 6, 7]
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Crea una lista que contenga los números del 1 al 30 que sean divisibles por 3.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{divisibles\_por\_3 }\OperatorTok{=}\NormalTok{ [x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{31}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ x }\OperatorTok{\%} \DecValTok{3} \OperatorTok{==} \DecValTok{0}\NormalTok{]}
+\BuiltInTok{print}\NormalTok{(divisibles\_por\_3)  }\CommentTok{\# Salida: [3, 6, 9, 12, 15, 18, 21, 24, 27, 30]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[3, 6, 9, 12, 15, 18, 21, 24, 27, 30]
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Dada una palabra, crea una lista que contenga solo las vocales de la palabra.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{palabra }\OperatorTok{=} \StringTok{"computadora"}
+\NormalTok{vocales }\OperatorTok{=}\NormalTok{ [letra }\ControlFlowTok{for}\NormalTok{ letra }\KeywordTok{in}\NormalTok{ palabra }\ControlFlowTok{if}\NormalTok{ letra }\KeywordTok{in} \StringTok{\textquotesingle{}aeiou\textquotesingle{}}\NormalTok{]}
+\BuiltInTok{print}\NormalTok{(vocales)  }\CommentTok{\# Salida: [\textquotesingle{}o\textquotesingle{}, \textquotesingle{}u\textquotesingle{}, \textquotesingle{}a\textquotesingle{}, \textquotesingle{}o\textquotesingle{}, \textquotesingle{}a\textquotesingle{}]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+['o', 'u', 'a', 'o', 'a']
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Crea una lista que contenga todos los números primos entre 1 y 50 usando una lista por comprensión.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ es\_primo(n):}
+    \ControlFlowTok{return}\NormalTok{ n }\OperatorTok{\textgreater{}} \DecValTok{1} \KeywordTok{and} \BuiltInTok{all}\NormalTok{(n }\OperatorTok{\%}\NormalTok{ i }\OperatorTok{!=} \DecValTok{0} \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{2}\NormalTok{, }\BuiltInTok{int}\NormalTok{(n}\OperatorTok{**}\FloatTok{0.5}\NormalTok{) }\OperatorTok{+} \DecValTok{1}\NormalTok{))}
+
+\NormalTok{primos }\OperatorTok{=}\NormalTok{ [x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{51}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ es\_primo(x)]}
+\BuiltInTok{print}\NormalTok{(primos)  }\CommentTok{\# Salida: [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Genera una lista de listas donde cada sublista contenga un número y su cuadrado, para los números del 1 al 5.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lista\_de\_listas }\OperatorTok{=}\NormalTok{ [[x, x}\OperatorTok{**}\DecValTok{2}\NormalTok{] }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{6}\NormalTok{)]}
+\BuiltInTok{print}\NormalTok{(lista\_de\_listas)  }\CommentTok{\# Salida: [[1, 1], [2, 4], [3, 9], [4, 16], [5, 25]]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[[1, 1], [2, 4], [3, 9], [4, 16], [5, 25]]
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Dada una lista de palabras, crea una nueva lista que contenga solo aquellas palabras que tienen más de 5 letras.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{palabras }\OperatorTok{=}\NormalTok{ [}\StringTok{"sol"}\NormalTok{, }\StringTok{"luna"}\NormalTok{, }\StringTok{"estrellas"}\NormalTok{, }\StringTok{"cometa"}\NormalTok{, }\StringTok{"galaxia"}\NormalTok{]}
+\NormalTok{palabras\_largas }\OperatorTok{=}\NormalTok{ [palabra }\ControlFlowTok{for}\NormalTok{ palabra }\KeywordTok{in}\NormalTok{ palabras }\ControlFlowTok{if} \BuiltInTok{len}\NormalTok{(palabra) }\OperatorTok{\textgreater{}} \DecValTok{5}\NormalTok{]}
+\BuiltInTok{print}\NormalTok{(palabras\_largas)  }\CommentTok{\# Salida: [\textquotesingle{}estrellas\textquotesingle{}, \textquotesingle{}cometa\textquotesingle{}, \textquotesingle{}galaxia\textquotesingle{}]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+['estrellas', 'cometa', 'galaxia']
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Genera una lista de tuplas, donde cada tupla contenga un número y su cubo, para los números del 1 al 5.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lista\_de\_tuplas }\OperatorTok{=}\NormalTok{ [(x, x}\OperatorTok{**}\DecValTok{3}\NormalTok{) }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{6}\NormalTok{)]}
+\BuiltInTok{print}\NormalTok{(lista\_de\_tuplas)  }\CommentTok{\# Salida: [(1, 1), (2, 8), (3, 27), (4, 64), (5, 125)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[(1, 1), (2, 8), (3, 27), (4, 64), (5, 125)]
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Dada una lista de listas, usa una lista por comprensión para aplanarla en una sola lista.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lista\_de\_listas }\OperatorTok{=}\NormalTok{ [[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], [}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{], [}\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{]]}
+\NormalTok{lista\_aplanada }\OperatorTok{=}\NormalTok{ [elemento }\ControlFlowTok{for}\NormalTok{ sublista }\KeywordTok{in}\NormalTok{ lista\_de\_listas }\ControlFlowTok{for}\NormalTok{ elemento }\KeywordTok{in}\NormalTok{ sublista]}
+\BuiltInTok{print}\NormalTok{(lista\_aplanada)  }\CommentTok{\# Salida: [1, 2, 3, 4, 5, 6, 7, 8, 9]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+\end{verbatim}
+\end{exercise}
+
+\subsection{Expresiones generadoras}
+
+\begin{exercise} Crea una expresión generadora que calcule la suma de los cuadrados de los números del 1 al 10.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{suma\_cuadrados }\OperatorTok{=} \BuiltInTok{sum}\NormalTok{(x}\OperatorTok{**}\DecValTok{2} \ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{11}\NormalTok{))}
+\BuiltInTok{print}\NormalTok{(suma\_cuadrados)  }\CommentTok{\# Salida: 385}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+385
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Genera una expresión generadora que produzca los números pares entre 1 y 20.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pares }\OperatorTok{=}\NormalTok{ (x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{21}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ x }\OperatorTok{\%} \DecValTok{2} \OperatorTok{==} \DecValTok{0}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\OperatorTok{*}\NormalTok{pares, sep}\OperatorTok{=}\StringTok{", "}\NormalTok{)  }\CommentTok{\# Salida: 2, 4, 6, 8, 10, 12, 14, 16, 18, 20}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+2, 4, 6, 8, 10, 12, 14, 16, 18, 20
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Dada una lista de palabras, usa una expresión generadora para calcular la longitud total de todas las palabras.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{palabras }\OperatorTok{=}\NormalTok{ [}\StringTok{"manzana"}\NormalTok{, }\StringTok{"banana"}\NormalTok{, }\StringTok{"cereza"}\NormalTok{, }\StringTok{"durazno"}\NormalTok{]}
+\NormalTok{longitud\_total }\OperatorTok{=} \BuiltInTok{sum}\NormalTok{(}\BuiltInTok{len}\NormalTok{(palabra) }\ControlFlowTok{for}\NormalTok{ palabra }\KeywordTok{in}\NormalTok{ palabras)}
+\BuiltInTok{print}\NormalTok{(longitud\_total)  }\CommentTok{\# Salida: 26}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+26
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Crea una expresión generadora que filtre los números divisibles por 3 en el rango de 1 a 30.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{divisibles\_por\_3 }\OperatorTok{=}\NormalTok{ (x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{31}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ x }\OperatorTok{\%} \DecValTok{3} \OperatorTok{==} \DecValTok{0}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\OperatorTok{*}\NormalTok{divisibles\_por\_3, sep}\OperatorTok{=}\StringTok{", "}\NormalTok{)  }\CommentTok{\# Salida: 3, 6, 9, 12, 15, 18, 21, 24, 27, 30}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+3, 6, 9, 12, 15, 18, 21, 24, 27, 30
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Genera una expresión generadora que calcule las raíces cuadradas de los números pares entre 1 y 20.
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ math}
+\NormalTok{raices\_cuadradas }\OperatorTok{=}\NormalTok{ (math.sqrt(x) }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{21}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+\BuiltInTok{print}\NormalTok{(}\OperatorTok{*}\NormalTok{raices\_cuadradas, sep}\OperatorTok{=}\StringTok{", "}\NormalTok{)}
+\CommentTok{\# Salida: 1.4142135623730951, 2.0, 2.8284271247461903, 3.4641016151377544, 4.0, 4.47213595499958, 5.0990195135927845, 5.656854249492381, 6.324555320336759, 7.0710678118654755}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+1.4142135623730951, 2.0, 2.449489742783178, 2.8284271247461903, 3.1622776601683795, 3.4641016151377544, 3.7416573867739413, 4.0, 4.242640687119285, 4.47213595499958
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Dada una lista de números, utiliza una expresión generadora para calcular el producto de todos los elementos.
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ math}
+\NormalTok{numeros }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{]}
+\NormalTok{producto }\OperatorTok{=}\NormalTok{ math.prod(x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in}\NormalTok{ numeros)}
+\BuiltInTok{print}\NormalTok{(producto)  }\CommentTok{\# Salida: 120}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+120
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Dada una lista de cadenas, utiliza una expresión generadora para concatenarlas en una sola cadena.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cadenas }\OperatorTok{=}\NormalTok{ [}\StringTok{"Hola"}\NormalTok{, }\StringTok{" "}\NormalTok{, }\StringTok{"Mundo"}\NormalTok{, }\StringTok{"!"}\NormalTok{]}
+\NormalTok{resultado }\OperatorTok{=} \StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{.join(cadena }\ControlFlowTok{for}\NormalTok{ cadena }\KeywordTok{in}\NormalTok{ cadenas)}
+\BuiltInTok{print}\NormalTok{(resultado)  }\CommentTok{\# Salida: "Hola Mundo!"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Hola Mundo!
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Usa una expresión generadora para sumar los primeros \textbf{N} números primos.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ es\_primo(n):}
+    \ControlFlowTok{return}\NormalTok{ n }\OperatorTok{\textgreater{}} \DecValTok{1} \KeywordTok{and} \BuiltInTok{all}\NormalTok{(n }\OperatorTok{\%}\NormalTok{ i }\OperatorTok{!=} \DecValTok{0} \ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{2}\NormalTok{, }\BuiltInTok{int}\NormalTok{(n}\OperatorTok{**}\FloatTok{0.5}\NormalTok{) }\OperatorTok{+} \DecValTok{1}\NormalTok{))}
+
+\NormalTok{N }\OperatorTok{=} \DecValTok{10}
+\NormalTok{primos\_sum }\OperatorTok{=} \BuiltInTok{sum}\NormalTok{(x }\ControlFlowTok{for}\NormalTok{ x }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{100}\NormalTok{) }\ControlFlowTok{if}\NormalTok{ es\_primo(x))  }\CommentTok{\# Generamos una lista amplia para cubrir los primeros 10 primos}
+\BuiltInTok{print}\NormalTok{(primos\_sum)  }\CommentTok{\# Salida: 129 (suma de los primeros 10 números primos)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+1060
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Dada una lista de palabras, utiliza una expresión generadora para filtrar solo aquellas palabras que tengan más de 5 letras.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{palabras }\OperatorTok{=}\NormalTok{ [}\StringTok{"sol"}\NormalTok{, }\StringTok{"luna"}\NormalTok{, }\StringTok{"estrellas"}\NormalTok{, }\StringTok{"cometa"}\NormalTok{, }\StringTok{"galaxia"}\NormalTok{]}
+\NormalTok{palabras\_largas }\OperatorTok{=}\NormalTok{ (palabra }\ControlFlowTok{for}\NormalTok{ palabra }\KeywordTok{in}\NormalTok{ palabras }\ControlFlowTok{if} \BuiltInTok{len}\NormalTok{(palabra) }\OperatorTok{\textgreater{}} \DecValTok{5}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\OperatorTok{*}\NormalTok{palabras\_largas, sep}\OperatorTok{=}\StringTok{", "}\NormalTok{)  }\CommentTok{\# Salida: "estrellas", "cometa", "galaxia"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+estrellas, cometa, galaxia
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} Usa una expresión generadora para generar números aleatorios entre 1 y 100, pero detente cuando el número generado supere 90.
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ random}
+\NormalTok{numeros\_al\_azar }\OperatorTok{=}\NormalTok{ (num }\ControlFlowTok{for}\NormalTok{ num }\KeywordTok{in} \BuiltInTok{iter}\NormalTok{(}\KeywordTok{lambda}\NormalTok{: random.randint(}\DecValTok{1}\NormalTok{, }\DecValTok{100}\NormalTok{), }\VariableTok{None}\NormalTok{))}
+\ControlFlowTok{for}\NormalTok{ num }\KeywordTok{in}\NormalTok{ numeros\_al\_azar:}
+    \BuiltInTok{print}\NormalTok{(num, end}\OperatorTok{=}\StringTok{", "}\NormalTok{)}
+    \ControlFlowTok{if}\NormalTok{ num }\OperatorTok{\textgreater{}} \DecValTok{90}\NormalTok{:}
+        \ControlFlowTok{break}  \CommentTok{\# Detenemos la iteración cuando el número es mayor a 90}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+59, 45, 92, 
+\end{verbatim}
+\end{exercise}

@@ -1,0 +1,367 @@
+\section{Ejercicios}
+
+\subsection{map, filter, lambda}
+
+\begin{exercise} 
+Escribe una función lambda que tome dos números y devuelva su producto.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{product }\OperatorTok{=} \KeywordTok{lambda}\NormalTok{ x, y: x }\OperatorTok{*}\NormalTok{ y}
+\BuiltInTok{print}\NormalTok{(product(}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+20
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise}
+Usa una función lambda dentro de map para sumar 10 a cada número en una lista.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{numbers }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{]}
+\NormalTok{result }\OperatorTok{=} \BuiltInTok{list}\NormalTok{(}\BuiltInTok{map}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x: x }\OperatorTok{+} \DecValTok{10}\NormalTok{, numbers))}
+\BuiltInTok{print}\NormalTok{(result)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[11, 12, 13, 14, 15]
+
+\end{verbatim}
+\end{exercise}
+
+
+\begin{exercise}
+Usa una función lambda para ordenar una lista de tuplas en función del segundo elemento de cada tupla.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tuples }\OperatorTok{=}\NormalTok{ [(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), (}\DecValTok{3}\NormalTok{, }\DecValTok{1}\NormalTok{), (}\DecValTok{5}\NormalTok{, }\DecValTok{4}\NormalTok{)]}
+\NormalTok{sorted\_tuples }\OperatorTok{=} \BuiltInTok{sorted}\NormalTok{(tuples, key}\OperatorTok{=}\KeywordTok{lambda}\NormalTok{ x: x[}\DecValTok{1}\NormalTok{])}
+\BuiltInTok{print}\NormalTok{(sorted\_tuples)  }\CommentTok{\# Salida esperada: [(3, 1), (1, 2), (5, 4)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[(3, 1), (1, 2), (5, 4)]
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise}
+Usa una función lambda dentro de sorted para ordenar una lista de cadenas en función de su longitud.
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{strings }\OperatorTok{=}\NormalTok{ [}\StringTok{"Hola"}\NormalTok{, }\StringTok{"Mundo"}\NormalTok{, }\StringTok{"Python"}\NormalTok{, }\StringTok{"es"}\NormalTok{, }\StringTok{"genial"}\NormalTok{]}
+\NormalTok{sorted\_strings }\OperatorTok{=} \BuiltInTok{sorted}\NormalTok{(strings, key}\OperatorTok{=}\KeywordTok{lambda}\NormalTok{ s: }\BuiltInTok{len}\NormalTok{(s))}
+\BuiltInTok{print}\NormalTok{(sorted\_strings)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+['es', 'Hola', 'Mundo', 'Python', 'genial']
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise}
+Filtrar y transformar una lista de diccionarios. Escribe un programa
+que tome una lista de diccionarios, donde cada diccionario representa
+a una persona con llaves nombre y edad. Devuelve una nueva lista de
+nombres de personas que tengan al menos 18 años.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ mayores\_de\_edad(personas):}
+    \ControlFlowTok{return} \BuiltInTok{list}\NormalTok{(}
+                \BuiltInTok{map}\NormalTok{(}
+                    \KeywordTok{lambda}\NormalTok{ persona: persona[}\StringTok{\textquotesingle{}nombre\textquotesingle{}}\NormalTok{], }
+                    \BuiltInTok{filter}\NormalTok{(}
+                        \KeywordTok{lambda}\NormalTok{ persona: persona[}\StringTok{\textquotesingle{}edad\textquotesingle{}}\NormalTok{] }\OperatorTok{\textgreater{}=} \DecValTok{18}\NormalTok{, }
+\NormalTok{                        personas}
+\NormalTok{                    )}
+\NormalTok{                )}
+\NormalTok{            )}
+
+\CommentTok{\# Ejemplo de uso}
+\NormalTok{personas }\OperatorTok{=}\NormalTok{ [}
+\NormalTok{    \{}\StringTok{"nombre"}\NormalTok{: }\StringTok{"Ana"}\NormalTok{, }\StringTok{"edad"}\NormalTok{: }\DecValTok{22}\NormalTok{\},}
+\NormalTok{    \{}\StringTok{"nombre"}\NormalTok{: }\StringTok{"Luis"}\NormalTok{, }\StringTok{"edad"}\NormalTok{: }\DecValTok{17}\NormalTok{\},}
+\NormalTok{    \{}\StringTok{"nombre"}\NormalTok{: }\StringTok{"Marta"}\NormalTok{, }\StringTok{"edad"}\NormalTok{: }\DecValTok{19}\NormalTok{\},}
+\NormalTok{    \{}\StringTok{"nombre"}\NormalTok{: }\StringTok{"Carlos"}\NormalTok{, }\StringTok{"edad"}\NormalTok{: }\DecValTok{15}\NormalTok{\}}
+\NormalTok{]}
+\NormalTok{nombres\_mayores }\OperatorTok{=}\NormalTok{ mayores\_de\_edad(personas)}
+\BuiltInTok{print}\NormalTok{(nombres\_mayores)  }\CommentTok{\# Output: [\textquotesingle{}Ana\textquotesingle{}, \textquotesingle{}Marta\textquotesingle{}]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+['Ana', 'Marta']
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise}
+Aplicar múltiples funciones a una lista de números. Escribe un
+programa que tome una lista de números y aplique dos funciones
+diferentes a cada número: una que calcule el cuadrado y otra que
+calcule el cubo. Devuelve una lista de tuplas donde cada tupla
+contiene el resultado de ambas funciones.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ cuadrado\_y\_cubo(lista):}
+    \ControlFlowTok{return} \BuiltInTok{list}\NormalTok{(}
+        \BuiltInTok{map}\NormalTok{(}
+            \KeywordTok{lambda}\NormalTok{ x: (x }\OperatorTok{**} \DecValTok{2}\NormalTok{, x }\OperatorTok{**} \DecValTok{3}\NormalTok{), }
+\NormalTok{            lista}
+\NormalTok{        )}
+\NormalTok{    )}
+
+\CommentTok{\# Ejemplo de uso}
+\NormalTok{numeros }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{]}
+\NormalTok{resultados }\OperatorTok{=}\NormalTok{ cuadrado\_y\_cubo(numeros)}
+\BuiltInTok{print}\NormalTok{(resultados)  }\CommentTok{\# Output: [(1, 1), (4, 8), (9, 27), (16, 64)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[(1, 1), (4, 8), (9, 27), (16, 64)]
+
+\end{verbatim}
+\end{exercise}
+
+
+\begin{exercise}
+Ordenar una lista de tuplas basada en la suma de sus elementos.
+Escribe un programa que tome una lista de tuplas, donde cada tupla
+contiene dos números. Devuelve una nueva lista de tuplas ordenadas por
+la suma de sus elementos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ ordenar\_por\_suma(lista):}
+    \ControlFlowTok{return} \BuiltInTok{list}\NormalTok{(}
+        \BuiltInTok{map}\NormalTok{(}
+            \KeywordTok{lambda}\NormalTok{ x: x, }
+            \BuiltInTok{sorted}\NormalTok{(}
+\NormalTok{                lista, }
+\NormalTok{                key }\OperatorTok{=} \KeywordTok{lambda}\NormalTok{ x: x[}\DecValTok{0}\NormalTok{] }\OperatorTok{+}\NormalTok{ x[}\DecValTok{1}\NormalTok{]}
+\NormalTok{            )}
+\NormalTok{        )}
+\NormalTok{    )}
+
+\CommentTok{\# Ejemplo de uso}
+\NormalTok{tuplas }\OperatorTok{=}\NormalTok{ [(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{), (}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{), (}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{), (}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{)]}
+\NormalTok{tuplas\_ordenadas }\OperatorTok{=}\NormalTok{ ordenar\_por\_suma(tuplas)}
+\BuiltInTok{print}\NormalTok{(tuplas\_ordenadas)  }\CommentTok{\# Output: [(1, 1), (1, 2), (2, 2), (3, 4)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[(1, 1), (1, 2), (2, 2), (3, 4)]
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise}
+Convertir una lista de tuplas a un diccionario. Escribe un programa
+que tome una lista de tuplas, donde cada tupla contiene una llave y un
+valor. Devuelve un diccionario construido a partir de estas tuplas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ tuplas\_a\_diccionario(lista):}
+    \ControlFlowTok{return} \BuiltInTok{dict}\NormalTok{(}\BuiltInTok{map}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x: (x[}\DecValTok{0}\NormalTok{], x[}\DecValTok{1}\NormalTok{]), lista))}
+
+\CommentTok{\# Ejemplo de uso}
+\NormalTok{tuplas }\OperatorTok{=}\NormalTok{ [(}\StringTok{"llave1"}\NormalTok{, }\StringTok{"valor1"}\NormalTok{), (}\StringTok{"llave2"}\NormalTok{, }\StringTok{"valor2"}\NormalTok{), (}\StringTok{"llave3"}\NormalTok{, }\StringTok{"valor3"}\NormalTok{)]}
+\NormalTok{diccionario }\OperatorTok{=}\NormalTok{ tuplas\_a\_diccionario(tuplas)}
+\BuiltInTok{print}\NormalTok{(diccionario)  }\CommentTok{\# Output: \{\textquotesingle{}llave1\textquotesingle{}: \textquotesingle{}valor1\textquotesingle{}, \textquotesingle{}llave2\textquotesingle{}: \textquotesingle{}valor2\textquotesingle{}, \textquotesingle{}llave3\textquotesingle{}: \textquotesingle{}valor3\textquotesingle{}\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+{'llave1': 'valor1', 'llave2': 'valor2', 'llave3': 'valor3'}
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise}
+Aplicar una función a una lista de listas. Escribe un programa que
+tome una lista de listas de números y aplique una función que calcule
+el promedio de cada lista interna. Devuelve una lista de promedios.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{def}\NormalTok{ promedios\_de\_listas(lista):}
+    \ControlFlowTok{return} \BuiltInTok{list}\NormalTok{(}
+        \BuiltInTok{map}\NormalTok{(}
+            \KeywordTok{lambda}\NormalTok{ x: }\BuiltInTok{sum}\NormalTok{(x) }\OperatorTok{/} \BuiltInTok{len}\NormalTok{(x) }\ControlFlowTok{if} \BuiltInTok{len}\NormalTok{(x) }\OperatorTok{\textgreater{}} \DecValTok{0} \ControlFlowTok{else} \DecValTok{0}\NormalTok{, }
+\NormalTok{            lista}
+\NormalTok{        )}
+\NormalTok{    )}
+
+\CommentTok{\# Ejemplo de uso}
+\NormalTok{listas }\OperatorTok{=}\NormalTok{ [[}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{], [}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{, }\DecValTok{7}\NormalTok{], [}\DecValTok{8}\NormalTok{, }\DecValTok{9}\NormalTok{], []]}
+\NormalTok{promedios }\OperatorTok{=}\NormalTok{ promedios\_de\_listas(listas)}
+\BuiltInTok{print}\NormalTok{(promedios)  }\CommentTok{\# Output: [2.0, 5.5, 8.5, 0]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[2.0, 5.5, 8.5, 0]
+
+\end{verbatim}
+\end{exercise}
+
+\subsection{Reduce}
+
+\begin{exercise}
+Usa una función lambda dentro de reduce para calcular el producto de
+todos los números en una lista.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ functools }\ImportTok{import} \BuiltInTok{reduce}
+
+\NormalTok{numbers }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{]}
+\NormalTok{product }\OperatorTok{=} \BuiltInTok{reduce}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x, y: x }\OperatorTok{*}\NormalTok{ y, numbers)}
+\BuiltInTok{print}\NormalTok{(product)  }\CommentTok{\# Salida esperada: 120}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+120
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise}
+Suma de una lista de números. Escribe un programa que tome una lista
+de números y devuelva la suma de todos los números en la lista.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ functools }\ImportTok{import} \BuiltInTok{reduce}
+
+\KeywordTok{def}\NormalTok{ suma(lista):}
+    \ControlFlowTok{return} \BuiltInTok{reduce}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x, y: x }\OperatorTok{+}\NormalTok{ y, lista)}
+
+\CommentTok{\# Ejemplo de uso}
+\NormalTok{numeros }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{]}
+\NormalTok{resultado }\OperatorTok{=}\NormalTok{ suma(numeros)}
+\BuiltInTok{print}\NormalTok{(resultado)  }\CommentTok{\# Output: 15}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+15
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise}
+Encontrar el máximo en una lista de números. Escribe un programa que
+tome una lista de números y devuelva el número más grande en la lista.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ functools }\ImportTok{import} \BuiltInTok{reduce}
+
+\KeywordTok{def}\NormalTok{ maximo(lista):}
+    \ControlFlowTok{return} \BuiltInTok{reduce}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x, y: x }\ControlFlowTok{if}\NormalTok{ x }\OperatorTok{\textgreater{}}\NormalTok{ y }\ControlFlowTok{else}\NormalTok{ y, lista)}
+
+\CommentTok{\# Ejemplo de uso}
+\NormalTok{numeros }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{5}\NormalTok{]}
+\NormalTok{resultado }\OperatorTok{=}\NormalTok{ maximo(numeros)}
+\BuiltInTok{print}\NormalTok{(resultado)  }\CommentTok{\# Output: 9}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+9
+
+\end{verbatim}
+\end{exercise}
+
+
+\begin{exercise}
+Contar la frecuencia de elementos en una lista. Escribe un programa
+que tome una lista de elementos y devuelva un diccionario con la
+frecuencia de cada elemento en la lista.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ functools }\ImportTok{import} \BuiltInTok{reduce}
+
+\KeywordTok{def}\NormalTok{ frecuencia(lista):}
+    \ControlFlowTok{return} \BuiltInTok{reduce}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ acc, x: \{}\OperatorTok{**}\NormalTok{acc, x: acc.get(x, }\DecValTok{0}\NormalTok{) }\OperatorTok{+} \DecValTok{1}\NormalTok{\}, lista, \{\})}
+
+\CommentTok{\# Ejemplo de uso}
+\NormalTok{elementos }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}a\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}a\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}c\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}b\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}a\textquotesingle{}}\NormalTok{]}
+\NormalTok{resultado }\OperatorTok{=}\NormalTok{ frecuencia(elementos)}
+\BuiltInTok{print}\NormalTok{(resultado)  }\CommentTok{\# Output: \{\textquotesingle{}a\textquotesingle{}: 3, \textquotesingle{}b\textquotesingle{}: 2, \textquotesingle{}c\textquotesingle{}: 1\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+{'a': 3, 'b': 2, 'c': 1}
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise}
+Calcular la diferencia entre el número más grande y el más pequeño en
+una lista. Escribe un programa que tome una lista de números y
+devuelva la diferencia entre el número más grande y el más pequeño en
+la lista.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ functools }\ImportTok{import} \BuiltInTok{reduce}
+
+\KeywordTok{def}\NormalTok{ diferencia\_max\_min(lista):}
+\NormalTok{    maximo }\OperatorTok{=} \BuiltInTok{reduce}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x, y: x }\ControlFlowTok{if}\NormalTok{ x }\OperatorTok{\textgreater{}}\NormalTok{ y }\ControlFlowTok{else}\NormalTok{ y, lista)}
+\NormalTok{    minimo }\OperatorTok{=} \BuiltInTok{reduce}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ x, y: x }\ControlFlowTok{if}\NormalTok{ x }\OperatorTok{\textless{}}\NormalTok{ y }\ControlFlowTok{else}\NormalTok{ y, lista)}
+    \ControlFlowTok{return}\NormalTok{ maximo }\OperatorTok{{-}}\NormalTok{ minimo}
+
+\CommentTok{\# Ejemplo de uso}
+\NormalTok{numeros }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{, }\DecValTok{7}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{9}\NormalTok{, }\DecValTok{5}\NormalTok{]}
+\NormalTok{resultado }\OperatorTok{=}\NormalTok{ diferencia\_max\_min(numeros)}
+\BuiltInTok{print}\NormalTok{(resultado)  }\CommentTok{\# Output: 8}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+8
+
+\end{verbatim}
+\end{exercise}
+
+
+\begin{exercise}
+Encontrar el número de palabras en una lista de cadenas. Escribe un
+programa que tome una lista de cadenas y devuelva el número total de
+palabras en todas las cadenas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ functools }\ImportTok{import} \BuiltInTok{reduce}
+
+\KeywordTok{def}\NormalTok{ contar\_palabras(lista):}
+    \ControlFlowTok{return} \BuiltInTok{reduce}\NormalTok{(}\KeywordTok{lambda}\NormalTok{ acc, x: acc }\OperatorTok{+} \BuiltInTok{len}\NormalTok{(x.split()), lista, }\DecValTok{0}\NormalTok{)}
+
+\CommentTok{\# Ejemplo de uso}
+\NormalTok{cadenas }\OperatorTok{=}\NormalTok{ [}\StringTok{"hola mundo"}\NormalTok{, }\StringTok{"python es genial"}\NormalTok{, }\StringTok{"reduce es útil"}\NormalTok{]}
+\NormalTok{resultado }\OperatorTok{=}\NormalTok{ contar\_palabras(cadenas)}
+\BuiltInTok{print}\NormalTok{(resultado)  }\CommentTok{\# Output: 8}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+8
+\end{verbatim}
+\end{exercise}

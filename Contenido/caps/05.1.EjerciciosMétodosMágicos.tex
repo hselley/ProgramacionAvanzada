@@ -1,0 +1,408 @@
+\section{Ejercicios}
+
+\begin{exercise}
+    .
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Persona:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, nombre, edad):}
+        \VariableTok{self}\NormalTok{.nombre }\OperatorTok{=}\NormalTok{ nombre}
+        \VariableTok{self}\NormalTok{.edad }\OperatorTok{=}\NormalTok{ edad}
+
+    \KeywordTok{def} \FunctionTok{\_\_str\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{nombre}\SpecialCharTok{\}}\SpecialStringTok{, }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{edad}\SpecialCharTok{\}}\SpecialStringTok{ años\textquotesingle{}}
+
+    \KeywordTok{def} \FunctionTok{\_\_repr\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \SpecialStringTok{f\textquotesingle{}Persona(}\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{nombre}\SpecialCharTok{\}}\SpecialStringTok{, }\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{edad}\SpecialCharTok{!r\}}\SpecialStringTok{)\textquotesingle{}}
+
+\NormalTok{persona }\OperatorTok{=}\NormalTok{ Persona(}\StringTok{\textquotesingle{}Juan\textquotesingle{}}\NormalTok{, }\DecValTok{30}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(persona)}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{repr}\NormalTok{(persona))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Juan, 30 años
+Persona(Juan, 30)
+
+\end{verbatim}
+\end{exercise}
+
+
+\begin{exercise} .
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ MiLista:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, elementos):}
+        \VariableTok{self}\NormalTok{.elementos }\OperatorTok{=}\NormalTok{ elementos}
+
+    \KeywordTok{def} \FunctionTok{\_\_len\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \BuiltInTok{len}\NormalTok{(}\VariableTok{self}\NormalTok{.elementos)}
+
+    \KeywordTok{def} \FunctionTok{\_\_getitem\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, posicion):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.elementos[posicion]}
+
+\NormalTok{lista }\OperatorTok{=}\NormalTok{ MiLista([}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{])}
+\NormalTok{listaNormal }\OperatorTok{=}\NormalTok{ [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{,}\DecValTok{4}\NormalTok{]}
+
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{len}\NormalTok{(lista))}
+\BuiltInTok{print}\NormalTok{(}\BuiltInTok{len}\NormalTok{(listaNormal))}
+
+\BuiltInTok{print}\NormalTok{(lista[}\DecValTok{2}\NormalTok{])}
+\BuiltInTok{print}\NormalTok{(listaNormal[}\DecValTok{2}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+4
+4
+3
+3
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} .
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ GestorRecursos:}
+    \KeywordTok{def} \FunctionTok{\_\_enter\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{"Entrando al contexto"}\NormalTok{)}
+        \ControlFlowTok{return} \VariableTok{self}
+
+    \KeywordTok{def} \FunctionTok{\_\_exit\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, tipo, valor, traza):}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{"Saliendo del contexto"}\NormalTok{)}
+
+\CommentTok{\# Declaración por contexto}
+\ControlFlowTok{with}\NormalTok{ GestorRecursos() }\ImportTok{as}\NormalTok{ recurso:}
+    \BuiltInTok{print}\NormalTok{(}\StringTok{"Dentro del bloque with"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Entrando al contexto
+Dentro del bloque with
+Saliendo del contexto
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} .
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Saludador:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, saludo):}
+        \VariableTok{self}\NormalTok{.saludo }\OperatorTok{=}\NormalTok{ saludo}
+
+    \KeywordTok{def} \FunctionTok{\_\_call\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, nombre):}
+        \ControlFlowTok{return} \SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\VariableTok{self}\SpecialCharTok{.}\NormalTok{saludo}\SpecialCharTok{\}}\SpecialStringTok{, }\SpecialCharTok{\{}\NormalTok{nombre}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}
+
+
+\NormalTok{saludador }\OperatorTok{=}\NormalTok{ Saludador(}\StringTok{\textquotesingle{}Hola\textquotesingle{}}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(saludador(}\StringTok{\textquotesingle{}mundo\textquotesingle{}}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Hola, mundo
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} .
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Singleton:}
+\NormalTok{    \_instancia }\OperatorTok{=} \VariableTok{None}
+
+    \KeywordTok{def} \FunctionTok{\_\_new\_\_}\NormalTok{(cls, }\OperatorTok{*}\NormalTok{args, }\OperatorTok{**}\NormalTok{kwargs):}
+        \ControlFlowTok{if}\NormalTok{ cls.\_instancia }\KeywordTok{is} \VariableTok{None}\NormalTok{:}
+\NormalTok{            cls.\_instancia }\OperatorTok{=} \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_new\_\_}\NormalTok{(cls)}
+        \ControlFlowTok{return}\NormalTok{ cls.\_instancia}
+
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, valor):}
+        \VariableTok{self}\NormalTok{.valor }\OperatorTok{=}\NormalTok{ valor}
+
+\NormalTok{obj1 }\OperatorTok{=}\NormalTok{ Singleton(}\DecValTok{10}\NormalTok{)}
+\NormalTok{obj2 }\OperatorTok{=}\NormalTok{ Singleton(}\DecValTok{20}\NormalTok{)}
+
+\BuiltInTok{print}\NormalTok{(obj1)}
+\BuiltInTok{print}\NormalTok{(obj2)}
+
+\BuiltInTok{print}\NormalTok{(obj1.valor)}
+\BuiltInTok{print}\NormalTok{(obj2.valor)}
+
+\BuiltInTok{print}\NormalTok{(obj1 }\KeywordTok{is}\NormalTok{ obj2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+<__main__.Singleton object at 0x7b04d2ea1450>
+<__main__.Singleton object at 0x7b04d2ea1450>
+20
+20
+True
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} .
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ AtributosDinamicos:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \VariableTok{self}\NormalTok{.datos }\OperatorTok{=}\NormalTok{ \{\} }\CommentTok{\# Diccionario vacio}
+
+    \KeywordTok{def} \FunctionTok{\_\_getattr\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, nombre):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.datos.get(nombre, }\SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\NormalTok{nombre}\SpecialCharTok{\}}\SpecialStringTok{ no encontrado\textquotesingle{}}\NormalTok{)}
+
+    \KeywordTok{def} \FunctionTok{\_\_setattr\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, nombre, valor):}
+        \ControlFlowTok{if}\NormalTok{ nombre }\OperatorTok{==} \StringTok{\textquotesingle{}datos\textquotesingle{}}\NormalTok{:}
+            \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_setattr\_\_}\NormalTok{(nombre, valor)}
+        \ControlFlowTok{else}\NormalTok{:}
+            \VariableTok{self}\NormalTok{.datos[nombre] }\OperatorTok{=}\NormalTok{ valor}
+
+
+\NormalTok{obj }\OperatorTok{=}\NormalTok{ AtributosDinamicos()}
+\NormalTok{obj.name }\OperatorTok{=} \StringTok{\textquotesingle{}Python\textquotesingle{}}
+\BuiltInTok{print}\NormalTok{(obj.name)}
+
+\BuiltInTok{print}\NormalTok{(obj.age)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Python
+age no encontrado
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} .  
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ DiccionarioPersonalizado:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \VariableTok{self}\NormalTok{.datos }\OperatorTok{=}\NormalTok{ \{\}}
+
+    \KeywordTok{def} \FunctionTok{\_\_setitem\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, llave, valor):}
+        \VariableTok{self}\NormalTok{.datos[llave] }\OperatorTok{=}\NormalTok{ valor}
+
+    \KeywordTok{def} \FunctionTok{\_\_getitem\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, llave):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.datos.get(llave, }\StringTok{\textquotesingle{}Llave no encontrada\textquotesingle{}}\NormalTok{)}
+
+    \KeywordTok{def} \FunctionTok{\_\_delitem\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, llave):}
+        \KeywordTok{del} \VariableTok{self}\NormalTok{.datos[llave]}
+
+\NormalTok{dic }\OperatorTok{=}\NormalTok{ DiccionarioPersonalizado()}
+\NormalTok{dic[}\StringTok{\textquotesingle{}llave\textquotesingle{}}\NormalTok{] }\OperatorTok{=} \StringTok{\textquotesingle{}valor\textquotesingle{}}  \CommentTok{\# \_\_setitem\_\_}
+\BuiltInTok{print}\NormalTok{(dic[}\StringTok{\textquotesingle{}llave\textquotesingle{}}\NormalTok{])     }\CommentTok{\# \_\_getitem\_\_}
+\KeywordTok{del}\NormalTok{ dic[}\StringTok{\textquotesingle{}llave\textquotesingle{}}\NormalTok{]        }\CommentTok{\# \_\_delitem\_\_}
+\BuiltInTok{print}\NormalTok{(dic[}\StringTok{\textquotesingle{}llave\textquotesingle{}}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+valor
+Llave no encontrada
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise}.
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Persona:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, nombre, edad):}
+        \VariableTok{self}\NormalTok{.nombre }\OperatorTok{=}\NormalTok{ nombre}
+        \VariableTok{self}\NormalTok{.edad }\OperatorTok{=}\NormalTok{ edad}
+
+    \KeywordTok{def} \FunctionTok{\_\_eq\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, otro):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.nombre }\OperatorTok{==}\NormalTok{ otro.nombre }\KeywordTok{and} \VariableTok{self}\NormalTok{.edad }\OperatorTok{==}\NormalTok{ otro.edad}
+
+    \KeywordTok{def} \FunctionTok{\_\_lt\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, otro):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.edad }\OperatorTok{\textless{}}\NormalTok{ otro.edad}
+
+    \KeywordTok{def} \FunctionTok{\_\_gt\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, otro):}
+        \ControlFlowTok{return} \VariableTok{self}\NormalTok{.edad }\OperatorTok{\textgreater{}}\NormalTok{ otro.edad}
+
+    \KeywordTok{def} \FunctionTok{\_\_hash\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \BuiltInTok{hash}\NormalTok{((}\VariableTok{self}\NormalTok{.nombre, }\VariableTok{self}\NormalTok{.edad))}
+
+\NormalTok{p1 }\OperatorTok{=}\NormalTok{ Persona(}\StringTok{\textquotesingle{}Juan\textquotesingle{}}\NormalTok{, }\DecValTok{25}\NormalTok{)}
+\NormalTok{p2 }\OperatorTok{=}\NormalTok{ Persona(}\StringTok{\textquotesingle{}Juan\textquotesingle{}}\NormalTok{, }\DecValTok{25}\NormalTok{)}
+\NormalTok{p3 }\OperatorTok{=}\NormalTok{ Persona(}\StringTok{\textquotesingle{}Ana\textquotesingle{}}\NormalTok{, }\DecValTok{30}\NormalTok{)}
+
+\BuiltInTok{print}\NormalTok{(p1 }\OperatorTok{==}\NormalTok{ p2)}
+\BuiltInTok{print}\NormalTok{(p1 }\OperatorTok{==}\NormalTok{ p3)}
+\BuiltInTok{print}\NormalTok{(p1 }\OperatorTok{\textless{}}\NormalTok{ p3)}
+\BuiltInTok{print}\NormalTok{(p3 }\OperatorTok{\textgreater{}}\NormalTok{ p1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+True
+False
+True
+True
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} .
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Optimizado:}
+    \FunctionTok{\_\_slots\_\_} \OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}x\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}y\textquotesingle{}}\NormalTok{]}
+
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, x, y):}
+        \VariableTok{self}\NormalTok{.x }\OperatorTok{=}\NormalTok{ x}
+        \VariableTok{self}\NormalTok{.y }\OperatorTok{=}\NormalTok{ y}
+
+\NormalTok{obj }\OperatorTok{=}\NormalTok{ Optimizado(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(obj.x, obj.y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+1 2
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} .
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ AccesoControlado:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, valor):}
+        \VariableTok{self}\NormalTok{.valor }\OperatorTok{=}\NormalTok{ valor}
+
+    \KeywordTok{def} \FunctionTok{\_\_getattribute\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, nombre):}
+        \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f\textquotesingle{}Accediendo a }\SpecialCharTok{\{}\NormalTok{nombre}\SpecialCharTok{\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+        \ControlFlowTok{return} \BuiltInTok{super}\NormalTok{().}\FunctionTok{\_\_getattribute\_\_}\NormalTok{(nombre)}
+
+\NormalTok{obj }\OperatorTok{=}\NormalTok{ AccesoControlado(}\DecValTok{10}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(obj.valor)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Accediendo a valor
+10
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} .
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Coleccion:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, elementos):}
+        \VariableTok{self}\NormalTok{.elementos }\OperatorTok{=}\NormalTok{ elementos}
+
+    \KeywordTok{def} \FunctionTok{\_\_contains\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, item):}
+        \ControlFlowTok{return}\NormalTok{ item }\KeywordTok{in} \VariableTok{self}\NormalTok{.elementos}
+
+\NormalTok{col }\OperatorTok{=}\NormalTok{ Coleccion([}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{])}
+\BuiltInTok{print}\NormalTok{(}\DecValTok{2} \KeywordTok{in}\NormalTok{ col)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+True
+\end{verbatim}
+\end{exercise}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{3} \KeywordTok{in}\NormalTok{ [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+True
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{5} \KeywordTok{in}\NormalTok{ [}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+False
+
+\end{verbatim}
+
+\begin{exercise} .
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Contador:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{, inicio, fin):}
+        \VariableTok{self}\NormalTok{.actual }\OperatorTok{=}\NormalTok{ inicio}
+        \VariableTok{self}\NormalTok{.fin }\OperatorTok{=}\NormalTok{ fin}
+
+    \KeywordTok{def} \FunctionTok{\_\_iter\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{return} \VariableTok{self}
+
+    \KeywordTok{def} \FunctionTok{\_\_next\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \ControlFlowTok{if} \VariableTok{self}\NormalTok{.actual }\OperatorTok{\textless{}} \VariableTok{self}\NormalTok{.fin:}
+\NormalTok{            actual }\OperatorTok{=} \VariableTok{self}\NormalTok{.actual}
+            \VariableTok{self}\NormalTok{.actual }\OperatorTok{+=} \DecValTok{1}
+            \ControlFlowTok{return}\NormalTok{ actual}
+        \ControlFlowTok{else}\NormalTok{:}
+            \ControlFlowTok{raise} \PreprocessorTok{StopIteration}
+
+\NormalTok{contador }\OperatorTok{=}\NormalTok{ Contador(}\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ numero }\KeywordTok{in}\NormalTok{ contador:}
+    \BuiltInTok{print}\NormalTok{(numero)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+0
+1
+2
+3
+4
+
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{ i }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(}\DecValTok{5}\NormalTok{):}
+    \BuiltInTok{print}\NormalTok{(i)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+0
+1
+2
+3
+4
+
+\end{verbatim}
+\end{exercise}
+
+\begin{exercise} .
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{ Recurso:}
+    \KeywordTok{def} \FunctionTok{\_\_init\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{"Recurso creado"}\NormalTok{)}
+
+    \KeywordTok{def} \FunctionTok{\_\_del\_\_}\NormalTok{(}\VariableTok{self}\NormalTok{):}
+        \BuiltInTok{print}\NormalTok{(}\StringTok{"Recurso liberado"}\NormalTok{)}
+
+\NormalTok{r }\OperatorTok{=}\NormalTok{ Recurso()}
+\KeywordTok{del}\NormalTok{ r}
+\CommentTok{\#print(r)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Recurso creado
+Recurso liberado
+\end{verbatim}
+\end{exercise}

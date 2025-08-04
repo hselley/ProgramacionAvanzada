@@ -1,0 +1,80 @@
+\documentclass[oneside]{book}
+\usepackage[spanish,mexico]{babel}
+\usepackage[left=3cm, right=3cm, top=3cm, bottom=3cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{mathpazo} % Tipografía bonita
+\usepackage{amsthm}
+\usepackage{float}
+\usepackage{hyperref}
+\hypersetup{
+    % bookmarks=true,			% show bookmarks bar?
+    colorlinks=true,			% false: boxed links; true: colored links
+    urlcolor=urlcolor,
+    % linkcolor=linkcolor,
+    citecolor=citecolor,
+    linkcolor=black,			  % color of internal links (change box color with linkbordercolor)
+    filecolor=magenta,      
+    urlcolor=cyan,			  % color of external links
+    pdftitle={Programación Avanzada con Python},    	% title
+    pdfauthor={Dr. Héctor Selley},    % author
+    breaklinks=true,  % so long urls are correctly broken across lines
+}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definición}[chapter]
+\newtheorem{example}{Ejemplo}[chapter]
+\newtheorem{exercise}{Ejercicio}[chapter]
+\newtheorem{code}{Código}[chapter]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                          Jupyter notebook stuff
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{import}
+\subimport{caps}{jupyter.tex} % Here is stored all jupyter latex crap
+    
+
+\title{Programación Avanzada con Python}
+\author{Dr. Héctor Selley}
+
+\begin{document}
+    \maketitle
+    \tableofcontents
+
+    % Chapter 1
+    \input{caps/01.Fundamentos.tex}
+
+    % Chapter 2
+    \input{caps/02.SintaxisBasicaPython}
+
+    % Chaper 3
+    \input{caps/03.Git.tex}
+
+    % Chapter 4
+    \input{caps/04.Objetos.tex}
+    % \input{caps/04.1. Ejercicios POO.tex}
+
+    % Chapter 5
+    \input{caps/05.MetodosMagicos}
+    \input{caps/05.1.EjerciciosMétodosMágicos.tex}
+
+    % Chapter 6
+    \input{caps/06.JerarquiaHerencia.tex}
+    \input{caps/06.1.Ejercicios.tex}
+
+    % Chapter 7
+    \input{caps/07. Iteradores y Listas por Comprension.tex}
+    \input{caps/07.1.Ejercicios.tex}
+
+    % Chapter 8
+    \input{caps/08.ManipulacionArchivos.tex}
+
+    % Chapter 9
+    \input{caps/09.PandasManipulacionLimpiezaVisualizacion.tex}
+
+    % Chapter 10
+    \input{caps/10.Matplotlib.tex}
+
+    % Chapter 11
+    \input{caps/11.LDA-sklearn.tex}
+\end{document}
